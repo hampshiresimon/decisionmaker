@@ -1,0 +1,26 @@
+﻿var express = require('express')
+var bodyParser = require('body-parser')
+var config = require('./config')
+var authMiddleware = require('./middleware/auth')
+var errorMiddleware = require('./middleware/error')
+var logMiddleware = require('./middleware/logger')
+
+var app = express()
+
+
+// middleware
+app.use(bodyParser.json())
+app.use(logMiddleware);
+app.use(authMiddleware);
+
+// endpoints
+app.use('/api/auth', require('./controllers/api/auth'))
+app.use('/api/users', require('./controllers/api/users'))
+
+app.use(errorMiddleware);
+
+
+app.listen( config.port, config.url, function()
+{
+    console.log('Server listening on port', config.port)
+})
