@@ -6,14 +6,12 @@ html
 		meta(http-equiv='X-UA-Compatible',content='IE=edge')
 		meta(name='viewport',content='width=device-width, initial-scale=1')
 
-		// Latest compiled and minified CSS
-		link(rel='stylesheet',href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css')
-		
-		// jQuery library
-		script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
-
-		// Latest compiled JavaScript
-		script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')
+		if (environment == 'development')
+			link(rel='stylesheet',href='bootstrap/bootstrap.min.css')
+			script(src='bootstrap/bootstrap.min.js')
+		else
+			link(rel='stylesheet',href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css')
+			script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')
 
 		link(rel='stylesheet',href='assets/app.css')
 
@@ -22,7 +20,7 @@ html
 			.row
 				.col-lg-6.col-lg-offset-3
 					.popout
-						.lead Login
+						.lead Login #{environment}
 						.text-left To begin, login or
 						a.text-left create an account
 						form(class='form-horizontal')
@@ -39,7 +37,7 @@ html
 								.col-sm-offset-2.col-sm-10
 									.checkbox
 										label Remember me
-											input(type='checkbox') 
+											input(type='checkbox')
 							.form-group
 								.col-sm-offset-2.col-sm-10
 									button.btn.btn-default(type='submit') Sign In

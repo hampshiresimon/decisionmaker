@@ -5,8 +5,11 @@ var ngAnnotate = require('gulp-ng-annotate')
 var wait = require('gulp-wait')
 var stylus = require('gulp-stylus')
 var jade = require('gulp-jade')
+var data = require('gulp-data')
 var nodemon = require('gulp-nodemon')
 var babel = require('gulp-babel');
+var config = require('./config')
+
 
 gulp.task('dev', ['watch:js', 'watch:css', 'watch:jade', 'node'])
 
@@ -26,7 +29,6 @@ gulp.task('watch:js', ['js'], function () {
     gulp.watch('javascript/**/*.js', ['js'])
 })
 
-
 gulp.task('css', function () {
     gulp.src('css/**/*.styl')
     .pipe(stylus())
@@ -39,6 +41,9 @@ gulp.task('watch:css', ['css'], function () {
 
 gulp.task('jade:main', function () {
     gulp.src('jade/main.jade')
+    .pipe(data( function(file) {
+                     return config;
+                   } ))
     .pipe(jade({
         pretty: true
     }))

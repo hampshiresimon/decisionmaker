@@ -5,6 +5,7 @@
     "express": "^4.14.0",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
+    "gulp-data": "^1.2.1",
     "gulp-jade": "^1.1.0",
     "gulp-ng-annotate": "^2.0.0",
     "gulp-nodemon": "^2.2.1",
@@ -24,7 +25,10 @@
     "mocha": "^3.1.2"
   },
   "babel": {
-  "presets": ["es2015", "react"]
+    "presets": [
+      "es2015",
+      "react"
+    ]
   },
   "scripts": {
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js  --recursive",
