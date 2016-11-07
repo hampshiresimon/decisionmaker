@@ -21,7 +21,10 @@ var authService = {
 
             userService.getUserByUsername(request.username, function (userServiceCallback) {
                 // if we don't have OK then bubble the callback
-                if (userServiceCallback.statusCode != httpStatusCodes.ok) { callback(userServiceCallback) }
+                if (userServiceCallback.statusCode != httpStatusCodes.ok) {
+                    callback(userServiceCallback)
+                    return
+                }
 
                 try {
 

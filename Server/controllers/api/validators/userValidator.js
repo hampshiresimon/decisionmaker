@@ -27,7 +27,7 @@ var validator = {
 
         if (!body.email || body.email == '') {
             isValid = false;
-            validationError = validationError.concat('email cannot be an empty string')
+            validationError = validationError.concat('email cannot be an empty string\n')
         }
 
         return {
