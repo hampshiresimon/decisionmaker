@@ -1,4 +1,3 @@
-d:
-cd "D:\Simon\Projects\DecisionMakerReact\Server"
+cd "C:\Projects\DecisionMaker\Server"
 gulp dev
 pause
