@@ -1,7 +1,8 @@
 var userValidation = require('../validators/userValidator')
 var httpStatusCodes = require('../../../helpers/httpStatusCodes')
 var hasher = require('../../../helpers/hasher')
-var config = require('../../../config')
+var dataCollections = require('../../../helpers/dataCollections')
+
 
 var userService = {
 
@@ -21,11 +22,12 @@ var userService = {
                 if (err) { callback({ statusCode: httpStatusCodes.internalServerError, payload: err }); return }
                 user.password = password
 
-                const db = require('monk')(config.mongoUrl)
-                const users = db.get('users')
+
+                var userCollection = dataCollections.getUsers()
+                var users = userCollection.collection
                 users.insert(user, function (err, response) {
+                    userCollection.database.close()
                     if (err) { callback({ statusCode: httpStatusCodes.internalServerError, payload: err }); return }
-                    db.close()
                     callback({ statusCode: httpStatusCodes.created, payload: user })
                 });
             });
@@ -34,12 +36,12 @@ var userService = {
 
     listAllUsers: function (callback) {
 
-      const db = require('monk')(config.mongoUrl)
-      const users = db.get('users')
+      var userCollection = dataCollections.getUsers()
+      var users = userCollection.collection
       users.find({}, function(err, docs)
       {
+          userCollection.database.close()
           if (err) { callback({ statusCode: httpStatusCodes.internalServerError, payload: err }); return }
-          db.close()
           callback({ statusCode: httpStatusCodes.ok, payload: docs })
       })
     },
@@ -51,11 +53,11 @@ var userService = {
             callback({ statusCode: httpStatusCodes.badRequest, payload: 'username cannot be an empty string' })
         }
         else {
-            const db = require('monk')(config.mongoUrl)
-            const users = db.get('users')
+            var userCollection = dataCollections.getUsers()
+            var users = userCollection.collection
             users.findOne({ username: username }, function(err, doc)
             {
-                db.close()
+                userCollection.database.close()
                 if (!doc) { callback({ statusCode: httpStatusCodes.notFound, payload: 'no user found with username ' + username }); return }
                 callback({ statusCode: httpStatusCodes.ok, payload: doc })
             })
