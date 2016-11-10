@@ -22,7 +22,6 @@ var userService = {
                 if (err) { callback({ statusCode: httpStatusCodes.internalServerError, payload: err }); return }
                 user.password = password
 
-
                 var userCollection = dataCollections.getUsers()
                 var users = userCollection.collection
                 users.insert(user, function (err, response) {
@@ -58,6 +57,7 @@ var userService = {
             users.findOne({ username: username }, function(err, doc)
             {
                 userCollection.database.close()
+                if (err) { callback({ statusCode: httpStatusCodes.internalServerError, payload: err }); return }
                 if (!doc) { callback({ statusCode: httpStatusCodes.notFound, payload: 'no user found with username ' + username }); return }
                 callback({ statusCode: httpStatusCodes.ok, payload: doc })
             })

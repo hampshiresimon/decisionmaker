@@ -2,6 +2,7 @@ node_modules/
 logs/
 assets/
 data/
-/StartClient.bat
-/StartServer.bat
-/TestClient.bat
+/StartClient
+/StartServer
+/RunClientTests
+/RunServerTests
