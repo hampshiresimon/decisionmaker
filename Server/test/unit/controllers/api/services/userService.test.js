@@ -1,5 +1,9 @@
-import {expect} from 'chai';
-import { givenAsync } from 'mocha-testdata';
+var chai = require('chai')
+var expect = chai.expect
+
+//import { givenAsync } from 'mocha-testdata';
+var testdata = require('mocha-testdata')
+var givenAsync = testdata.givenAsync
 var userService = require('../../../../../controllers/api/services/userService')
 var userValidation = require('../../../../../controllers/api/validators/userValidator')
 var hasher = require('../../../../../helpers/hasher')

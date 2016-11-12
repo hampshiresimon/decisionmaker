@@ -1,6 +1,6 @@
 ﻿var express = require('express')
 var bodyParser = require('body-parser')
-var config = require('./config')
+var config = require('./config').getConfig()
 var authMiddleware = require('./middleware/auth')
 var errorMiddleware = require('./middleware/error')
 var logMiddleware = require('./middleware/logger')
@@ -20,9 +20,9 @@ app.use('/api/users', require('./controllers/api/users'))
 app.use(errorMiddleware);
 
 
-app.listen( config.port, config.url, function()
+var server = app.listen( config.port, config.url, function()
 {
     console.log('Server listening on port', config.port)
 })
 
-module.exports = app; // for testing
+module.exports = { app : app, server : server }; // for testing

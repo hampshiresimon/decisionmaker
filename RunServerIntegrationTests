@@ -1,0 +1,2 @@
+cd /users/simonhampshire/Projects/DecisionMaker/Server/
+gulp watch:integrationtests

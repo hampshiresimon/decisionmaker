@@ -1,13 +1,13 @@
-﻿var config = require('../config')
+﻿var config = require('../config').getConfig()
 var httpStatusCodes = require('../helpers/httpStatusCodes')
 var jwt = require('jwt-simple')
 var userService = require('../controllers/api/services/userService')
 
 module.exports = function (req, res, next) {
-   
+
     // exclude the auth and user create
     if (req.path == '/api/auth' || ( req.path == '/api/users' && req.method == 'POST')) { return next(); }
-   
+
     var token = req.headers['x-auth']
 
     if (token) {
@@ -36,4 +36,4 @@ module.exports = function (req, res, next) {
     } else {
         res.status(httpStatusCodes.forbidden).send('no x-auth token present')
     }
-} 
+}

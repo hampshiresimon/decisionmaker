@@ -1,7 +1,7 @@
 ﻿var logger = require('../helpers/logger')
 var environmentTypes = require('../helpers/environmentTypes')
 var httpStatusCodes = require('../helpers/httpStatusCodes')
-var config = require('../config')
+var config = require('../config').getConfig()
 
 module.exports = function (err, req, res, next) {
 

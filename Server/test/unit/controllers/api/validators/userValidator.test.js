@@ -1,4 +1,5 @@
-import {expect} from 'chai';
+var chai = require('chai')
+var expect = chai.expect
 var validator = require('../../../../../controllers/api/validators/userValidator')
 
 describe('userValidation', () => {

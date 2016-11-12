@@ -1,5 +1,5 @@
 ﻿var bunyan = require('bunyan')
-var config = require('../config')
+var config = require('../config').getConfig()
 
 /*
 "fatal" (60): The service/app is going to stop or become unusable now. An operator should definitely look into this soon.

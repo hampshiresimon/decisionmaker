@@ -1,4 +1,5 @@
-import {expect} from 'chai';
+var chai = require('chai')
+var expect = chai.expect
 var authService = require('../../../../../controllers/api/services/authService')
 var userValidation = require('../../../../../controllers/api/validators/userValidator')
 var userService = require('../../../../../controllers/api/services/userService')
