@@ -24,3 +24,5 @@ app.listen( config.port, config.url, function()
 {
     console.log('Server listening on port', config.port)
 })
+
+module.exports = app; // for testing
