@@ -3,7 +3,7 @@ var httpStatusCodes = require('../../../helpers/httpStatusCodes')
 var userService = require('./userService')
 var jwt = require('jwt-simple')
 var moment = require('moment')
-var config = require('../../../config')
+var config = require('../../../config').getConfig()
 var hasher = require('../../../helpers/hasher')
 
 var authService = {

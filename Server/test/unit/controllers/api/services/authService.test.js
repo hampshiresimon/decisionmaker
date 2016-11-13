@@ -22,7 +22,7 @@ describe('authService', () => {
         expect(response.statusCode).to.equal(400)
         expect(response.payload).to.equal('There is an error')
         done()
-      })
+      }) 
     }))
 
     it('is InternalServerError if GetUserByUsername fails', sinon.test(function(done)

@@ -1,25 +1,6 @@
-﻿var authService = require('./services/authService')
-var httpStatusCodes = require('../../helpers/httpStatusCodes')
-var router = require('express').Router()
+﻿var router = require('express').Router()
+var authRouter = require('./routers/authRouter')
 
-router.post('/', function (req, res, next) {
-
-    authService.createToken(req.body, function (callback) {
-        if (callback.statusCode == httpStatusCodes.badRequest) {
-
-            res.status(httpStatusCodes.badRequest).send(callback.payload)
-
-        } else if (callback.statusCode == httpStatusCodes.internalServerError) {
-
-            next(callback.payload)
-        } else if ( callback.statusCode == httpStatusCodes.notFound) {
-
-            res.status(httpStatusCodes.notFound).send(callback.payload)
-        } else {
-
-            res.status(httpStatusCodes.ok).json(callback.payload)
-        }
-    })
-})
+router.post('/', authRouter.postRoute)
 
 module.exports = router

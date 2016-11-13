@@ -22,7 +22,7 @@ app.use(errorMiddleware);
 
 var server = app.listen( config.port, config.url, function()
 {
-    console.log('Server listening on port', config.port)
+    //console.log('Server listening on port', config.port)
 })
 
 module.exports = { app : app, server : server }; // for testing

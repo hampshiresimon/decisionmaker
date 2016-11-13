@@ -5,6 +5,7 @@ chai.use(chaiHttp);
 
 var server = require('../../server')
 var dataCollections = require('../../helpers/dataCollections')
+var userGenerator = require('../dataGenerators/userGenerator')
 
 describe('user', () => {
 
@@ -22,7 +23,7 @@ describe('user', () => {
 
       chai.request(server.app)
           .post('/api/users')
-          .send( { firstName : 'firstName_test', lastName : 'lastName_test' })
+          .send(userGenerator.createInvalidUser())
           .end((err, res) => {
 
             expect(res).to.have.status(400);
@@ -30,8 +31,8 @@ describe('user', () => {
             expect(res.text).to.contain('password cannot be an empty string')
             expect(res.text).to.contain('email cannot be an empty string')
 
-            done();
-          });
+            done()
+          })
     })
 
     it('is Created when new a new user is created', function(done)
@@ -42,7 +43,7 @@ describe('user', () => {
 
       chai.request(server.app)
           .post('/api/users')
-          .send( createValidUser() )
+          .send(userGenerator.createValidUser())
           .end((err, res) => {
 
             expect(res).to.have.status(201);
@@ -55,20 +56,113 @@ describe('user', () => {
             expect(res.body.email).to.not.be.empty
             expect(res.body._id).to.not.be.empty
 
-            done();
-          });
+            done()
+          })
+    })
+  })
+
+  describe('/GET', () => {
+
+    it('is Forbidden if no auth token provided', function(done)
+    {
+      // drop the user collection
+      var users = dataCollections.getUsers().collection;
+      users.drop()
+
+      var user = userGenerator.createValidUser()
+
+      chai.request(server.app)
+          .post('/api/users')
+          .send(user)
+          .end((err, res) => {
+
+            expect(res).to.have.status(201);
+
+            chai.request(server.app)
+                .get('/api/users')
+                .send(user)
+                .end((userErr, userRes) => {
+                  expect(userRes).to.have.status(403)
+                  expect(userRes.text).to.equal('no x-auth token present')
+                  done()
+                })
+
+          })
     })
 
-    function createValidUser()
+    it('is Forbidden if invalid token used', function(done)
     {
-      return {
-        firstName : 'firstName_test',
-        lastName : 'lastName_test',
-        username : 'username_test',
-        password : 'password_test',
-        email : 'email_test'
-      }
-    }
+      // drop the user collection
+      var users = dataCollections.getUsers().collection;
+      users.drop()
 
+      var user = userGenerator.createValidUser()
+      var userLogin = userGenerator.createValidLoginUser();
+
+      chai.request(server.app)
+          .post('/api/users')
+          .send(user)
+          .end((err, res) => {
+
+            expect(res).to.have.status(201);
+
+            chai.request(server.app)
+                .post('/api/auth')
+                .send(userLogin)
+                .end((authErr, authRes) => {
+
+                  expect(authRes).to.have.status(200)
+                  expect(authRes.text).to.not.be.empty
+
+                  chai.request(server.app)
+                      .get('/api/users')
+                      .set('x-auth', 'invalid_token')
+                      .end((userErr, userRes) => {
+
+                        expect(userRes).to.have.status(403)
+                        expect(userRes.text).to.equal('invalid x-auth token')
+                        done()
+                      })
+                })
+          })
+    })
+
+
+    it('is Ok if valid token used', function(done)
+    {
+      // drop the user collection
+      var users = dataCollections.getUsers().collection;
+      users.drop()
+
+      var user = userGenerator.createValidUser()
+      var userLogin = userGenerator.createValidLoginUser();
+
+      chai.request(server.app)
+          .post('/api/users')
+          .send(user)
+          .end((err, res) => {
+
+            expect(res).to.have.status(201);
+
+            chai.request(server.app)
+                .post('/api/auth')
+                .send(userLogin)
+                .end((authErr, authRes) => {
+
+                  expect(authRes).to.have.status(200)
+                  expect(authRes.text).to.not.be.empty
+
+                  chai.request(server.app)
+                      .get('/api/users')
+                      .set('x-auth', authRes.body)
+                      .end((userErr, userRes) => {
+
+                        expect(userRes).to.have.status(200)
+                        expect(userRes.body.username).to.equal(user.username)
+                        done()
+                      })
+                })
+          })
+    })
   })
 })
