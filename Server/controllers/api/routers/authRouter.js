@@ -9,7 +9,6 @@ var authRouter = {
         if (callback.statusCode == httpStatusCodes.badRequest) {
 
             res.status(httpStatusCodes.badRequest).send(callback.payload)
-
         } else if (callback.statusCode == httpStatusCodes.internalServerError) {
 
             next(callback.payload)
