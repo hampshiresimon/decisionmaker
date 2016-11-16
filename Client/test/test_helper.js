@@ -14,4 +14,6 @@ Object.keys(window).forEach((key) => {
   }
 });
 
+console.log('test helper....')
+
 chai.use(chaiImmutable);
