@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, Route, hashHistory} from 'react-router';
 import App from './components/App';
-import Voting from './components/Voting';
-import Test from './components/test';
+import Landing from './components/Landing';
+
 
 const routes = <Route component={App}>
-  <Route path="/" component={Voting} />
-  <Route path="/test" component={Test} />
+  <Route path="/" component={Landing} />
+
 </Route>
 
 ReactDOM.render(

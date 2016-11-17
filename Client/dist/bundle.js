@@ -63,7 +63,7 @@
 /******/ 	}
 
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "53aaebb13e7b9ac3629d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "20f5523d2a5fcbcd8d58"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 
@@ -8422,21 +8422,16 @@
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _Voting = __webpack_require__(306);
+	var _Landing = __webpack_require__(306);
 
-	var _Voting2 = _interopRequireDefault(_Voting);
-
-	var _test = __webpack_require__(310);
-
-	var _test2 = _interopRequireDefault(_test);
+	var _Landing2 = _interopRequireDefault(_Landing);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var routes = _react2.default.createElement(
 	  _reactRouter.Route,
 	  { component: _App2.default },
-	  _react2.default.createElement(_reactRouter.Route, { path: '/', component: _Voting2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: '/test', component: _test2.default })
+	  _react2.default.createElement(_reactRouter.Route, { path: '/', component: _Landing2.default })
 	);
 
 	_reactDom2.default.render(_react2.default.createElement(
@@ -39699,39 +39694,37 @@
 
 	var _reactAddonsPureRenderMixin2 = _interopRequireDefault(_reactAddonsPureRenderMixin);
 
+	var _NewQuestion = __webpack_require__(310);
+
+	var _NewQuestion2 = _interopRequireDefault(_NewQuestion);
+
+	var _MyQuestionsHeader = __webpack_require__(312);
+
+	var _MyQuestionsHeader2 = _interopRequireDefault(_MyQuestionsHeader);
+
+	var _Login = __webpack_require__(313);
+
+	var _Login2 = _interopRequireDefault(_Login);
+
+	var _QuestionList = __webpack_require__(314);
+
+	var _QuestionList2 = _interopRequireDefault(_QuestionList);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var _default = _react2.default.createClass({
 	  displayName: '_default',
 
 	  mixins: [_reactAddonsPureRenderMixin2.default],
-	  getPair: function getPair() {
-	    return this.props.pair || [];
-	  },
-	  isDisabled: function isDisabled() {
-	    return !!this.props.hasVoted;
-	  },
-	  render: function render() {
-	    var _this = this;
 
+	  render: function render() {
 	    return _react2.default.createElement(
 	      'div',
-	      { className: 'voting' },
-	      this.getPair().map(function (entry) {
-	        return _react2.default.createElement(
-	          'button',
-	          { key: entry,
-	            disabled: _this.isDisabled(),
-	            onClick: function onClick() {
-	              return _this.props.vote(entry);
-	            } },
-	          _react2.default.createElement(
-	            'h1',
-	            null,
-	            entry
-	          )
-	        );
-	      })
+	      { className: 'container-fluid' },
+	      _react2.default.createElement(_NewQuestion2.default, null),
+	      _react2.default.createElement(_MyQuestionsHeader2.default, null),
+	      _react2.default.createElement(_Login2.default, null),
+	      _react2.default.createElement(_QuestionList2.default, null)
 	    );
 	  }
 	});
@@ -39745,9 +39738,9 @@
 	    return;
 	  }
 
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Voting.jsx');
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Landing.jsx');
 
-	  __REACT_HOT_LOADER__.register(_default2, 'default', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Voting.jsx');
+	  __REACT_HOT_LOADER__.register(_default2, 'default', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Landing.jsx');
 	}();
 
 	;
@@ -39860,6 +39853,108 @@
 	  value: true
 	});
 
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(78);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var shallowCompare = __webpack_require__(311);
+
+	var NewQuestion = function (_React$Component) {
+	  _inherits(NewQuestion, _React$Component);
+
+	  function NewQuestion(props) {
+	    _classCallCheck(this, NewQuestion);
+
+	    var _this = _possibleConstructorReturn(this, (NewQuestion.__proto__ || Object.getPrototypeOf(NewQuestion)).call(this, props));
+
+	    _this.state = {
+	      questionText: ''
+	    };
+	    return _this;
+	  }
+
+	  _createClass(NewQuestion, [{
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps, nextState) {
+	      return shallowCompare(this, nextProps, nextState);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'ol-md-8 col-md-offset-2' },
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          'Question:'
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement('textarea', null)
+	        )
+	      );
+	    }
+	  }]);
+
+	  return NewQuestion;
+	}(_react2.default.Component);
+
+	var _default = NewQuestion;
+	var _default2 = _default;
+	exports.default = _default2;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(NewQuestion, 'NewQuestion', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/NewQuestion.jsx');
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/NewQuestion.jsx');
+
+	  __REACT_HOT_LOADER__.register(_default2, 'default', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/NewQuestion.jsx');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+	}();
+
+	;
+
+/***/ },
+/* 311 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(309);
+
+/***/ },
+/* 312 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
 	var _react = __webpack_require__(78);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -39878,8 +39973,12 @@
 	  render: function render() {
 	    return _react2.default.createElement(
 	      'div',
-	      null,
-	      'HELLO!'
+	      { className: 'ol-md-8 col-md-offset-2' },
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        'My Saved Questions'
+	      )
 	    );
 	  }
 	});
@@ -39893,9 +39992,177 @@
 	    return;
 	  }
 
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/test.jsx');
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/MyQuestionsHeader.jsx');
 
-	  __REACT_HOT_LOADER__.register(_default2, 'default', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/test.jsx');
+	  __REACT_HOT_LOADER__.register(_default2, 'default', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/MyQuestionsHeader.jsx');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+	}();
+
+	;
+
+/***/ },
+/* 313 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(78);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactAddonsPureRenderMixin = __webpack_require__(307);
+
+	var _reactAddonsPureRenderMixin2 = _interopRequireDefault(_reactAddonsPureRenderMixin);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var _default = _react2.default.createClass({
+	  displayName: '_default',
+
+	  mixins: [_reactAddonsPureRenderMixin2.default],
+
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'ol-md-8 col-md-offset-2' },
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        'Username:'
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement('input', { type: 'text' })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        'Password:'
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement('input', { type: 'text' })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'button',
+	          null,
+	          'OK'
+	        )
+	      )
+	    );
+	  }
+	});
+
+	var _default2 = _default;
+	exports.default = _default2;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Login.jsx');
+
+	  __REACT_HOT_LOADER__.register(_default2, 'default', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Login.jsx');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+	}();
+
+	;
+
+/***/ },
+/* 314 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(78);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactAddonsPureRenderMixin = __webpack_require__(307);
+
+	var _reactAddonsPureRenderMixin2 = _interopRequireDefault(_reactAddonsPureRenderMixin);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var _default = _react2.default.createClass({
+	  displayName: '_default',
+
+	  mixins: [_reactAddonsPureRenderMixin2.default],
+
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'ol-md-8 col-md-offset-2' },
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'u',
+	          null,
+	          'This is my first question - should I do this or that?'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'i',
+	          null,
+	          _react2.default.createElement(
+	            'b',
+	            null,
+	            'Best Answer'
+	          ),
+	          ' - I should definitely do this'
+	        )
+	      )
+	    );
+	  }
+	});
+
+	var _default2 = _default;
+	exports.default = _default2;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/QuestionList.jsx');
+
+	  __REACT_HOT_LOADER__.register(_default2, 'default', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/QuestionList.jsx');
 	}();
 
 	;
