@@ -5,22 +5,24 @@ import {
   scryRenderedDOMComponentsWithTag,
   Simulate
 } from 'react-addons-test-utils';
-import Voting from '../../src/components/Voting';
+import QuestionList from '../../src/components/QuestionList';
 import {expect} from 'chai';
+import {List} from 'immutable';
 
-describe('Voting', () => {
+describe('QuestionList', () => {
 
-  it('renders a pair of buttons', () => {
+  it('renders question links', () => {
     const component = renderIntoDocument(
-      <Voting pair={["Trainspotting", "28 Days Later"]} />
-    );
-    const buttons = scryRenderedDOMComponentsWithTag(component, 'button');
+      <QuestionList questions={ [ { title : 'question1'}, { title : 'question2'} ]} />
+    )
+    const links = scryRenderedDOMComponentsWithTag(component, 'a');
 
-    expect(buttons.length).to.equal(2);
-    expect(buttons[0].textContent).to.equal('Trainspotting');
-    expect(buttons[1].textContent).to.equal('28 Days Later');
+    expect(links[0].textContent).to.equal('question1')
+    expect(links[1].textContent).to.equal('question2')
   });
 
+
+/*
   it('invokes callback when a button is clicked', () => {
     let votedWith;
     const vote = (entry) => votedWith = entry;
@@ -35,5 +37,5 @@ describe('Voting', () => {
 
     expect(votedWith).to.equal('Trainspotting');
   });
-
-});
+*/
+})

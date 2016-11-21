@@ -1,14 +1,28 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+var shallowCompare = require('react-addons-shallow-compare');
+import {Link} from 'react-router';
 
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
-
-  render: function() {
-    return <div className="ol-md-8 col-md-offset-2">
-            <div><u>This is my first question - should I do this or that?</u></div>
-            <div><i><b>Best Answer</b> - I should definitely do this</i></div>
-          </div>;
+class QuestionList extends React.Component{
+  constructor(props) {
+    super(props)
   }
-});
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
+
+  getQuestions() {
+    return this.props.questions || []
+  }
+
+  render() {
+    return <div className="ol-md-8 col-md-offset-2">
+      {this.getQuestions().map(question =>
+        <div><Link to="/question">{question.title}</Link></div>
+     )}
+      </div>;
+  }
+}
+
+export default QuestionList

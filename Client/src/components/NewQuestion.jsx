@@ -1,5 +1,9 @@
 import React from 'react';
 var shallowCompare = require('react-addons-shallow-compare');
+import {connect} from 'react-redux';
+import {browserHistory} from 'react-router';
+import * as actionCreators from '../core/actionCreator';
+import uuid from 'uuid';
 
 
 class NewQuestion extends React.Component{
@@ -18,8 +22,10 @@ class NewQuestion extends React.Component{
   }
 
   handleSubmit(event) {
-    alert('A question was submitted: ' + this.state.questionText);
     event.preventDefault();
+    var uid = uuid.v1()
+    this.props.newQuestionAction( { title : this.state.questionText, id : uid })
+    browserHistory.push('/question/' + uid);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -39,4 +45,17 @@ class NewQuestion extends React.Component{
   }
 }
 
-export default NewQuestion
+function mapStateToProps(state) {
+  return {
+    //pair: state.getIn(['vote', 'pair']),
+    //hasVoted: state.get('hasVoted'),
+    //winner: state.get('winner')
+  };
+}
+
+const NewQuestionContainer = connect(
+  mapStateToProps,
+  actionCreators
+)(NewQuestion);
+
+export { NewQuestion, NewQuestionContainer }

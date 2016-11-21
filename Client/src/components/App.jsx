@@ -5,6 +5,12 @@ const pair = List.of('Trainspotting', '28 Days Later');
 
 export default React.createClass({
   render: function() {
-    return React.cloneElement(this.props.children, {pair: pair});
+    return this.props.children
+  },
+
+  componentWillReceiveProps : function(nextProps) {
+    this.setState({
+        children: nextProps.children
+    });
   }
 });
