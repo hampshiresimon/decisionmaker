@@ -63,7 +63,7 @@
 /******/ 	}
 
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "516b2ad40e97338a549e"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "bf2caf8264d08ee24614"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 
@@ -8432,7 +8432,7 @@
 
 	var _Question = __webpack_require__(355);
 
-	var _reducer = __webpack_require__(357);
+	var _reducer = __webpack_require__(359);
 
 	var _reducer2 = _interopRequireDefault(_reducer);
 
@@ -41841,7 +41841,7 @@
 	    value: function handleSubmit(event) {
 	      event.preventDefault();
 	      var uid = _uuid2.default.v1();
-	      this.props.newQuestionAction({ title: this.state.questionText, id: uid });
+	      this.props.newQuestionAction({ title: this.state.questionText, id: uid }, this.props.question);
 	      _reactRouter.browserHistory.push('/question/' + uid);
 	    }
 	  }, {
@@ -41924,8 +41924,18 @@
 	  value: true
 	});
 	exports.newQuestionAction = newQuestionAction;
+	exports.newAnswerAction = newAnswerAction;
+	exports.removeAnswerAction = removeAnswerAction;
 	function newQuestionAction(question) {
 	  return { type: 'NEW_QUESTION', question: question };
+	}
+
+	function newAnswerAction(answer, question) {
+	  return { type: 'NEW_ANSWER', answer: answer, question: question };
+	}
+
+	function removeAnswerAction(answerId, question) {
+	  return { type: 'REMOVE_ANSWER', answerId: answerId, question: question };
 	}
 	;
 
@@ -41935,6 +41945,10 @@
 	  }
 
 	  __REACT_HOT_LOADER__.register(newQuestionAction, 'newQuestionAction', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/actionCreator.js');
+
+	  __REACT_HOT_LOADER__.register(newAnswerAction, 'newAnswerAction', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/actionCreator.js');
+
+	  __REACT_HOT_LOADER__.register(removeAnswerAction, 'removeAnswerAction', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/actionCreator.js');
 	}();
 
 	;
@@ -42484,6 +42498,8 @@
 
 	var _Answers = __webpack_require__(356);
 
+	var _NewAnswer = __webpack_require__(358);
+
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -42504,9 +42520,12 @@
 
 	    var _this = _possibleConstructorReturn(this, (Question.__proto__ || Object.getPrototypeOf(Question)).call(this, props));
 
-	    _this.state = {};
+	    _this.state = {
+	      showNewAnswer: false
+	    };
 
-	    //this.handleChange = this.handleChange.bind(this);
+	    _this.newAnswer = _this.newAnswer.bind(_this);
+	    _this.newAnswerAdded = _this.newAnswerAdded.bind(_this);
 	    //this.handleSubmit = this.handleSubmit.bind(this);
 	    return _this;
 	  }
@@ -42538,9 +42557,28 @@
 	      return shallowCompare(this, nextProps, nextState);
 	    }
 	  }, {
+	    key: 'newAnswer',
+	    value: function newAnswer() {
+	      this.setState({ showNewAnswer: true });
+	    }
+	  }, {
+	    key: 'newAnswerAdded',
+	    value: function newAnswerAdded() {
+	      this.setState({ showNewAnswer: false });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var question = this.getQuestion();
+
+	      var showNewAnswer = void 0;
+	      if (!!this.state.showNewAnswer) {
+	        showNewAnswer = _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(_NewAnswer.NewAnswerContainer, { question: question, newAnswerAdded: this.newAnswerAdded })
+	        );
+	      }
 
 	      return _react2.default.createElement(
 	        'div',
@@ -42553,8 +42591,9 @@
 	        _react2.default.createElement(
 	          'div',
 	          null,
-	          _react2.default.createElement(_Answers.AnswersContainer, { answers: question.get('answers') })
-	        )
+	          _react2.default.createElement(_Answers.AnswersContainer, { question: question, newAnswer: this.newAnswer })
+	        ),
+	        showNewAnswer
 	      );
 	    }
 	  }]);
@@ -42627,6 +42666,8 @@
 
 	var actionCreators = _interopRequireWildcard(_actionCreator);
 
+	var _Considerations = __webpack_require__(357);
+
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -42647,8 +42688,13 @@
 
 	    var _this = _possibleConstructorReturn(this, (Answers.__proto__ || Object.getPrototypeOf(Answers)).call(this, props));
 
-	    _this.state = {};
+	    _this.state = {
+	      showConsiderationForAnswers: (0, _immutable.List)()
+	    };
 
+	    _this.newAnswer = _this.newAnswer.bind(_this);
+	    _this.removeAnswer = _this.removeAnswer.bind(_this);
+	    _this.addConsideration = _this.addConsideration.bind(_this);
 	    //this.handleChange = this.handleChange.bind(this);
 	    //this.handleSubmit = this.handleSubmit.bind(this);
 	    return _this;
@@ -42686,12 +42732,109 @@
 	      return shallowCompare(this, nextProps, nextState);
 	    }
 	  }, {
+	    key: 'newAnswer',
+	    value: function newAnswer(event) {
+	      event.preventDefault();
+	      this.props.newAnswer();
+	    }
+	  }, {
+	    key: 'removeAnswer',
+	    value: function removeAnswer(event) {
+	      event.preventDefault();
+	      this.props.removeAnswerAction(event.currentTarget.dataset.id, this.props.question);
+	    }
+	  }, {
+	    key: 'showConsiderations',
+	    value: function showConsiderations(event) {
+	      event.preventDefault();
+	      var answerId = event.currentTarget.dataset.id;
+	      if (this.state.showConsiderationForAnswers.has(function (item) {
+	        return item === answerId;
+	      })) {
+	        this.setState({ showConsiderationForAnswers: this.state.showConsiderationForAnswers.push(answerId) });
+	      } else {
+	        this.setState({ showConsiderationForAnswers: this.state.showConsiderationForAnswers.filter(function (item) {
+	            return item === answerId;
+	          }) });
+	      }
+	    }
+	  }, {
+	    key: 'getAddConsideration',
+	    value: function getAddConsideration(id) {
+	      if (this.state.showConsiderationForAnswers.has(function (item) {
+	        return item === id;
+	      })) {
+	        var answer = this.props.question.get('answers').find(function (item) {
+	          return item.get('id') === id;
+	        });
+
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(_Considerations.ConsiderationsContainer, { answer: answer })
+	        );
+	      }
+
+	      return _react2.default.createElement('div', null);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
+
+	      /* order by highest score first */
+	      var answers = this.props.question.get('answers').sort(function (a, b) {
+	        return b.get('score') - a.get('score');
+	      });
+
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        'SOME TEXT HERE'
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          answers.map(function (c) {
+	            return _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement(
+	                'h1',
+	                { key: c.get('id') },
+	                _react2.default.createElement(
+	                  'u',
+	                  null,
+	                  c.get('title')
+	                ),
+	                ' - ',
+	                c.get('score')
+	              ),
+	              _react2.default.createElement(
+	                'u',
+	                { 'data-id': c.get('id'), onClick: _this2.removeAnswer },
+	                'REMOVE'
+	              ),
+	              _react2.default.createElement(
+	                'u',
+	                { 'data-id': c.get('id'), onClick: _this2.showConsiderations },
+	                'SHOW CONSIDERATIONS'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                _this2.getAddConsideration(c.get('id'))
+	              )
+	            );
+	          })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { onClick: this.newAnswer },
+	          _react2.default.createElement(
+	            'u',
+	            null,
+	            'new answer'
+	          )
+	        )
 	      );
 	    }
 	  }]);
@@ -42746,10 +42889,361 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.ConsiderationsContainer = exports.Considerations = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(78);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(324);
+
+	var _reactRouter = __webpack_require__(248);
 
 	var _immutable = __webpack_require__(342);
 
-	var _questionState = __webpack_require__(358);
+	var _actionCreator = __webpack_require__(348);
+
+	var actionCreators = _interopRequireWildcard(_actionCreator);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var shallowCompare = __webpack_require__(351);
+
+	var Considerations = function (_React$Component) {
+	  _inherits(Considerations, _React$Component);
+
+	  function Considerations(props) {
+	    _classCallCheck(this, Considerations);
+
+	    var _this = _possibleConstructorReturn(this, (Considerations.__proto__ || Object.getPrototypeOf(Considerations)).call(this, props));
+
+	    _this.state = {
+	      considerationText: ''
+	    };
+
+	    _this.newConsideration = _this.newConsideration.bind(_this);
+	    _this.removeConsideration = _this.removeConsideration.bind(_this);
+	    _this.handleConsiderationChange = _this.handleConsiderationChange.bind(_this);
+	    _this.handleConsiderationSubmit = _this.handleConsiderationSubmit.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(Considerations, [{
+	    key: 'handleConsiderationChange',
+	    value: function handleConsiderationChange(event) {
+	      this.setState({ considerationText: event.target.value });
+	    }
+	  }, {
+	    key: 'handleConsiderationSubmit',
+	    value: function handleConsiderationSubmit(event) {
+	      //event.preventDefault();
+	      //this.props.newQuestionAction(this.state.questionText)
+	      //browserHistory.push('/some/path/123');
+	    }
+	  }, {
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps, nextState) {
+	      return shallowCompare(this, nextProps, nextState);
+	    }
+	  }, {
+	    key: 'newConsideration',
+	    value: function newConsideration(event) {
+	      event.preventDefault();
+	      //this.props.newAnswer()
+	    }
+	  }, {
+	    key: 'removeConsideration',
+	    value: function removeConsideration(event) {
+	      event.preventDefault();
+	      //this.props.removeAnswerAction(event.currentTarget.dataset.id, this.props.question)
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      /* order by highest score first */
+	      var considerations = this.props.answer.get('considerations'); //.sort( (a,b) => b.get('score') - a.get('score'))
+
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'form',
+	            { onSubmit: this.handleConsiderationSubmit },
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement('input', { type: 'text', value: this.state.considerationText, onChange: this.handleConsiderationChange }),
+	              _react2.default.createElement('input', { type: 'submit', value: 'ADD' })
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          considerations.map(function (c) {
+	            return _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement(
+	                'h1',
+	                { key: c.get('id') },
+	                _react2.default.createElement(
+	                  'u',
+	                  null,
+	                  c.get('title')
+	                ),
+	                _react2.default.createElement(
+	                  'u',
+	                  { 'data-id': c.get('id'), onClick: _this2.removeConsideration },
+	                  'REMOVE'
+	                )
+	              )
+	            );
+	          })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Considerations;
+	}(_react2.default.Component);
+
+	function mapStateToProps(state) {
+	  return {
+	    //answers : state.get('answers')
+	    //pair: state.getIn(['vote', 'pair']),
+	    //hasVoted: state.get('hasVoted'),
+	    //winner: state.get('winner')
+	  };
+	}
+
+	var ConsiderationsContainer = (0, _reactRedux.connect)(mapStateToProps, actionCreators)(Considerations);
+
+	exports.Considerations = Considerations;
+	exports.ConsiderationsContainer = ConsiderationsContainer;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Considerations.jsx');
+
+	  __REACT_HOT_LOADER__.register(Considerations, 'Considerations', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Considerations.jsx');
+
+	  __REACT_HOT_LOADER__.register(ConsiderationsContainer, 'ConsiderationsContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Considerations.jsx');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+	}();
+
+	;
+
+/***/ },
+/* 358 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.NewAnswerContainer = exports.NewAnswer = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(78);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(324);
+
+	var _reactRouter = __webpack_require__(248);
+
+	var _immutable = __webpack_require__(342);
+
+	var _actionCreator = __webpack_require__(348);
+
+	var actionCreators = _interopRequireWildcard(_actionCreator);
+
+	var _uuid = __webpack_require__(349);
+
+	var _uuid2 = _interopRequireDefault(_uuid);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var shallowCompare = __webpack_require__(351);
+
+	var NewAnswer = function (_React$Component) {
+	  _inherits(NewAnswer, _React$Component);
+
+	  function NewAnswer(props) {
+	    _classCallCheck(this, NewAnswer);
+
+	    var _this = _possibleConstructorReturn(this, (NewAnswer.__proto__ || Object.getPrototypeOf(NewAnswer)).call(this, props));
+
+	    _this.state = {
+	      answerText: ''
+	    };
+
+	    _this.handleChange = _this.handleChange.bind(_this);
+	    _this.handleSubmit = _this.handleSubmit.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(NewAnswer, [{
+	    key: 'handleChange',
+	    value: function handleChange(event) {
+	      this.setState({ answerText: event.target.value });
+	    }
+	  }, {
+	    key: 'handleSubmit',
+	    value: function handleSubmit(event) {
+
+	      event.preventDefault();
+	      var uid = _uuid2.default.v1();
+	      this.props.newAnswerAction({ title: this.state.answerText, id: uid, score: 0 }, this.props.question);
+	      this.props.newAnswerAdded();
+	      //browserHistory.push('/some/path/123');
+	    }
+
+	    /*
+	      getQuestion()
+	      {
+	        return this.props.questions.get(this.getQuestionIndex())
+	      }
+	    
+	      getQuestionIndex()
+	      {
+	        return this.props.questions.findIndex(q => {
+	              return q.get('id') === this.props.params.questionId })
+	      }
+	      */
+
+	  }, {
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps, nextState) {
+	      return shallowCompare(this, nextProps, nextState);
+	    }
+
+	    /*
+	      newAnswer(event) {
+	        event.preventDefault();
+	        this.props.newAnswer()
+	      }
+	      */
+
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'ol-md-8 col-md-offset-2' },
+	        _react2.default.createElement(
+	          'form',
+	          { onSubmit: this.handleSubmit },
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            'Answer:'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement('textarea', { value: this.state.answerText, onChange: this.handleChange }),
+	            _react2.default.createElement('input', { type: 'submit', value: 'GO' })
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return NewAnswer;
+	}(_react2.default.Component);
+
+	function mapStateToProps(state) {
+	  return {
+	    //answers : state.get('answers')
+	    //pair: state.getIn(['vote', 'pair']),
+	    //hasVoted: state.get('hasVoted'),
+	    //winner: state.get('winner')
+	  };
+	}
+
+	var NewAnswerContainer = (0, _reactRedux.connect)(mapStateToProps, actionCreators)(NewAnswer);
+
+	exports.NewAnswer = NewAnswer;
+	exports.NewAnswerContainer = NewAnswerContainer;
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/NewAnswer.jsx');
+
+	  __REACT_HOT_LOADER__.register(NewAnswer, 'NewAnswer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/NewAnswer.jsx');
+
+	  __REACT_HOT_LOADER__.register(NewAnswerContainer, 'NewAnswerContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/NewAnswer.jsx');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+	}();
+
+	;
+
+/***/ },
+/* 359 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _immutable = __webpack_require__(342);
+
+	var _questionState = __webpack_require__(360);
+
+	var _answerState = __webpack_require__(361);
 
 	var _default = function _default() {
 	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : (0, _immutable.Map)({ questions: (0, _immutable.List)() });
@@ -42761,8 +43255,25 @@
 	      return state.update('questions', function (q) {
 	        return (0, _questionState.NewQuestion)(q, action.question);
 	      });
-	    //case 'VOTE':
-	    //return vote(state, action.entry);
+
+	    case 'NEW_ANSWER':
+	      var newAnswerQuestionIndex = state.get('questions').findIndex(function (q) {
+	        return q.get('id') === action.question.get('id');
+	      });
+
+	      return state.updateIn(['questions', newAnswerQuestionIndex], function (question) {
+	        return (0, _answerState.NewAnswer)(question, action.answer);
+	      });
+
+	    case 'REMOVE_ANSWER':
+	      var removeAnswerQuestionIndex = state.get('questions').findIndex(function (q) {
+	        return q.get('id') === action.question.get('id');
+	      });
+
+	      return state.updateIn(['questions', removeAnswerQuestionIndex], function (question) {
+	        return (0, _answerState.RemoveAnswer)(question, action.answerId);
+	      });
+
 	  }
 	  return state;
 	};
@@ -42793,7 +43304,7 @@
 	;
 
 /***/ },
-/* 358 */
+/* 360 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42806,7 +43317,7 @@
 	var _immutable = __webpack_require__(342);
 
 	function NewQuestion(questions, question) {
-	  return questions.push((0, _immutable.Map)({ title: question.title, id: question.id, answers: (0, _immutable.List)([{ title: 'answer1', score: 12 }, { title: 'answer2', score: 55 }]) }));
+	  return questions.push((0, _immutable.Map)({ title: question.title, id: question.id, answers: (0, _immutable.List)([(0, _immutable.Map)({ title: 'bnswer1', score: 12, id: 1 }), (0, _immutable.Map)({ title: 'answer2', score: 55, id: 2 })]) }));
 	}
 	;
 
@@ -42816,6 +43327,56 @@
 	  }
 
 	  __REACT_HOT_LOADER__.register(NewQuestion, 'NewQuestion', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/stateManagers/questionState.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+	}();
+
+	;
+
+/***/ },
+/* 361 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.NewAnswer = NewAnswer;
+	exports.RemoveAnswer = RemoveAnswer;
+
+	var _immutable = __webpack_require__(342);
+
+	function NewAnswer(question, answer) {
+	  return question.update('answers', function (answers) {
+	    return answers.push((0, _immutable.Map)({ title: answer.title, id: answer.id, score: 0, considerations: (0, _immutable.List)() }));
+	  });
+	}
+
+	function RemoveAnswer(question, answerId) {
+	  return question.update('answers', function (answers) {
+	    return answers.filter(function (a) {
+	      return a.get('id') !== answerId;
+	    });
+	  });
+	}
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(NewAnswer, 'NewAnswer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/stateManagers/answerState.js');
+
+	  __REACT_HOT_LOADER__.register(RemoveAnswer, 'RemoveAnswer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/stateManagers/answerState.js');
 	}();
 
 	;

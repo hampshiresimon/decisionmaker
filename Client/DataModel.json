@@ -4,7 +4,7 @@
   questions :
 
         {
-          _id : 2322,
+          id : 2322,
           title : "Should I leave my job and move to Swindon?",
           description : "This is my dilemma - leave my cushy job in Mayfair and the Bankside flat to chase my dreams of a semi in Swindon?"
 

@@ -5,16 +5,18 @@ import {browserHistory} from 'react-router';
 import {Map, List} from 'immutable';
 import * as actionCreators from '../core/actionCreator';
 import {AnswersContainer} from './Answers'
+import {NewAnswerContainer} from './NewAnswer'
 
 
 class Question extends React.Component{
   constructor(props) {
     super(props)
     this.state = {
-
+      showNewAnswer : false
     }
 
-    //this.handleChange = this.handleChange.bind(this);
+    this.newAnswer = this.newAnswer.bind(this);
+    this.newAnswerAdded = this.newAnswerAdded.bind(this);
     //this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -38,12 +40,30 @@ class Question extends React.Component{
     return shallowCompare(this, nextProps, nextState);
   }
 
+  newAnswer() {
+    this.setState({showNewAnswer : true});
+
+  }
+
+  newAnswerAdded() {
+    this.setState({showNewAnswer : false});
+  }
+
   render() {
     var question = this.getQuestion()
 
+    let showNewAnswer;
+       if (!!this.state.showNewAnswer) {
+         showNewAnswer = (
+           <div><NewAnswerContainer question={question} newAnswerAdded={this.newAnswerAdded}/></div>
+         )
+       }
+
     return <div className="container-fluid">
               <div>{question.get('title')}</div>
-              <div><AnswersContainer answers={question.get('answers')}/></div>
+              <div><AnswersContainer question={question} newAnswer={this.newAnswer}/ ></div>
+
+            {showNewAnswer}
             </div>
     }
 }
