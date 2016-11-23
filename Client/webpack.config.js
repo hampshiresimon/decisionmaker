@@ -15,7 +15,10 @@ module.exports = {
         "presets": ["es2015", "react"],
         "plugins": ["react-hot-loader/babel"]
       },
-    }]
+    },{
+  test:   /\.css$/,
+  loader: 'style-loader!css-loader!postcss-loader'
+}]
   },
   resolve: {
     extensions: ['', '.js', '.jsx']

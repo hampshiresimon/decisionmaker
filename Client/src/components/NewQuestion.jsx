@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {browserHistory} from 'react-router';
 import * as actionCreators from '../core/actionCreator';
 import uuid from 'uuid';
+import {List, Map} from 'immutable';
 
 
 class NewQuestion extends React.Component{
@@ -24,7 +25,7 @@ class NewQuestion extends React.Component{
   handleSubmit(event) {
     event.preventDefault();
     var uid = uuid.v1()
-    this.props.newQuestionAction( { title : this.state.questionText, id : uid }, this.props.question)
+    this.props.newQuestionAction( Map({ title : this.state.questionText, id : uid }), this.props.question)
     browserHistory.push('/question/' + uid);
   }
 
@@ -35,13 +36,13 @@ class NewQuestion extends React.Component{
   render() {
     return <div className="ol-md-8 col-md-offset-2">
       <form onSubmit={this.handleSubmit}>
-            <div>Question:</div>
-            <div>
-              <textarea value={this.state.questionText} onChange={this.handleChange}/>
-              <input type="submit" value="GO" />
-            </div>
-          </form>
-          </div>
+        <div>Question:</div>
+        <div>
+          <textarea value={this.state.questionText} onChange={this.handleChange}/>
+          <input type="submit" value="GO" />
+        </div>
+      </form>
+    </div>
   }
 }
 

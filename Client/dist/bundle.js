@@ -63,7 +63,7 @@
 /******/ 	}
 
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "bf2caf8264d08ee24614"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "8e54a44e2fbacc43ac14"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 
@@ -8432,7 +8432,7 @@
 
 	var _Question = __webpack_require__(355);
 
-	var _reducer = __webpack_require__(359);
+	var _reducer = __webpack_require__(368);
 
 	var _reducer2 = _interopRequireDefault(_reducer);
 
@@ -41802,6 +41802,8 @@
 
 	var _uuid2 = _interopRequireDefault(_uuid);
 
+	var _immutable = __webpack_require__(342);
+
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -41841,7 +41843,7 @@
 	    value: function handleSubmit(event) {
 	      event.preventDefault();
 	      var uid = _uuid2.default.v1();
-	      this.props.newQuestionAction({ title: this.state.questionText, id: uid }, this.props.question);
+	      this.props.newQuestionAction((0, _immutable.Map)({ title: this.state.questionText, id: uid }), this.props.question);
 	      _reactRouter.browserHistory.push('/question/' + uid);
 	    }
 	  }, {
@@ -41926,6 +41928,9 @@
 	exports.newQuestionAction = newQuestionAction;
 	exports.newAnswerAction = newAnswerAction;
 	exports.removeAnswerAction = removeAnswerAction;
+	exports.newConsiderationAction = newConsiderationAction;
+	exports.updateConsiderationAction = updateConsiderationAction;
+	exports.removeConsiderationAction = removeConsiderationAction;
 	function newQuestionAction(question) {
 	  return { type: 'NEW_QUESTION', question: question };
 	}
@@ -41936,6 +41941,18 @@
 
 	function removeAnswerAction(answerId, question) {
 	  return { type: 'REMOVE_ANSWER', answerId: answerId, question: question };
+	}
+
+	function newConsiderationAction(consideration, answer, question) {
+	  return { type: "NEW_CONSIDERATION", consideration: consideration, answer: answer, question: question };
+	}
+
+	function updateConsiderationAction(consideration, answer, question) {
+	  return { type: "UPDATE_CONSIDERATION", consideration: consideration, answer: answer, question: question };
+	}
+
+	function removeConsiderationAction(considerationId, answer, question) {
+	  return { type: "REMOVE_CONSIDERATION", considerationId: considerationId, answer: answer, question: question };
 	}
 	;
 
@@ -41949,6 +41966,12 @@
 	  __REACT_HOT_LOADER__.register(newAnswerAction, 'newAnswerAction', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/actionCreator.js');
 
 	  __REACT_HOT_LOADER__.register(removeAnswerAction, 'removeAnswerAction', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/actionCreator.js');
+
+	  __REACT_HOT_LOADER__.register(newConsiderationAction, 'newConsiderationAction', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/actionCreator.js');
+
+	  __REACT_HOT_LOADER__.register(updateConsiderationAction, 'updateConsiderationAction', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/actionCreator.js');
+
+	  __REACT_HOT_LOADER__.register(removeConsiderationAction, 'removeConsiderationAction', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/actionCreator.js');
 	}();
 
 	;
@@ -42498,7 +42521,7 @@
 
 	var _Answers = __webpack_require__(356);
 
-	var _NewAnswer = __webpack_require__(358);
+	var _NewAnswer = __webpack_require__(367);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -42520,12 +42543,8 @@
 
 	    var _this = _possibleConstructorReturn(this, (Question.__proto__ || Object.getPrototypeOf(Question)).call(this, props));
 
-	    _this.state = {
-	      showNewAnswer: false
-	    };
+	    _this.state = {};
 
-	    _this.newAnswer = _this.newAnswer.bind(_this);
-	    _this.newAnswerAdded = _this.newAnswerAdded.bind(_this);
 	    //this.handleSubmit = this.handleSubmit.bind(this);
 	    return _this;
 	  }
@@ -42557,28 +42576,9 @@
 	      return shallowCompare(this, nextProps, nextState);
 	    }
 	  }, {
-	    key: 'newAnswer',
-	    value: function newAnswer() {
-	      this.setState({ showNewAnswer: true });
-	    }
-	  }, {
-	    key: 'newAnswerAdded',
-	    value: function newAnswerAdded() {
-	      this.setState({ showNewAnswer: false });
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var question = this.getQuestion();
-
-	      var showNewAnswer = void 0;
-	      if (!!this.state.showNewAnswer) {
-	        showNewAnswer = _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(_NewAnswer.NewAnswerContainer, { question: question, newAnswerAdded: this.newAnswerAdded })
-	        );
-	      }
 
 	      return _react2.default.createElement(
 	        'div',
@@ -42592,8 +42592,7 @@
 	          'div',
 	          null,
 	          _react2.default.createElement(_Answers.AnswersContainer, { question: question, newAnswer: this.newAnswer })
-	        ),
-	        showNewAnswer
+	        )
 	      );
 	    }
 	  }]);
@@ -42668,6 +42667,10 @@
 
 	var _Considerations = __webpack_require__(357);
 
+	var _uuid = __webpack_require__(349);
+
+	var _uuid2 = _interopRequireDefault(_uuid);
+
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -42689,43 +42692,31 @@
 	    var _this = _possibleConstructorReturn(this, (Answers.__proto__ || Object.getPrototypeOf(Answers)).call(this, props));
 
 	    _this.state = {
-	      showConsiderationForAnswers: (0, _immutable.List)()
+	      showConsiderationForAnswers: (0, _immutable.List)(),
+	      answerText: ''
 	    };
 
 	    _this.newAnswer = _this.newAnswer.bind(_this);
 	    _this.removeAnswer = _this.removeAnswer.bind(_this);
-	    _this.addConsideration = _this.addConsideration.bind(_this);
-	    //this.handleChange = this.handleChange.bind(this);
-	    //this.handleSubmit = this.handleSubmit.bind(this);
+	    _this.showConsiderations = _this.showConsiderations.bind(_this);
+	    _this.handleAnswerChange = _this.handleAnswerChange.bind(_this);
+	    _this.handleAnswerSubmit = _this.handleAnswerSubmit.bind(_this);
 	    return _this;
 	  }
 
 	  _createClass(Answers, [{
-	    key: 'handleChange',
-	    value: function handleChange(event) {
-	      //this.setState({questionText: event.target.value});
+	    key: 'handleAnswerChange',
+	    value: function handleAnswerChange(event) {
+	      this.setState({ answerText: event.target.value });
 	    }
 	  }, {
-	    key: 'handleSubmit',
-	    value: function handleSubmit(event) {}
-	    //event.preventDefault();
-	    //this.props.newQuestionAction(this.state.questionText)
-	    //browserHistory.push('/some/path/123');
+	    key: 'handleAnswerSubmit',
+	    value: function handleAnswerSubmit(event) {
 
-
-	    /*
-	      getQuestion()
-	      {
-	        return this.props.questions.get(this.getQuestionIndex())
-	      }
-	    
-	      getQuestionIndex()
-	      {
-	        return this.props.questions.findIndex(q => {
-	              return q.get('id') === this.props.params.questionId })
-	      }
-	      */
-
+	      event.preventDefault();
+	      var uid = _uuid2.default.v1();
+	      this.props.newAnswerAction((0, _immutable.Map)({ title: this.state.answerText, id: uid, score: 0 }), this.props.question);
+	    }
 	  }, {
 	    key: 'shouldComponentUpdate',
 	    value: function shouldComponentUpdate(nextProps, nextState) {
@@ -42748,22 +42739,20 @@
 	    value: function showConsiderations(event) {
 	      event.preventDefault();
 	      var answerId = event.currentTarget.dataset.id;
-	      if (this.state.showConsiderationForAnswers.has(function (item) {
-	        return item === answerId;
-	      })) {
-	        this.setState({ showConsiderationForAnswers: this.state.showConsiderationForAnswers.push(answerId) });
-	      } else {
+
+	      if (this.state.showConsiderationForAnswers.includes(answerId)) {
 	        this.setState({ showConsiderationForAnswers: this.state.showConsiderationForAnswers.filter(function (item) {
 	            return item === answerId;
 	          }) });
+	      } else {
+	        this.setState({ showConsiderationForAnswers: this.state.showConsiderationForAnswers.push(answerId) });
 	      }
 	    }
 	  }, {
 	    key: 'getAddConsideration',
 	    value: function getAddConsideration(id) {
-	      if (this.state.showConsiderationForAnswers.has(function (item) {
-	        return item === id;
-	      })) {
+
+	      if (this.state.showConsiderationForAnswers.includes(id)) {
 	        var answer = this.props.question.get('answers').find(function (item) {
 	          return item.get('id') === id;
 	        });
@@ -42771,7 +42760,7 @@
 	        return _react2.default.createElement(
 	          'div',
 	          null,
-	          _react2.default.createElement(_Considerations.ConsiderationsContainer, { answer: answer })
+	          _react2.default.createElement(_Considerations.ConsiderationsContainer, { question: this.props.question, answer: answer })
 	        );
 	      }
 
@@ -42790,6 +42779,20 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'form',
+	            { onSubmit: this.handleAnswerSubmit },
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement('input', { type: 'text', value: this.state.answerText, onChange: this.handleAnswerChange }),
+	              _react2.default.createElement('input', { type: 'submit', value: 'ADD' })
+	            )
+	          )
+	        ),
 	        _react2.default.createElement(
 	          'div',
 	          null,
@@ -42825,15 +42828,6 @@
 	              )
 	            );
 	          })
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { onClick: this.newAnswer },
-	          _react2.default.createElement(
-	            'u',
-	            null,
-	            'new answer'
-	          )
 	        )
 	      );
 	    }
@@ -42907,6 +42901,14 @@
 
 	var actionCreators = _interopRequireWildcard(_actionCreator);
 
+	var _uuid = __webpack_require__(349);
+
+	var _uuid2 = _interopRequireDefault(_uuid);
+
+	var _reactInputRange = __webpack_require__(358);
+
+	var _reactInputRange2 = _interopRequireDefault(_reactInputRange);
+
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -42918,6 +42920,8 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var shallowCompare = __webpack_require__(351);
+	//import Slider from 'rc-slider';
+	//require('rc-slider/assets/index.css');
 
 	var Considerations = function (_React$Component) {
 	  _inherits(Considerations, _React$Component);
@@ -42928,13 +42932,14 @@
 	    var _this = _possibleConstructorReturn(this, (Considerations.__proto__ || Object.getPrototypeOf(Considerations)).call(this, props));
 
 	    _this.state = {
-	      considerationText: ''
+	      considerationText: '',
+	      values: 0
 	    };
 
-	    _this.newConsideration = _this.newConsideration.bind(_this);
 	    _this.removeConsideration = _this.removeConsideration.bind(_this);
 	    _this.handleConsiderationChange = _this.handleConsiderationChange.bind(_this);
 	    _this.handleConsiderationSubmit = _this.handleConsiderationSubmit.bind(_this);
+	    _this.handleConsiderationValueChanged = _this.handleConsiderationValueChanged.bind(_this);
 	    return _this;
 	  }
 
@@ -42946,26 +42951,34 @@
 	  }, {
 	    key: 'handleConsiderationSubmit',
 	    value: function handleConsiderationSubmit(event) {
-	      //event.preventDefault();
-	      //this.props.newQuestionAction(this.state.questionText)
-	      //browserHistory.push('/some/path/123');
+	      event.preventDefault();
+	      var uid = _uuid2.default.v1();
+	      this.props.newConsiderationAction((0, _immutable.Map)({ title: this.state.considerationText, id: uid, score: 0 }), this.props.answer, this.props.question);
+	      this.state.considerationText = '';
 	    }
 	  }, {
 	    key: 'shouldComponentUpdate',
 	    value: function shouldComponentUpdate(nextProps, nextState) {
-	      return shallowCompare(this, nextProps, nextState);
-	    }
-	  }, {
-	    key: 'newConsideration',
-	    value: function newConsideration(event) {
-	      event.preventDefault();
-	      //this.props.newAnswer()
+	      return true; // shallowCompare(this, nextProps, nextState);
 	    }
 	  }, {
 	    key: 'removeConsideration',
 	    value: function removeConsideration(event) {
 	      event.preventDefault();
-	      //this.props.removeAnswerAction(event.currentTarget.dataset.id, this.props.question)
+	      this.props.removeConsiderationAction(event.currentTarget.dataset.id, this.props.answer, this.props.question);
+	    }
+	  }, {
+	    key: 'handleConsiderationValueChanged',
+	    value: function handleConsiderationValueChanged(id, val) {
+	      this.setState({
+	        values: val
+	      });
+	      /*
+	      alert('here')
+	      var consideration = this.props.answer.get('considerations').find( (c) => c.get('id') === id)
+	      var updatedConsideration = consideration.set('score', val)
+	      this.props.updateConsiderationAction(updatedConsideration, this.props.answer, this.props.question)
+	      */
 	    }
 	  }, {
 	    key: 'render',
@@ -43006,12 +43019,25 @@
 	                  'u',
 	                  null,
 	                  c.get('title')
-	                ),
-	                _react2.default.createElement(
-	                  'u',
-	                  { 'data-id': c.get('id'), onClick: _this2.removeConsideration },
-	                  'REMOVE'
 	                )
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                alert(c.get('score')),
+	                _react2.default.createElement(_reactInputRange2.default, {
+	                  maxValue: 20,
+	                  minValue: 0,
+	                  value: _this2.state.values,
+	                  onChange: _this2.handleConsiderationValueChanged
+	                }),
+	                '//',
+	                _react2.default.createElement(CustomizedSlider, { startVal: c.get('score'), afterChange: _this2.handleConsiderationValueChanged })
+	              ),
+	              _react2.default.createElement(
+	                'u',
+	                { 'data-id': c.get('id'), onClick: _this2.removeConsideration },
+	                'REMOVE'
 	              )
 	            );
 	          })
@@ -43022,6 +43048,41 @@
 
 	  return Considerations;
 	}(_react2.default.Component);
+
+	/*
+	class CustomizedSlider extends React.Component{
+
+	  constructor(props) {
+	    super(props)
+	    this.state = {
+	      value : this.props.startVal
+	    }
+
+	    alert('constructor = ' + this.props.startVal)
+
+	    this.onSliderChange = this.onSliderChange.bind(this)
+	    this.onAfterChange = this.onAfterChange.bind(this)
+	  }
+
+	  onSliderChange(value) {
+	    this.setState({
+	      value : value
+	    });
+	  }
+
+	  onAfterChange(value) {
+	      this.props.afterChange(value)
+	  }
+
+	  render() {
+	    return (
+	      <Slider value={this.state.value}
+	        onChange={this.onSliderChange} onAfterChange={this.onAfterChange}
+	      />
+	    );
+	  }
+	}
+	*/
 
 	function mapStateToProps(state) {
 	  return {
@@ -43063,6 +43124,1853 @@
 
 /***/ },
 /* 358 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * @module InputRange
+	 */
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _InputRange = __webpack_require__(359);
+
+	var _InputRange2 = _interopRequireDefault(_InputRange);
+
+	/**
+	 * An object describing the position of a point
+	 * @typedef {Object} Point
+	 * @property {number} x - x value
+	 * @property {number} y - y value
+	 */
+
+	/**
+	 * An object describing a range of values
+	 * @typedef {Object} Range
+	 * @property {number} min - Min value
+	 * @property {number} max - Max value
+	 */
+
+	exports['default'] = _InputRange2['default'];
+	module.exports = exports['default'];
+
+/***/ },
+/* 359 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * @module InputRange
+	 */
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(78);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Slider = __webpack_require__(360);
+
+	var _Slider2 = _interopRequireDefault(_Slider);
+
+	var _Track = __webpack_require__(363);
+
+	var _Track2 = _interopRequireDefault(_Track);
+
+	var _Label = __webpack_require__(361);
+
+	var _Label2 = _interopRequireDefault(_Label);
+
+	var _defaultClassNames = __webpack_require__(364);
+
+	var _defaultClassNames2 = _interopRequireDefault(_defaultClassNames);
+
+	var _valueTransformer = __webpack_require__(365);
+
+	var _valueTransformer2 = _interopRequireDefault(_valueTransformer);
+
+	var _util = __webpack_require__(362);
+
+	var _propTypes = __webpack_require__(366);
+
+	/**
+	 * A map for storing internal members
+	 * @const {WeakMap}
+	 */
+	var internals = new WeakMap();
+
+	/**
+	 * An object storing keyboard key codes
+	 * @const {Object.<string, number>}
+	 */
+	var KeyCode = {
+	  DOWN_ARROW: 40,
+	  LEFT_ARROW: 37,
+	  RIGHT_ARROW: 39,
+	  UP_ARROW: 38
+	};
+
+	/**
+	 * Check if values are within the max and min range of inputRange
+	 * @private
+	 * @param {InputRange} inputRange - React component
+	 * @param {Range} values - Min/max value of sliders
+	 * @return {boolean} True if within range
+	 */
+	function isWithinRange(inputRange, values) {
+	  var props = inputRange.props;
+
+	  if (inputRange.isMultiValue) {
+	    return values.min >= props.minValue && values.max <= props.maxValue && values.min < values.max;
+	  }
+
+	  return values.max >= props.minValue && values.max <= props.maxValue;
+	}
+
+	/**
+	 * Check if the difference between values and the current values of inputRange
+	 * is greater or equal to its step amount
+	 * @private
+	 * @param {InputRange} inputRange - React component
+	 * @param {Range} values - Min/max value of sliders
+	 * @return {boolean} True if difference is greater or equal to step amount
+	 */
+	function hasStepDifference(inputRange, values) {
+	  var props = inputRange.props;
+
+	  var currentValues = _valueTransformer2['default'].valuesFromProps(inputRange);
+
+	  return (0, _util.length)(values.min, currentValues.min) >= props.step || (0, _util.length)(values.max, currentValues.max) >= props.step;
+	}
+
+	/**
+	 * Check if inputRange should update with new values
+	 * @private
+	 * @param {InputRange} inputRange - React component
+	 * @param {Range} values - Min/max value of sliders
+	 * @return {boolean} True if inputRange should update
+	 */
+	function shouldUpdate(inputRange, values) {
+	  return isWithinRange(inputRange, values) && hasStepDifference(inputRange, values);
+	}
+
+	/**
+	 * Get the owner document of inputRange
+	 * @private
+	 * @param {InputRange} inputRange - React component
+	 * @return {Document} Document
+	 */
+	function getDocument(inputRange) {
+	  var ownerDocument = inputRange.refs.inputRange.ownerDocument;
+
+	  return ownerDocument;
+	}
+
+	/**
+	 * Get the class name(s) of inputRange based on its props
+	 * @private
+	 * @param {InputRange} inputRange - React component
+	 * @return {string} A list of class names delimited with spaces
+	 */
+	function getComponentClassName(inputRange) {
+	  var props = inputRange.props;
+
+	  if (!props.disabled) {
+	    return props.classNames.component;
+	  }
+
+	  return props.classNames.component + ' is-disabled';
+	}
+
+	/**
+	 * Get the key name of a slider
+	 * @private
+	 * @param {InputRange} inputRange - React component
+	 * @param {Slider} slider - React component
+	 * @return {string} Key name
+	 */
+	function getKeyFromSlider(inputRange, slider) {
+	  if (slider === inputRange.refs.sliderMin) {
+	    return 'min';
+	  }
+
+	  return 'max';
+	}
+
+	/**
+	 * Get all slider keys of inputRange
+	 * @private
+	 * @param {InputRange} inputRange - React component
+	 * @return {Array.<string>} Key names
+	 */
+	function getKeys(inputRange) {
+	  if (inputRange.isMultiValue) {
+	    return ['min', 'max'];
+	  }
+
+	  return ['max'];
+	}
+
+	/**
+	 * Get the key name of a slider that's the closest to a point
+	 * @private
+	 * @param {InputRange} inputRange - React component
+	 * @param {Point} position - x/y
+	 * @return {string} Key name
+	 */
+	function getKeyByPosition(inputRange, position) {
+	  var values = _valueTransformer2['default'].valuesFromProps(inputRange);
+	  var positions = _valueTransformer2['default'].positionsFromValues(inputRange, values);
+
+	  if (inputRange.isMultiValue) {
+	    var distanceToMin = (0, _util.distanceTo)(position, positions.min);
+	    var distanceToMax = (0, _util.distanceTo)(position, positions.max);
+
+	    if (distanceToMin < distanceToMax) {
+	      return 'min';
+	    }
+	  }
+
+	  return 'max';
+	}
+
+	/**
+	 * Get an array of slider HTML for rendering
+	 * @private
+	 * @param {InputRange} inputRange - React component
+	 * @return {Array.<string>} Array of HTML
+	 */
+	function renderSliders(inputRange) {
+	  var classNames = inputRange.props.classNames;
+
+	  var sliders = [];
+	  var keys = getKeys(inputRange);
+	  var values = _valueTransformer2['default'].valuesFromProps(inputRange);
+	  var percentages = _valueTransformer2['default'].percentagesFromValues(inputRange, values);
+
+	  var _iteratorNormalCompletion = true;
+	  var _didIteratorError = false;
+	  var _iteratorError = undefined;
+
+	  try {
+	    for (var _iterator = keys[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	      var key = _step.value;
+
+	      var value = values[key];
+	      var percentage = percentages[key];
+	      var ref = 'slider' + (0, _util.captialize)(key);
+
+	      var _inputRange$props = inputRange.props;
+	      var maxValue = _inputRange$props.maxValue;
+	      var minValue = _inputRange$props.minValue;
+
+	      if (key === 'min') {
+	        maxValue = values.max;
+	      } else {
+	        minValue = values.min;
+	      }
+
+	      var slider = _react2['default'].createElement(_Slider2['default'], {
+	        ariaLabelledby: inputRange.props.ariaLabelledby,
+	        ariaControls: inputRange.props.ariaControls,
+	        classNames: classNames,
+	        formatLabel: inputRange.formatLabel,
+	        key: key,
+	        maxValue: maxValue,
+	        minValue: minValue,
+	        onSliderKeyDown: inputRange.handleSliderKeyDown,
+	        onSliderMouseMove: inputRange.handleSliderMouseMove,
+	        percentage: percentage,
+	        ref: ref,
+	        type: key,
+	        value: value });
+
+	      sliders.push(slider);
+	    }
+	  } catch (err) {
+	    _didIteratorError = true;
+	    _iteratorError = err;
+	  } finally {
+	    try {
+	      if (!_iteratorNormalCompletion && _iterator['return']) {
+	        _iterator['return']();
+	      }
+	    } finally {
+	      if (_didIteratorError) {
+	        throw _iteratorError;
+	      }
+	    }
+	  }
+
+	  return sliders;
+	}
+
+	/**
+	 * Get an array of hidden input HTML for rendering
+	 * @private
+	 * @param {InputRange} inputRange - React component
+	 * @return {Array.<string>} Array of HTML
+	 */
+	function renderHiddenInputs(inputRange) {
+	  var inputs = [];
+	  var keys = getKeys(inputRange);
+
+	  var _iteratorNormalCompletion2 = true;
+	  var _didIteratorError2 = false;
+	  var _iteratorError2 = undefined;
+
+	  try {
+	    for (var _iterator2 = keys[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	      var key = _step2.value;
+
+	      var _name = inputRange.isMultiValue ? '' + inputRange.props.name + (0, _util.captialize)(key) : inputRange.props.name;
+
+	      var input = _react2['default'].createElement('input', { type: 'hidden', name: _name });
+	    }
+	  } catch (err) {
+	    _didIteratorError2 = true;
+	    _iteratorError2 = err;
+	  } finally {
+	    try {
+	      if (!_iteratorNormalCompletion2 && _iterator2['return']) {
+	        _iterator2['return']();
+	      }
+	    } finally {
+	      if (_didIteratorError2) {
+	        throw _iteratorError2;
+	      }
+	    }
+	  }
+
+	  return inputs;
+	}
+
+	/**
+	 * InputRange React component
+	 * @class
+	 * @extends React.Component
+	 * @param {Object} props - React component props
+	 */
+
+	var InputRange = (function (_React$Component) {
+	  _inherits(InputRange, _React$Component);
+
+	  function InputRange(props) {
+	    _classCallCheck(this, InputRange);
+
+	    _get(Object.getPrototypeOf(InputRange.prototype), 'constructor', this).call(this, props);
+
+	    // Private
+	    internals.set(this, {});
+
+	    // Auto-bind
+	    (0, _util.autobind)(['formatLabel', 'handleInteractionEnd', 'handleInteractionStart', 'handleKeyDown', 'handleKeyUp', 'handleMouseDown', 'handleMouseUp', 'handleSliderKeyDown', 'handleSliderMouseMove', 'handleTouchStart', 'handleTouchEnd', 'handleTrackMouseDown'], this);
+	  }
+
+	  /**
+	   * Accepted propTypes of InputRange
+	   * @static {Object}
+	   * @property {Function} ariaLabelledby
+	   * @property {Function} ariaControls
+	   * @property {Function} classNames
+	   * @property {Function} defaultValue
+	   * @property {Function} disabled
+	   * @property {Function} formatLabel
+	   * @property {Function} labelPrefix
+	   * @property {Function} labelSuffix
+	   * @property {Function} maxValue
+	   * @property {Function} minValue
+	   * @property {Function} name
+	   * @property {Function} onChange
+	   * @property {Function} onChangeComplete
+	   * @property {Function} step
+	   * @property {Function} value
+	   */
+
+	  /**
+	   * Return the clientRect of the component's track
+	   * @member {ClientRect}
+	   */
+
+	  _createClass(InputRange, [{
+	    key: 'updatePosition',
+
+	    /**
+	     * Update the position of a slider by key
+	     * @param {string} key - min/max
+	     * @param {Point} position x/y
+	     */
+	    value: function updatePosition(key, position) {
+	      var values = _valueTransformer2['default'].valuesFromProps(this);
+	      var positions = _valueTransformer2['default'].positionsFromValues(this, values);
+
+	      positions[key] = position;
+
+	      this.updatePositions(positions);
+	    }
+
+	    /**
+	     * Update the position of sliders
+	     * @param {Object} positions
+	     * @param {Point} positions.min
+	     * @param {Point} positions.max
+	     */
+	  }, {
+	    key: 'updatePositions',
+	    value: function updatePositions(positions) {
+	      var values = {
+	        min: _valueTransformer2['default'].valueFromPosition(this, positions.min),
+	        max: _valueTransformer2['default'].valueFromPosition(this, positions.max)
+	      };
+
+	      var transformedValues = {
+	        min: _valueTransformer2['default'].stepValueFromValue(this, values.min),
+	        max: _valueTransformer2['default'].stepValueFromValue(this, values.max)
+	      };
+
+	      this.updateValues(transformedValues);
+	    }
+
+	    /**
+	     * Update the value of a slider by key
+	     * @param {string} key - max/min
+	     * @param {number} value - New value
+	     */
+	  }, {
+	    key: 'updateValue',
+	    value: function updateValue(key, value) {
+	      var values = _valueTransformer2['default'].valuesFromProps(this);
+
+	      values[key] = value;
+
+	      this.updateValues(values);
+	    }
+
+	    /**
+	     * Update the values of all sliders
+	     * @param {Object|number} values - Object if multi-value, number if single-value
+	     */
+	  }, {
+	    key: 'updateValues',
+	    value: function updateValues(values) {
+	      if (!shouldUpdate(this, values)) {
+	        return;
+	      }
+
+	      if (this.isMultiValue) {
+	        this.props.onChange(this, values);
+	      } else {
+	        this.props.onChange(this, values.max);
+	      }
+	    }
+
+	    /**
+	     * Increment the value of a slider by key name
+	     * @param {string} key - max/min
+	     */
+	  }, {
+	    key: 'incrementValue',
+	    value: function incrementValue(key) {
+	      var values = _valueTransformer2['default'].valuesFromProps(this);
+	      var value = values[key] + this.props.step;
+
+	      this.updateValue(key, value);
+	    }
+
+	    /**
+	     * Decrement the value of a slider by key name
+	     * @param {string} key - max/min
+	     */
+	  }, {
+	    key: 'decrementValue',
+	    value: function decrementValue(key) {
+	      var values = _valueTransformer2['default'].valuesFromProps(this);
+	      var value = values[key] - this.props.step;
+
+	      this.updateValue(key, value);
+	    }
+
+	    /**
+	     * Format label
+	     * @param {number} labelValue - Label value
+	     * @return {string} Formatted label value
+	     */
+	  }, {
+	    key: 'formatLabel',
+	    value: function formatLabel(labelValue) {
+	      var _props = this.props;
+	      var formatLabel = _props.formatLabel;
+	      var labelPrefix = _props.labelPrefix;
+	      var labelSuffix = _props.labelSuffix;
+
+	      if (formatLabel) {
+	        return formatLabel(labelValue, { labelPrefix: labelPrefix, labelSuffix: labelSuffix });
+	      }
+
+	      return '' + labelPrefix + labelValue + labelSuffix;
+	    }
+
+	    /**
+	     * Handle any mousemove event received by the slider
+	     * @param {SyntheticEvent} event - User event
+	     * @param {Slider} slider - React component
+	     */
+	  }, {
+	    key: 'handleSliderMouseMove',
+	    value: function handleSliderMouseMove(event, slider) {
+	      if (this.props.disabled) {
+	        return;
+	      }
+
+	      var key = getKeyFromSlider(this, slider);
+	      var position = _valueTransformer2['default'].positionFromEvent(this, event);
+
+	      this.updatePosition(key, position);
+	    }
+
+	    /**
+	     * Handle any keydown event received by the slider
+	     * @param {SyntheticEvent} event - User event
+	     * @param {Slider} slider - React component
+	     */
+	  }, {
+	    key: 'handleSliderKeyDown',
+	    value: function handleSliderKeyDown(event, slider) {
+	      if (this.props.disabled) {
+	        return;
+	      }
+
+	      var key = getKeyFromSlider(this, slider);
+
+	      switch (event.keyCode) {
+	        case KeyCode.LEFT_ARROW:
+	        case KeyCode.DOWN_ARROW:
+	          event.preventDefault();
+	          this.decrementValue(key);
+	          break;
+
+	        case KeyCode.RIGHT_ARROW:
+	        case KeyCode.UP_ARROW:
+	          event.preventDefault();
+	          this.incrementValue(key);
+	          break;
+
+	        default:
+	          break;
+	      }
+	    }
+
+	    /**
+	     * Handle any mousedown event received by the track
+	     * @param {SyntheticEvent} event - User event
+	     * @param {Slider} slider - React component
+	     * @param {Point} position - Mousedown position
+	     */
+	  }, {
+	    key: 'handleTrackMouseDown',
+	    value: function handleTrackMouseDown(event, track, position) {
+	      if (this.props.disabled) {
+	        return;
+	      }
+
+	      event.preventDefault();
+
+	      var key = getKeyByPosition(this, position);
+
+	      this.updatePosition(key, position);
+	    }
+
+	    /**
+	     * Handle the start of any user-triggered event
+	     * @param {SyntheticEvent} event - User event
+	     */
+	  }, {
+	    key: 'handleInteractionStart',
+	    value: function handleInteractionStart() {
+	      var _this = internals.get(this);
+
+	      if (!this.props.onChangeComplete || (0, _util.isDefined)(_this.startValue)) {
+	        return;
+	      }
+
+	      _this.startValue = this.props.value || this.props.defaultValue;
+	    }
+
+	    /**
+	     * Handle the end of any user-triggered event
+	     * @param {SyntheticEvent} event - User event
+	     */
+	  }, {
+	    key: 'handleInteractionEnd',
+	    value: function handleInteractionEnd() {
+	      var _this = internals.get(this);
+
+	      if (!this.props.onChangeComplete || !(0, _util.isDefined)(_this.startValue)) {
+	        return;
+	      }
+
+	      if (_this.startValue !== this.props.value) {
+	        this.props.onChangeComplete(this, this.props.value);
+	      }
+
+	      _this.startValue = null;
+	    }
+
+	    /**
+	     * Handle any keydown event received by the component
+	     * @param {SyntheticEvent} event - User event
+	     */
+	  }, {
+	    key: 'handleKeyDown',
+	    value: function handleKeyDown(event) {
+	      this.handleInteractionStart(event);
+	    }
+
+	    /**
+	     * Handle any keyup event received by the component
+	     * @param {SyntheticEvent} event - User event
+	     */
+	  }, {
+	    key: 'handleKeyUp',
+	    value: function handleKeyUp(event) {
+	      this.handleInteractionEnd(event);
+	    }
+
+	    /**
+	     * Handle any mousedown event received by the component
+	     * @param {SyntheticEvent} event - User event
+	     */
+	  }, {
+	    key: 'handleMouseDown',
+	    value: function handleMouseDown(event) {
+	      var document = getDocument(this);
+
+	      this.handleInteractionStart(event);
+
+	      document.addEventListener('mouseup', this.handleMouseUp);
+	    }
+
+	    /**
+	     * Handle any mouseup event received by the component
+	     * @param {SyntheticEvent} event - User event
+	     */
+	  }, {
+	    key: 'handleMouseUp',
+	    value: function handleMouseUp(event) {
+	      var document = getDocument(this);
+
+	      this.handleInteractionEnd(event);
+
+	      document.removeEventListener('mouseup', this.handleMouseUp);
+	    }
+
+	    /**
+	     * Handle any touchstart event received by the component
+	     * @param {SyntheticEvent} event - User event
+	     */
+	  }, {
+	    key: 'handleTouchStart',
+	    value: function handleTouchStart(event) {
+	      var document = getDocument(this);
+
+	      this.handleInteractionStart(event);
+
+	      document.addEventListener('touchend', this.handleTouchEnd);
+	    }
+
+	    /**
+	     * Handle any touchend event received by the component
+	     * @param {SyntheticEvent} event - User event
+	     */
+	  }, {
+	    key: 'handleTouchEnd',
+	    value: function handleTouchEnd(event) {
+	      var document = getDocument(this);
+
+	      this.handleInteractionEnd(event);
+
+	      document.removeEventListener('touchend', this.handleTouchEnd);
+	    }
+
+	    /**
+	     * Render method of the component
+	     * @return {string} Component JSX
+	     */
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var classNames = this.props.classNames;
+
+	      var componentClassName = getComponentClassName(this);
+	      var values = _valueTransformer2['default'].valuesFromProps(this);
+	      var percentages = _valueTransformer2['default'].percentagesFromValues(this, values);
+
+	      return _react2['default'].createElement(
+	        'div',
+	        {
+	          'aria-disabled': this.props.disabled,
+	          ref: 'inputRange',
+	          className: componentClassName,
+	          onKeyDown: this.handleKeyDown,
+	          onKeyUp: this.handleKeyUp,
+	          onMouseDown: this.handleMouseDown,
+	          onTouchStart: this.handleTouchStart },
+	        _react2['default'].createElement(
+	          _Label2['default'],
+	          {
+	            className: classNames.labelMin,
+	            containerClassName: classNames.labelContainer,
+	            formatLabel: this.formatLabel },
+	          this.props.minValue
+	        ),
+	        _react2['default'].createElement(
+	          _Track2['default'],
+	          {
+	            classNames: classNames,
+	            ref: 'track',
+	            percentages: percentages,
+	            onTrackMouseDown: this.handleTrackMouseDown },
+	          renderSliders(this)
+	        ),
+	        _react2['default'].createElement(
+	          _Label2['default'],
+	          {
+	            className: classNames.labelMax,
+	            containerClassName: classNames.labelContainer,
+	            formatLabel: this.formatLabel },
+	          this.props.maxValue
+	        ),
+	        renderHiddenInputs(this)
+	      );
+	    }
+	  }, {
+	    key: 'trackClientRect',
+	    get: function get() {
+	      var track = this.refs.track;
+
+	      if (track) {
+	        return track.clientRect;
+	      }
+
+	      return {
+	        height: 0,
+	        left: 0,
+	        top: 0,
+	        width: 0
+	      };
+	    }
+
+	    /**
+	     * Return true if the component accepts a range of values
+	     * @member {boolean}
+	     */
+	  }, {
+	    key: 'isMultiValue',
+	    get: function get() {
+	      return (0, _util.isObject)(this.props.value) || (0, _util.isObject)(this.props.defaultValue);
+	    }
+	  }]);
+
+	  return InputRange;
+	})(_react2['default'].Component);
+
+	exports['default'] = InputRange;
+	InputRange.propTypes = {
+	  ariaLabelledby: _react2['default'].PropTypes.string,
+	  ariaControls: _react2['default'].PropTypes.string,
+	  classNames: _react2['default'].PropTypes.objectOf(_react2['default'].PropTypes.string),
+	  defaultValue: _propTypes.maxMinValuePropType,
+	  disabled: _react2['default'].PropTypes.bool,
+	  formatLabel: _react2['default'].PropTypes.func,
+	  labelPrefix: _react2['default'].PropTypes.string,
+	  labelSuffix: _react2['default'].PropTypes.string,
+	  maxValue: _propTypes.maxMinValuePropType,
+	  minValue: _propTypes.maxMinValuePropType,
+	  name: _react2['default'].PropTypes.string,
+	  onChange: _react2['default'].PropTypes.func.isRequired,
+	  onChangeComplete: _react2['default'].PropTypes.func,
+	  step: _react2['default'].PropTypes.number,
+	  value: _propTypes.maxMinValuePropType
+	};
+
+	/**
+	 * Default props of InputRange
+	 * @static {Object}
+	 * @property {Object.<string, string>} defaultClassNames
+	 * @property {Range|number} defaultValue
+	 * @property {boolean} disabled
+	 * @property {string} labelPrefix
+	 * @property {string} labelSuffix
+	 * @property {number} maxValue
+	 * @property {number} minValue
+	 * @property {number} step
+	 * @property {Range|number} value
+	 */
+	InputRange.defaultProps = {
+	  classNames: _defaultClassNames2['default'],
+	  defaultValue: 0,
+	  disabled: false,
+	  labelPrefix: '',
+	  labelSuffix: '',
+	  maxValue: 10,
+	  minValue: 0,
+	  step: 1,
+	  value: null
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 360 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * @module InputRange/Slider
+	 */
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(78);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Label = __webpack_require__(361);
+
+	var _Label2 = _interopRequireDefault(_Label);
+
+	var _util = __webpack_require__(362);
+
+	/**
+	 * Get the owner document of slider
+	 * @private
+	 * @param {Slider} slider - React component
+	 * @return {Document} Document
+	 */
+	function getDocument(slider) {
+	  var ownerDocument = slider.refs.slider.ownerDocument;
+
+	  return ownerDocument;
+	}
+
+	/**
+	 * Get the style of slider based on its props
+	 * @private
+	 * @param {Slider} slider - React component
+	 * @return {Object} CSS styles
+	 */
+	function getStyle(slider) {
+	  var perc = (slider.props.percentage || 0) * 100;
+	  var style = {
+	    position: 'absolute',
+	    left: perc + '%'
+	  };
+
+	  return style;
+	}
+
+	/**
+	 * Slider React component
+	 * @class
+	 * @extends React.Component
+	 * @param {Object} props - React component props
+	 */
+
+	var Slider = (function (_React$Component) {
+	  _inherits(Slider, _React$Component);
+
+	  function Slider(props) {
+	    _classCallCheck(this, Slider);
+
+	    _get(Object.getPrototypeOf(Slider.prototype), 'constructor', this).call(this, props);
+
+	    // Auto-bind
+	    (0, _util.autobind)(['handleClick', 'handleMouseDown', 'handleMouseUp', 'handleMouseMove', 'handleTouchStart', 'handleTouchEnd', 'handleTouchMove', 'handleKeyDown'], this);
+	  }
+
+	  /**
+	   * Accepted propTypes of Slider
+	   * @static {Object}
+	   * @property {Function} ariaLabelledby
+	   * @property {Function} ariaControls
+	   * @property {Function} className
+	   * @property {Function} formatLabel
+	   * @property {Function} maxValue
+	   * @property {Function} minValue
+	   * @property {Function} onSliderKeyDown
+	   * @property {Function} onSliderMouseMove
+	   * @property {Function} percentage
+	   * @property {Function} type
+	   * @property {Function} value
+	   */
+
+	  /**
+	   * Handle any click event received by the component
+	   * @param {SyntheticEvent} event - User event
+	   */
+
+	  _createClass(Slider, [{
+	    key: 'handleClick',
+	    value: function handleClick(event) {
+	      event.preventDefault();
+	    }
+
+	    /**
+	     * Handle any mousedown event received by the component
+	     * @param {SyntheticEvent} event - User event
+	     */
+	  }, {
+	    key: 'handleMouseDown',
+	    value: function handleMouseDown() {
+	      var document = getDocument(this);
+
+	      // Event
+	      document.addEventListener('mousemove', this.handleMouseMove);
+	      document.addEventListener('mouseup', this.handleMouseUp);
+	    }
+
+	    /**
+	     * Handle any mouseup event received by the component
+	     * @param {SyntheticEvent} event - User event
+	     */
+	  }, {
+	    key: 'handleMouseUp',
+	    value: function handleMouseUp() {
+	      var document = getDocument(this);
+
+	      // Event
+	      document.removeEventListener('mousemove', this.handleMouseMove);
+	      document.removeEventListener('mouseup', this.handleMouseUp);
+	    }
+
+	    /**
+	     * Handle any mousemove event received by the component
+	     * @param {SyntheticEvent} event - User event
+	     */
+	  }, {
+	    key: 'handleMouseMove',
+	    value: function handleMouseMove(event) {
+	      this.props.onSliderMouseMove(event, this);
+	    }
+
+	    /**
+	     * Handle any touchstart event received by the component
+	     * @param {SyntheticEvent} event - User event
+	     */
+	  }, {
+	    key: 'handleTouchStart',
+	    value: function handleTouchStart(event) {
+	      var document = getDocument(this);
+
+	      event.preventDefault();
+
+	      document.addEventListener('touchmove', this.handleTouchMove);
+	      document.addEventListener('touchend', this.handleTouchEnd);
+	    }
+
+	    /**
+	     * Handle any touchmove event received by the component
+	     * @param {SyntheticEvent} event - User event
+	     */
+	  }, {
+	    key: 'handleTouchMove',
+	    value: function handleTouchMove(event) {
+	      this.props.onSliderMouseMove(event, this);
+	    }
+
+	    /**
+	     * Handle any touchend event received by the component
+	     * @param {SyntheticEvent} event - User event
+	     */
+	  }, {
+	    key: 'handleTouchEnd',
+	    value: function handleTouchEnd(event) {
+	      var document = getDocument(this);
+
+	      event.preventDefault();
+
+	      document.removeEventListener('touchmove', this.handleTouchMove);
+	      document.removeEventListener('touchend', this.handleTouchEnd);
+	    }
+
+	    /**
+	     * Handle any keydown event received by the component
+	     * @param {SyntheticEvent} event - User event
+	     */
+	  }, {
+	    key: 'handleKeyDown',
+	    value: function handleKeyDown(event) {
+	      this.props.onSliderKeyDown(event, this);
+	    }
+
+	    /**
+	     * Render method of the component
+	     * @return {string} Component JSX
+	     */
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var classNames = this.props.classNames;
+	      var style = getStyle(this);
+
+	      return _react2['default'].createElement(
+	        'span',
+	        {
+	          className: classNames.sliderContainer,
+	          ref: 'slider',
+	          style: style },
+	        _react2['default'].createElement(
+	          _Label2['default'],
+	          {
+	            className: classNames.labelValue,
+	            containerClassName: classNames.labelContainer,
+	            formatLabel: this.props.formatLabel },
+	          this.props.value
+	        ),
+	        _react2['default'].createElement('a', {
+	          'aria-labelledby': this.props.ariaLabelledby,
+	          'aria-controls': this.props.ariaControls,
+	          'aria-valuemax': this.props.maxValue,
+	          'aria-valuemin': this.props.minValue,
+	          'aria-valuenow': this.props.formatLabel ? this.props.formatLabel(this.props.value) : this.props.value,
+	          className: classNames.slider,
+	          draggable: 'false',
+	          href: '#',
+	          onClick: this.handleClick,
+	          onKeyDown: this.handleKeyDown,
+	          onMouseDown: this.handleMouseDown,
+	          onTouchStart: this.handleTouchStart,
+	          role: 'slider' })
+	      );
+	    }
+	  }]);
+
+	  return Slider;
+	})(_react2['default'].Component);
+
+	exports['default'] = Slider;
+	Slider.propTypes = {
+	  ariaLabelledby: _react2['default'].PropTypes.string,
+	  ariaControls: _react2['default'].PropTypes.string,
+	  classNames: _react2['default'].PropTypes.objectOf(_react2['default'].PropTypes.string),
+	  formatLabel: _react2['default'].PropTypes.func,
+	  maxValue: _react2['default'].PropTypes.number,
+	  minValue: _react2['default'].PropTypes.number,
+	  onSliderKeyDown: _react2['default'].PropTypes.func.isRequired,
+	  onSliderMouseMove: _react2['default'].PropTypes.func.isRequired,
+	  percentage: _react2['default'].PropTypes.number.isRequired,
+	  type: _react2['default'].PropTypes.string.isRequired,
+	  value: _react2['default'].PropTypes.number.isRequired
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 361 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * @module InputRange/Label
+	 */
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(78);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	/**
+	 * Label React component
+	 * @class
+	 * @extends React.Component
+	 * @param {Object} props - React component props
+	 */
+
+	var Label = (function (_React$Component) {
+	  _inherits(Label, _React$Component);
+
+	  function Label() {
+	    _classCallCheck(this, Label);
+
+	    _get(Object.getPrototypeOf(Label.prototype), 'constructor', this).apply(this, arguments);
+	  }
+
+	  /**
+	   * Accepted propTypes of Label
+	   * @static {Object}
+	   * @property {Function} children
+	   * @property {Function} className
+	   * @property {Function} containerClassName
+	   * @property {Function} formatLabel
+	   */
+
+	  _createClass(Label, [{
+	    key: 'render',
+
+	    /**
+	     * Render method of the component
+	     * @return {string} Component JSX
+	     */
+	    value: function render() {
+	      var _props = this.props;
+	      var className = _props.className;
+	      var containerClassName = _props.containerClassName;
+
+	      var labelValue = this.props.formatLabel ? this.props.formatLabel(this.props.children) : this.props.children;
+
+	      return _react2['default'].createElement(
+	        'span',
+	        { className: className },
+	        _react2['default'].createElement(
+	          'span',
+	          { className: containerClassName },
+	          labelValue
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Label;
+	})(_react2['default'].Component);
+
+	exports['default'] = Label;
+	Label.propTypes = {
+	  children: _react2['default'].PropTypes.node,
+	  className: _react2['default'].PropTypes.string,
+	  containerClassName: _react2['default'].PropTypes.string,
+	  formatLabel: _react2['default'].PropTypes.func
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 362 */
+/***/ function(module, exports) {
+
+	/**
+	 * @module InputRange/util
+	 */
+
+	/**
+	 * @callback predicateFn
+	 * @param {*} value
+	 * @return {boolean}
+	 */
+
+	/**
+	 * Clamp a value between a min and max value
+	 * @static
+	 * @param {number} value
+	 * @param {number} min
+	 * @param {number} max
+	 * @return {number}
+	 */
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports.clamp = clamp;
+	exports.extend = extend;
+	exports.includes = includes;
+	exports.omit = omit;
+	exports.captialize = captialize;
+	exports.distanceTo = distanceTo;
+	exports.length = length;
+	exports.isNumber = isNumber;
+	exports.isObject = isObject;
+	exports.isDefined = isDefined;
+	exports.isEmpty = isEmpty;
+	exports.arrayOf = arrayOf;
+	exports.objectOf = objectOf;
+	exports.autobind = autobind;
+
+	function clamp(value, min, max) {
+	  return Math.min(Math.max(value, min), max);
+	}
+
+	/**
+	 * Extend an Object
+	 * @static
+	 * @param {Object} object - Destination object
+	 * @param {...Object} sources - Source objects
+	 * @return {Object} Destination object, extended with members from sources
+	 */
+
+	function extend() {
+	  return Object.assign.apply(Object, arguments);
+	}
+
+	/**
+	 * Check if a value is included in an array
+	 * @static
+	 * @param {Array} array
+	 * @param {number} value
+	 * @return {boolean}
+	 */
+
+	function includes(array, value) {
+	  return array.indexOf(value) > -1;
+	}
+
+	/**
+	 * Return a new object without the specified keys
+	 * @static
+	 * @param {Object} obj
+	 * @param {Array.<string>} omitKeys
+	 * @return {Object}
+	 */
+
+	function omit(obj, omitKeys) {
+	  var keys = Object.keys(obj);
+	  var outputObj = {};
+
+	  keys.forEach(function (key) {
+	    if (!includes(omitKeys, key)) {
+	      outputObj[key] = obj[key];
+	    }
+	  });
+
+	  return outputObj;
+	}
+
+	/**
+	 * Captialize a string
+	 * @static
+	 * @param {string} string
+	 * @return {string}
+	 */
+
+	function captialize(string) {
+	  return string.charAt(0).toUpperCase() + string.slice(1);
+	}
+
+	/**
+	 * Calculate the distance between pointA and pointB
+	 * @static
+	 * @param {Point} pointA
+	 * @param {Point} pointB
+	 * @return {number} Distance
+	 */
+
+	function distanceTo(pointA, pointB) {
+	  return Math.sqrt(Math.pow(pointB.x - pointA.x, 2) + Math.pow(pointB.y - pointA.y, 2));
+	}
+
+	/**
+	 * Calculate the absolute difference between two numbers
+	 * @static
+	 * @param {number} numA
+	 * @param {number} numB
+	 * @return {number}
+	 */
+
+	function length(numA, numB) {
+	  return Math.abs(numA - numB);
+	}
+
+	/**
+	 * Check if a value is a number
+	 * @static
+	 * @param {*} value
+	 * @return {Boolean}
+	 */
+
+	function isNumber(value) {
+	  return typeof value === 'number';
+	}
+
+	/**
+	 * Check if a value is an object
+	 * @static
+	 * @param {*} value
+	 * @return {Boolean}
+	 */
+
+	function isObject(value) {
+	  return value !== null && typeof value === 'object';
+	}
+
+	/**
+	 * Check if a value is defined
+	 * @static
+	 * @param {*} value
+	 * @return {Boolean}
+	 */
+
+	function isDefined(value) {
+	  return value !== undefined && value !== null;
+	}
+
+	/**
+	 * Check if an object is empty
+	 * @static
+	 * @param {Object|Array} obj
+	 * @return {Boolean}
+	 */
+
+	function isEmpty(obj) {
+	  if (!obj) {
+	    return true;
+	  }
+
+	  if (Array.isArray(obj)) {
+	    return obj.length === 0;
+	  }
+
+	  return Object.keys(obj).length === 0;
+	}
+
+	/**
+	 * Check if all items in an array match a predicate
+	 * @static
+	 * @param {Array} array
+	 * @param {predicateFn} predicate
+	 * @return {Boolean}
+	 */
+
+	function arrayOf(array, predicate) {
+	  if (!Array.isArray(array)) {
+	    return false;
+	  }
+
+	  for (var i = 0, len = array.length; i < len; i++) {
+	    if (!predicate(array[i])) {
+	      return false;
+	    }
+	  }
+
+	  return true;
+	}
+
+	/**
+	 * Check if all items in an object match a predicate
+	 * @static
+	 * @param {Object} object
+	 * @param {predicateFn} predicate
+	 * @param {Array.<string>} keys
+	 * @return {Boolean}
+	 */
+
+	function objectOf(object, predicate, keys) {
+	  if (!isObject(object)) {
+	    return false;
+	  }
+
+	  var props = keys || Object.keys(object);
+
+	  for (var i = 0, len = props.length; i < len; i++) {
+	    var prop = props[i];
+
+	    if (!predicate(object[prop])) {
+	      return false;
+	    }
+	  }
+
+	  return true;
+	}
+
+	/**
+	 * Bind all methods of an object to itself
+	 * @static
+	 * @param {Array.<Function>} methodNames
+	 * @param {Object} instance
+	 */
+
+	function autobind(methodNames, instance) {
+	  methodNames.forEach(function (methodName) {
+	    instance[methodName] = instance[methodName].bind(instance);
+	  });
+	}
+
+/***/ },
+/* 363 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * @module InputRange/Track
+	 */
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(78);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _util = __webpack_require__(362);
+
+	/**
+	 * Get the CSS styles for an active track
+	 * @private
+	 * @param {Track} track React component
+	 * @return {Object} CSS styles
+	 */
+	function getActiveTrackStyle(track) {
+	  var props = track.props;
+
+	  var width = (props.percentages.max - props.percentages.min) * 100 + '%';
+	  var left = props.percentages.min * 100 + '%';
+
+	  var activeTrackStyle = {
+	    left: left,
+	    width: width
+	  };
+
+	  return activeTrackStyle;
+	}
+
+	/**
+	 * Track React component
+	 * @class
+	 * @extends React.Component
+	 * @param {Object} props - React component props
+	 */
+
+	var Track = (function (_React$Component) {
+	  _inherits(Track, _React$Component);
+
+	  function Track(props) {
+	    _classCallCheck(this, Track);
+
+	    _get(Object.getPrototypeOf(Track.prototype), 'constructor', this).call(this, props);
+
+	    // Auto-bind
+	    (0, _util.autobind)(['handleMouseDown', 'handleTouchStart'], this);
+	  }
+
+	  /**
+	   * Accepted propTypes of Track
+	   * @static {Object}
+	   * @property {Function} children
+	   * @property {Function} classNames
+	   * @property {Function} onTrackMouseDown
+	   * @property {Function} percentages
+	   */
+
+	  /**
+	   * Return the clientRect of the component
+	   * @member {ClientRect}
+	   */
+
+	  _createClass(Track, [{
+	    key: 'handleMouseDown',
+
+	    /**
+	     * Handle any mousedown event received by the component
+	     * @param {SyntheticEvent} event - User event
+	     */
+	    value: function handleMouseDown(event) {
+	      var trackClientRect = this.clientRect;
+
+	      var _ref = event.touches ? event.touches[0] : event;
+
+	      var clientX = _ref.clientX;
+
+	      var position = {
+	        x: clientX - trackClientRect.left,
+	        y: 0
+	      };
+
+	      this.props.onTrackMouseDown(event, this, position);
+	    }
+
+	    /**
+	     * Handle any touchstart event received by the component
+	     * @param {SyntheticEvent} event - User event
+	     */
+	  }, {
+	    key: 'handleTouchStart',
+	    value: function handleTouchStart(event) {
+	      event.preventDefault();
+
+	      this.handleMouseDown(event);
+	    }
+
+	    /**
+	     * Render method of the component
+	     * @return {string} Component JSX
+	     */
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var activeTrackStyle = getActiveTrackStyle(this);
+	      var classNames = this.props.classNames;
+
+	      return _react2['default'].createElement(
+	        'div',
+	        {
+	          className: classNames.trackContainer,
+	          onMouseDown: this.handleMouseDown,
+	          onTouchStart: this.handleTouchStart,
+	          ref: 'track' },
+	        _react2['default'].createElement('div', {
+	          style: activeTrackStyle,
+	          className: classNames.trackActive }),
+	        this.props.children
+	      );
+	    }
+	  }, {
+	    key: 'clientRect',
+	    get: function get() {
+	      var track = this.refs.track;
+
+	      var clientRect = track.getBoundingClientRect();
+
+	      return clientRect;
+	    }
+	  }]);
+
+	  return Track;
+	})(_react2['default'].Component);
+
+	exports['default'] = Track;
+	Track.propTypes = {
+	  children: _react2['default'].PropTypes.node,
+	  classNames: _react2['default'].PropTypes.objectOf(_react2['default'].PropTypes.string),
+	  onTrackMouseDown: _react2['default'].PropTypes.func.isRequired,
+	  percentages: _react2['default'].PropTypes.objectOf(_react2['default'].PropTypes.number).isRequired
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 364 */
+/***/ function(module, exports) {
+
+	/**
+	 * @module InputRange/defaultClassNames
+	 */
+
+	/**
+	* An object containing class names
+	* @const {Object}
+	* @property {string} component
+	* @property {string} labelContainer
+	* @property {string} labelMax
+	* @property {string} labelMin
+	* @property {string} labelValue
+	* @property {string} slider
+	* @property {string} sliderContainer
+	* @property {string} trackActive
+	* @property {string} trackContainer
+	*/
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports['default'] = {
+	  component: 'InputRange',
+	  labelContainer: 'InputRange-labelContainer',
+	  labelMax: 'InputRange-label InputRange-label--max',
+	  labelMin: 'InputRange-label InputRange-label--min',
+	  labelValue: 'InputRange-label InputRange-label--value',
+	  slider: 'InputRange-slider',
+	  sliderContainer: 'InputRange-sliderContainer',
+	  trackActive: 'InputRange-track InputRange-track--active',
+	  trackContainer: 'InputRange-track InputRange-track--container'
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 365 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * @module InputRange/valueTransformer
+	 */
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _util = __webpack_require__(362);
+
+	/**
+	 * Convert position into percentage value
+	 * @static
+	 * @param {InputRange} inputRange
+	 * @param {Point} position
+	 * @return {number} Percentage value
+	 */
+	function percentageFromPosition(inputRange, position) {
+	  var length = inputRange.trackClientRect.width;
+	  var sizePerc = position.x / length;
+
+	  return sizePerc || 0;
+	}
+
+	/**
+	 * Convert position into model value
+	 * @static
+	 * @param {InputRange} inputRange
+	 * @param {Point} position
+	 * @return {number} Model value
+	 */
+	function valueFromPosition(inputRange, position) {
+	  var sizePerc = percentageFromPosition(inputRange, position);
+	  var valueDiff = inputRange.props.maxValue - inputRange.props.minValue;
+	  var value = inputRange.props.minValue + valueDiff * sizePerc;
+
+	  return value;
+	}
+
+	/**
+	 * Extract values from props
+	 * @static
+	 * @param {InputRange} inputRange
+	 * @param {Point} [props=inputRange.props]
+	 * @return {Range} Range values
+	 */
+	function valuesFromProps(inputRange) {
+	  var _ref = arguments.length <= 1 || arguments[1] === undefined ? inputRange : arguments[1];
+
+	  var props = _ref.props;
+	  return (function () {
+	    if (inputRange.isMultiValue) {
+	      var values = props.value;
+
+	      if ((0, _util.isEmpty)(values) || !(0, _util.objectOf)(values, _util.isNumber)) {
+	        values = props.defaultValue;
+	      }
+
+	      return Object.create(values);
+	    }
+
+	    var value = (0, _util.isNumber)(props.value) ? props.value : props.defaultValue;
+
+	    return {
+	      min: props.minValue,
+	      max: value
+	    };
+	  })();
+	}
+
+	/**
+	 * Convert value into percentage value
+	 * @static
+	 * @param {InputRange} inputRange
+	 * @param {number} value
+	 * @return {number} Percentage value
+	 */
+	function percentageFromValue(inputRange, value) {
+	  var validValue = (0, _util.clamp)(value, inputRange.props.minValue, inputRange.props.maxValue);
+	  var valueDiff = inputRange.props.maxValue - inputRange.props.minValue;
+	  var valuePerc = (validValue - inputRange.props.minValue) / valueDiff;
+
+	  return valuePerc || 0;
+	}
+
+	/**
+	 * Convert values into percentage values
+	 * @static
+	 * @param {InputRange} inputRange
+	 * @param {Range} values
+	 * @return {Range} Percentage values
+	 */
+	function percentagesFromValues(inputRange, values) {
+	  var percentages = {
+	    min: percentageFromValue(inputRange, values.min),
+	    max: percentageFromValue(inputRange, values.max)
+	  };
+
+	  return percentages;
+	}
+
+	/**
+	 * Convert value into position
+	 * @static
+	 * @param {InputRange} inputRange
+	 * @param {number} value
+	 * @return {Point} Position
+	 */
+	function positionFromValue(inputRange, value) {
+	  var length = inputRange.trackClientRect.width;
+	  var valuePerc = percentageFromValue(inputRange, value);
+	  var positionValue = valuePerc * length;
+
+	  return {
+	    x: positionValue,
+	    y: 0
+	  };
+	}
+
+	/**
+	 * Convert a range of values into positions
+	 * @static
+	 * @param {InputRange} inputRange
+	 * @param {Range} values
+	 * @return {Object.<string, Point>}
+	 */
+	function positionsFromValues(inputRange, values) {
+	  var positions = {
+	    min: positionFromValue(inputRange, values.min),
+	    max: positionFromValue(inputRange, values.max)
+	  };
+
+	  return positions;
+	}
+
+	/**
+	 * Extract a position from an event
+	 * @static
+	 * @param {InputRange} inputRange
+	 * @param {Event} event
+	 * @return {Point}
+	 */
+	function positionFromEvent(inputRange, event) {
+	  var trackClientRect = inputRange.trackClientRect;
+	  var length = trackClientRect.width;
+
+	  var _ref2 = event.touches ? event.touches[0] : event;
+
+	  var clientX = _ref2.clientX;
+
+	  var position = {
+	    x: (0, _util.clamp)(clientX - trackClientRect.left, 0, length),
+	    y: 0
+	  };
+
+	  return position;
+	}
+
+	/**
+	 * Convert a value into a step value
+	 * @static
+	 * @param {InputRange} inputRange
+	 * @param {number} value
+	 * @return {number} Step value
+	 */
+	function stepValueFromValue(inputRange, value) {
+	  return Math.round(value / inputRange.props.step) * inputRange.props.step;
+	}
+
+	exports['default'] = {
+	  percentageFromPosition: percentageFromPosition,
+	  percentageFromValue: percentageFromValue,
+	  percentagesFromValues: percentagesFromValues,
+	  positionFromEvent: positionFromEvent,
+	  positionFromValue: positionFromValue,
+	  positionsFromValues: positionsFromValues,
+	  stepValueFromValue: stepValueFromValue,
+	  valueFromPosition: valueFromPosition,
+	  valuesFromProps: valuesFromProps
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 366 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * @module InputRange/maxMinValuePropType
+	 */
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	exports.maxMinValuePropType = maxMinValuePropType;
+
+	var _util = __webpack_require__(362);
+
+	/**
+	 * A prop type accepting a range of numeric values or a single numeric value
+	 * @param {Object} props - React component props
+	 * @return {?Error} Return Error if validation fails
+	 */
+
+	function maxMinValuePropType(props) {
+	  var maxValue = props.maxValue;
+	  var minValue = props.minValue;
+	  var value = props.value;
+	  var defaultValue = props.defaultValue;
+	  var isValueNumber = (0, _util.isNumber)(value);
+	  var isDefaultValueNumber = (0, _util.isNumber)(defaultValue);
+	  var isValueNumberObject = (0, _util.objectOf)(value, _util.isNumber);
+	  var isDefaultValueNumberObject = (0, _util.objectOf)(defaultValue, _util.isNumber);
+
+	  if (value === undefined) {
+	    return new Error('`value` must be defined');
+	  }
+
+	  if (!isValueNumber && !isDefaultValueNumber && !isValueNumberObject && !isDefaultValueNumberObject) {
+	    return new Error('`value` or `defaultValue` must be a number or an array');
+	  }
+
+	  if (minValue >= maxValue) {
+	    return new Error('`minValue` must be smaller than `maxValue`');
+	  }
+
+	  if (maxValue <= minValue) {
+	    return new Error('`maxValue` must be larger than `minValue`');
+	  }
+
+	  if (value < minValue || value > maxValue) {
+	    return new Error('`value` must be within `minValue` and `maxValue`');
+	  }
+	}
+
+/***/ },
+/* 367 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43230,7 +45138,7 @@
 	;
 
 /***/ },
-/* 359 */
+/* 368 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43241,9 +45149,11 @@
 
 	var _immutable = __webpack_require__(342);
 
-	var _questionState = __webpack_require__(360);
+	var _questionState = __webpack_require__(369);
 
-	var _answerState = __webpack_require__(361);
+	var _answerState = __webpack_require__(370);
+
+	var _considerationState = __webpack_require__(371);
 
 	var _default = function _default() {
 	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : (0, _immutable.Map)({ questions: (0, _immutable.List)() });
@@ -43274,6 +45184,44 @@
 	        return (0, _answerState.RemoveAnswer)(question, action.answerId);
 	      });
 
+	    case 'NEW_CONSIDERATION':
+	      var newConsiderationQuestionIndex = state.get('questions').findIndex(function (q) {
+	        return q.get('id') === action.question.get('id');
+	      });
+
+	      var newConsiderationAnswerIndex = state.getIn(['questions', newConsiderationQuestionIndex]).get('answers').findIndex(function (a) {
+	        return a.get('id') == action.answer.get('id');
+	      });
+
+	      return state.updateIn(['questions', newConsiderationQuestionIndex, 'answers', newConsiderationAnswerIndex], function (answer) {
+	        return (0, _considerationState.NewConsideration)(action.answer, action.consideration);
+	      });
+
+	    case 'UPDATE_CONSIDERATION':
+	      var updateConsiderationQuestionIndex = state.get('questions').findIndex(function (q) {
+	        return q.get('id') === action.question.get('id');
+	      });
+
+	      var updateConsiderationAnswerIndex = state.getIn(['questions', updateConsiderationQuestionIndex]).get('answers').findIndex(function (a) {
+	        return a.get('id') == action.answer.get('id');
+	      });
+
+	      return state.updateIn(['questions', updateConsiderationQuestionIndex, 'answers', updateConsiderationAnswerIndex], function (answer) {
+	        return (0, _considerationState.UpdateConsideration)(action.answer, action.consideration);
+	      });
+
+	    case 'REMOVE_CONSIDERATION':
+	      var removeConsiderationQuestionIndex = state.get('questions').findIndex(function (q) {
+	        return q.get('id') === action.question.get('id');
+	      });
+
+	      var removeConsiderationAnswerIndex = state.getIn(['questions', removeConsiderationQuestionIndex]).get('answers').findIndex(function (a) {
+	        return a.get('id') == action.answer.get('id');
+	      });
+
+	      return state.updateIn(['questions', removeConsiderationQuestionIndex, 'answers', removeConsiderationAnswerIndex], function (answer) {
+	        return (0, _considerationState.RemoveConsideration)(action.answer, action.considerationId);
+	      });
 	  }
 	  return state;
 	};
@@ -43304,7 +45252,7 @@
 	;
 
 /***/ },
-/* 360 */
+/* 369 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43317,7 +45265,7 @@
 	var _immutable = __webpack_require__(342);
 
 	function NewQuestion(questions, question) {
-	  return questions.push((0, _immutable.Map)({ title: question.title, id: question.id, answers: (0, _immutable.List)([(0, _immutable.Map)({ title: 'bnswer1', score: 12, id: 1 }), (0, _immutable.Map)({ title: 'answer2', score: 55, id: 2 })]) }));
+	  return questions.push((0, _immutable.Map)({ title: question.get('title'), id: question.get('id'), answers: (0, _immutable.List)() }));
 	}
 	;
 
@@ -43341,7 +45289,7 @@
 	;
 
 /***/ },
-/* 361 */
+/* 370 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43356,7 +45304,7 @@
 
 	function NewAnswer(question, answer) {
 	  return question.update('answers', function (answers) {
-	    return answers.push((0, _immutable.Map)({ title: answer.title, id: answer.id, score: 0, considerations: (0, _immutable.List)() }));
+	    return answers.push((0, _immutable.Map)({ title: answer.get('title'), id: answer.get('id'), score: 0, considerations: (0, _immutable.List)() }));
 	  });
 	}
 
@@ -43377,6 +45325,76 @@
 	  __REACT_HOT_LOADER__.register(NewAnswer, 'NewAnswer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/stateManagers/answerState.js');
 
 	  __REACT_HOT_LOADER__.register(RemoveAnswer, 'RemoveAnswer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/stateManagers/answerState.js');
+	}();
+
+	;
+	;
+
+	var _temp2 = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+	}();
+
+	;
+
+/***/ },
+/* 371 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.NewConsideration = NewConsideration;
+	exports.RemoveConsideration = RemoveConsideration;
+	exports.UpdateConsideration = UpdateConsideration;
+
+	var _immutable = __webpack_require__(342);
+
+	function NewConsideration(answer, consideration) {
+	  var considerationMap = (0, _immutable.Map)({ title: consideration.get('title'), id: consideration.get('id'), score: consideration.get('score') });
+	  return answer.update('considerations', function (consideration) {
+	    return consideration.unshift(considerationMap);
+	  });
+	}
+
+	function RemoveConsideration(answer, considerationId) {
+	  return answer.update('considerations', function (consideration) {
+	    return consideration.filter(function (c) {
+	      return c.get('id') !== considerationId;
+	    });
+	  });
+	}
+
+	function UpdateConsideration(answer, consideration) {
+	  var index = answer.get('considerations').findIndex(function (q) {
+	    return q.get('id') === consideration.get('id');
+	  });
+
+	  var updatedConsiderations = answer.setIn(['considerations', index], consideration);
+
+	  // update the score on the answer based on it's considerations
+	  var totalScore = updatedConsiderations.get('considerations').reduce(function (sum, d) {
+	    return sum + d.get('score');
+	  }, 0);
+
+	  var updatedAnswer = updatedConsiderations.set('score', totalScore);
+	  return updatedAnswer;
+	}
+	;
+
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+
+	  __REACT_HOT_LOADER__.register(NewConsideration, 'NewConsideration', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/stateManagers/considerationState.js');
+
+	  __REACT_HOT_LOADER__.register(RemoveConsideration, 'RemoveConsideration', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/stateManagers/considerationState.js');
+
+	  __REACT_HOT_LOADER__.register(UpdateConsideration, 'UpdateConsideration', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/stateManagers/considerationState.js');
 	}();
 
 	;

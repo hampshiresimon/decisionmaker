@@ -5,44 +5,34 @@ import {browserHistory} from 'react-router';
 import {List, Map} from 'immutable';
 import * as actionCreators from '../core/actionCreator';
 import {ConsiderationsContainer} from './Considerations'
+import uuid from 'uuid';
 
 
 class Answers extends React.Component{
   constructor(props) {
     super(props)
     this.state = {
-      showConsiderationForAnswers : List()
+      showConsiderationForAnswers : List(),
+      answerText : ''
     }
 
     this.newAnswer = this.newAnswer.bind(this)
     this.removeAnswer = this.removeAnswer.bind(this)
     this.showConsiderations = this.showConsiderations.bind(this)
-    //this.handleChange = this.handleChange.bind(this);
-    //this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleAnswerChange = this.handleAnswerChange.bind(this);
+    this.handleAnswerSubmit = this.handleAnswerSubmit.bind(this);
   }
 
-  handleChange(event) {
-    //this.setState({questionText: event.target.value});
+  handleAnswerChange(event) {
+    this.setState({answerText: event.target.value});
   }
 
-  handleSubmit(event) {
-    //event.preventDefault();
-    //this.props.newQuestionAction(this.state.questionText)
-    //browserHistory.push('/some/path/123');
-  }
+  handleAnswerSubmit(event) {
 
-/*
-  getQuestion()
-  {
-    return this.props.questions.get(this.getQuestionIndex())
+    event.preventDefault();
+    var uid = uuid.v1()
+    this.props.newAnswerAction( Map({ title : this.state.answerText, id : uid, score : 0 }), this.props.question )
   }
-
-  getQuestionIndex()
-  {
-    return this.props.questions.findIndex(q => {
-          return q.get('id') === this.props.params.questionId })
-  }
-  */
 
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
@@ -78,7 +68,7 @@ class Answers extends React.Component{
       var answer = this.props.question.get('answers').find((item) => item.get('id') === id)
 
         return <div>
-            <ConsiderationsContainer answer={answer}/>
+            <ConsiderationsContainer question={this.props.question} answer={answer}/>
         </div>
     }
 
@@ -91,7 +81,15 @@ class Answers extends React.Component{
     var answers = this.props.question.get('answers').sort( (a,b) => b.get('score') - a.get('score'))
 
     return <div>
+      <div>
+        <form onSubmit={this.handleAnswerSubmit}>
 
+          <div>
+            <input type='text' value={this.state.answerText} onChange={this.handleAnswerChange}/>
+            <input type="submit" value="ADD" />
+          </div>
+        </form>
+      </div>
       <div>
         {answers.map(c=>
           <div>
@@ -102,13 +100,11 @@ class Answers extends React.Component{
               <div>
                 {this.getAddConsideration(c.get('id'))}
               </div>
-          </div>
+            </div>
           )
         }
       </div>
-      <div onClick={this.newAnswer}><u>new answer</u></div>
-
-            </div>
+    </div>
     }
 }
 

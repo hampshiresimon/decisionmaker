@@ -7,8 +7,9 @@ export default React.createClass({
 
   render: function() {
     return <div className="ol-md-8 col-md-offset-2">
-            <div>My Saved Questions</div>
-
-          </div>;
+      <div>
+        My Saved Questions
+      </div>
+    </div>;
   }
 });
