@@ -47,20 +47,22 @@ export function accountCreationSuccessAction()
 
 export function createAccountAction(account)
 {
-  alert('In Thunk!')
   return function (dispatch) {
     return fetch('http://www.decision-maker.co.uk:3000/api/users', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-
-      })
+      body: JSON.stringify(
+          { username : 'username'}
+      )
     }).then((response) =>
     {
-      alert('Response - ' + response)
-    }).error(e =>
+      return response.text()
+    }).then((response) =>
+    {
+      alert(response)
+    }).catch(e =>
     {
       alert('Error - ' + e)
     })

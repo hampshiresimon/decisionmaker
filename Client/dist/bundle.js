@@ -63,7 +63,7 @@
 /******/ 	}
 
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "aa1fd37759c80968b8d0"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "312772fe68e2c4686a2a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 
@@ -42778,17 +42778,18 @@
 	}
 
 	function createAccountAction(account) {
-	  alert('In Thunk!');
 	  return function (dispatch) {
 	    return fetch('http://www.decision-maker.co.uk:3000/api/users', {
 	      method: 'POST',
 	      headers: {
 	        'Content-Type': 'application/json'
 	      },
-	      body: JSON.stringify({})
+	      body: JSON.stringify({ username: 'username' })
 	    }).then(function (response) {
-	      alert('Response - ' + response);
-	    }).error(function (e) {
+	      return response.text();
+	    }).then(function (response) {
+	      alert(response);
+	    }).catch(function (e) {
 	      alert('Error - ' + e);
 	    });
 	  };
@@ -46787,6 +46788,7 @@
 	      lastName: '',
 	      username: '',
 	      password: '',
+	      email: '',
 	      marketing: true
 	    };
 
@@ -46794,6 +46796,7 @@
 	    _this.handleLastNameChange = _this.handleLastNameChange.bind(_this);
 	    _this.handleUsernameChange = _this.handleUsernameChange.bind(_this);
 	    _this.handlePasswordChange = _this.handlePasswordChange.bind(_this);
+	    _this.handleEmailChange = _this.handleEmailChange.bind(_this);
 	    _this.handleMarketingChange = _this.handleMarketingChange.bind(_this);
 	    _this.handleAccountCreateSubmit = _this.handleAccountCreateSubmit.bind(_this);
 	    return _this;
@@ -46823,6 +46826,11 @@
 	    key: 'handlePasswordChange',
 	    value: function handlePasswordChange(event) {
 	      this.setState({ password: event.target.value });
+	    }
+	  }, {
+	    key: 'handleEmailChange',
+	    value: function handleEmailChange(event) {
+	      this.setState({ email: event.target.value });
 	    }
 	  }, {
 	    key: 'handleMarketingChange',
@@ -46891,10 +46899,20 @@
 	          _react2.default.createElement(
 	            'div',
 	            null,
+	            'email'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement('input', { type: 'text', value: this.state.email, onChange: this.handleEmailChange })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
 	            _react2.default.createElement(
 	              'label',
 	              null,
-	              _react2.default.createElement('input', { type: 'checkbox', checked: this.state.marketing, onChange: this.handleMarketingChange, text: 'marketing' }),
+	              _react2.default.createElement('input', { type: 'checkbox', checked: this.state.marketing, onChange: this.handleMarketingChange }),
 	              'marketing?'
 	            )
 	          ),
@@ -47262,12 +47280,28 @@
 
 	var _immutable = __webpack_require__(345);
 
+	var _constants = __webpack_require__(384);
+
+	var Constants = _interopRequireWildcard(_constants);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 	function SetAccountCreationStatus(account, status) {
 	  return account.set('accountCreationStatus', status);
 	}
 
 	function SetLoginStatus(account, status) {
-	  return account.set('loginStatus', status);
+	  var loginStatusUpdate = account.set('loginStatus', status);
+	  if (status == Constants.LOGIN_STATE_LOGGED_IN) {
+	    return loginStatusUpdate.set('lastLogin', getDateTime());
+	  }
+	}
+
+	function getDateTime() {
+	  var currentDate = new Date();
+	  var datetime = currentDate.getDate() + '/' + (currentDate.getMonth() + 1) + '/' + currentDate.getFullYear() + " @" + currentDate.getHours() + ":" + currentDate.getSeconds();
+
+	  return datetime;
 	}
 	;
 
@@ -47279,6 +47313,8 @@
 	  __REACT_HOT_LOADER__.register(SetAccountCreationStatus, 'SetAccountCreationStatus', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/stateManagers/accountState.js');
 
 	  __REACT_HOT_LOADER__.register(SetLoginStatus, 'SetLoginStatus', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/stateManagers/accountState.js');
+
+	  __REACT_HOT_LOADER__.register(getDateTime, 'getDateTime', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/stateManagers/accountState.js');
 	}();
 
 	;
@@ -47307,8 +47343,9 @@
 	var LOGIN_STATE_LOGGED_IN = exports.LOGIN_STATE_LOGGED_IN = 4;
 
 	var ACCOUNT_STATE_IN_PROGRESS = exports.ACCOUNT_STATE_IN_PROGRESS = 1;
-	var ACCOUNT_STATE_FAILED = exports.ACCOUNT_STATE_FAILED = 2;
-	var ACCOUNT_STATE_SUCCESS = exports.ACCOUNT_STATE_SUCCESS = 3;
+	var ACCOUNT_STATE_USERNAME_IN_USE = exports.ACCOUNT_STATE_USERNAME_IN_USE = 2;
+	var ACCOUNT_STATE_FAILED = exports.ACCOUNT_STATE_FAILED = 3;
+	var ACCOUNT_STATE_SUCCESS = exports.ACCOUNT_STATE_SUCCESS = 4;
 	;
 
 	var _temp = function () {
@@ -47325,6 +47362,8 @@
 	  __REACT_HOT_LOADER__.register(LOGIN_STATE_LOGGED_IN, "LOGIN_STATE_LOGGED_IN", "/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/constants.js");
 
 	  __REACT_HOT_LOADER__.register(ACCOUNT_STATE_IN_PROGRESS, "ACCOUNT_STATE_IN_PROGRESS", "/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/constants.js");
+
+	  __REACT_HOT_LOADER__.register(ACCOUNT_STATE_USERNAME_IN_USE, "ACCOUNT_STATE_USERNAME_IN_USE", "/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/constants.js");
 
 	  __REACT_HOT_LOADER__.register(ACCOUNT_STATE_FAILED, "ACCOUNT_STATE_FAILED", "/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/constants.js");
 

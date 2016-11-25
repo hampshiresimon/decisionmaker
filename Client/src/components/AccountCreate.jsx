@@ -12,6 +12,7 @@ class AccountCreate extends React.Component{
       lastName : '',
       username : '',
       password : '',
+      email : '',
       marketing : true
     }
 
@@ -19,6 +20,7 @@ class AccountCreate extends React.Component{
     this.handleLastNameChange = this.handleLastNameChange.bind(this)
     this.handleUsernameChange = this.handleUsernameChange.bind(this)
     this.handlePasswordChange = this.handlePasswordChange.bind(this)
+    this.handleEmailChange = this.handleEmailChange.bind(this)
     this.handleMarketingChange = this.handleMarketingChange.bind(this)
     this.handleAccountCreateSubmit = this.handleAccountCreateSubmit.bind(this)
   }
@@ -28,23 +30,27 @@ class AccountCreate extends React.Component{
   }
 
   handleFirstNameChange(event){
-    this.setState({firstName: event.target.value});
+    this.setState({firstName: event.target.value})
   }
 
   handleLastNameChange(event){
-    this.setState({lastName: event.target.value});
+    this.setState({lastName: event.target.value})
   }
 
   handleUsernameChange(event){
-    this.setState({username: event.target.value});
+    this.setState({username: event.target.value})
   }
 
   handlePasswordChange(event){
-    this.setState({password: event.target.value});
+    this.setState({password: event.target.value})
+  }
+
+  handleEmailChange(event){
+    this.setState({email: event.target.value})
   }
 
   handleMarketingChange(event){
-    this.setState({marketing: event.target.checked});
+    this.setState({marketing: event.target.checked})
   }
 
   handleAccountCreateSubmit(event) {
@@ -85,8 +91,14 @@ class AccountCreate extends React.Component{
           <input type='text' value={this.state.password} onChange={this.handlePasswordChange}/>
         </div>
         <div>
+          email
+        </div>
+        <div>
+          <input type='text' value={this.state.email} onChange={this.handleEmailChange}/>
+        </div>
+        <div>
           <label>
-            <input type='checkbox' checked={this.state.marketing} onChange={this.handleMarketingChange} text='marketing'/>
+            <input type='checkbox' checked={this.state.marketing} onChange={this.handleMarketingChange}/>
             marketing?
           </label>
         </div>

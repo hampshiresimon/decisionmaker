@@ -4,5 +4,6 @@ export const LOGIN_STATE_FAILED = 3
 export const LOGIN_STATE_LOGGED_IN = 4
 
 export const ACCOUNT_STATE_IN_PROGRESS = 1
-export const ACCOUNT_STATE_FAILED = 2
-export const ACCOUNT_STATE_SUCCESS = 3
+export const ACCOUNT_STATE_USERNAME_IN_USE = 2
+export const ACCOUNT_STATE_FAILED = 3
+export const ACCOUNT_STATE_SUCCESS = 4
