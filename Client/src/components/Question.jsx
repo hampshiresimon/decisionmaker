@@ -6,16 +6,17 @@ import {Map, List} from 'immutable';
 import * as actionCreators from '../core/actionCreator';
 import {AnswersContainer} from './Answers'
 import {NewAnswerContainer} from './NewAnswer'
+import {AccountContainer} from './Account'
 
 
 class Question extends React.Component{
   constructor(props) {
     super(props)
     this.state = {
-    
+      showAccount : false
     }
 
-
+    this.saveQuestion = this.saveQuestion.bind(this);
     //this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -39,11 +40,48 @@ class Question extends React.Component{
     return shallowCompare(this, nextProps, nextState);
   }
 
+  getBestAnswer()
+  {
+    var bestAnswer = this.getQuestion().get('answers').sort( (a,b) => b.get('score') - a.get('score')).first()
+
+    if( bestAnswer )
+    {
+      return <div>BEST ANSWER - {bestAnswer.get('title')}</div>
+    }
+  }
+
+  saveQuestion()
+  {
+    this.setState( { showAccount : true} )
+  }
+
+  getAccountLink()
+  {
+    if( !this.state.showAccount && !this.props.account.get('loggedIn') )
+    {
+      return <div onClick={this.saveQuestion}>SAVE THIS QUESTION</div>
+    }
+  }
+
+  getAccountPanel()
+  {
+    if( this.state.showAccount && !this.props.account.get('loggedIn'))
+    {
+      return <div><AccountContainer /></div>
+    }
+  }
+
   render() {
     var question = this.getQuestion()
 
+
+
+
     return <div className="container-fluid">
               <div>{question.get('title')}</div>
+              { this.getAccountLink()}
+              { this.getAccountPanel()}
+              { this.getBestAnswer()}
               <div><AnswersContainer question={question} newAnswer={this.newAnswer}/ ></div>
 
             </div>
@@ -52,6 +90,7 @@ class Question extends React.Component{
 
 function mapStateToProps(state) {
   return {
+    account : state.get('account'),
     questions : state.get('questions')
     //pair: state.getIn(['vote', 'pair']),
     //hasVoted: state.get('hasVoted'),

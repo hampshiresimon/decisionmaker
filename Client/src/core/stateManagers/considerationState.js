@@ -25,5 +25,6 @@ export function UpdateConsideration(answer, consideration)
   }, 0);
 
   var updatedAnswer = updatedConsiderations.set('score', totalScore)
+
   return updatedAnswer
 }

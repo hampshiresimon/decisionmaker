@@ -1,28 +1,31 @@
 import React from 'react';
 var shallowCompare = require('react-addons-shallow-compare');
 import {connect} from 'react-redux';
-import {browserHistory} from 'react-router';
-import {List, Map} from 'immutable';
 import * as actionCreators from '../core/actionCreator';
-import {ConsiderationsContainer} from './Considerations'
-import uuid from 'uuid';
+import {AccountCreateContainer} from './AccountCreate'
 
 
-class Answers extends React.Component{
+class Account extends React.Component{
   constructor(props) {
     super(props)
     this.state = {
-      showConsiderationForAnswers : List(),
-      answerText : ''
+
     }
 
+/*
     this.newAnswer = this.newAnswer.bind(this)
     this.removeAnswer = this.removeAnswer.bind(this)
     this.showConsiderations = this.showConsiderations.bind(this)
     this.handleAnswerChange = this.handleAnswerChange.bind(this);
     this.handleAnswerSubmit = this.handleAnswerSubmit.bind(this);
+    */
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
+
+/*
   handleAnswerChange(event) {
     this.setState({answerText: event.target.value});
   }
@@ -34,9 +37,7 @@ class Answers extends React.Component{
     this.props.newAnswerAction( Map({ title : this.state.answerText, id : uid, score : 0 }), this.props.question )
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
-  }
+
 
   newAnswer(event) {
     event.preventDefault()
@@ -74,37 +75,11 @@ class Answers extends React.Component{
 
     return <div/>
   }
-
+*/
   render() {
 
-    /* order by highest score first */
-    var answers = this.props.question.get('answers')//.sort( (a,b) => b.get('score') - a.get('score'))
+    return <div><AccountCreateContainer /></div>
 
-    return <div>
-      <div>
-        <form onSubmit={this.handleAnswerSubmit}>
-
-          <div>
-            <input type='text' value={this.state.answerText} onChange={this.handleAnswerChange}/>
-            <input type="submit" value="ADD" />
-          </div>
-        </form>
-      </div>
-      <div>
-        {answers.map(c=>
-          <div key={c.get('id')}>
-            <h1>
-              <u>{c.get('title')}</u> - {c.get('score')}</h1>
-              <u data-id={c.get('id')} onClick={this.removeAnswer}>REMOVE</u>
-              <u data-id={c.get('id')} onClick={this.showConsiderations}>SHOW CONSIDERATIONS</u>
-              <div>
-                {this.getAddConsideration(c.get('id'))}
-              </div>
-            </div>
-          )
-        }
-      </div>
-    </div>
     }
 }
 
@@ -117,9 +92,9 @@ function mapStateToProps(state) {
   };
 }
 
-const AnswersContainer = connect(
+const AccountContainer = connect(
   mapStateToProps,
   actionCreators
-)(Answers);
+)(Account);
 
-export { Answers, AnswersContainer }
+export { Account, AccountContainer }

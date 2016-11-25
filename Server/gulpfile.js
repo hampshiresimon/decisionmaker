@@ -22,7 +22,7 @@ gulp.task('set-test-node-env', function() {
     return process.env.NODE_ENV = 'test';
 });
 
-gulp.task('dev', ['mongo-start', 'node'], function () {
+gulp.task('dev', ['set-dev-node-env', 'mongo-start', 'node'], function () {
 })
 
 

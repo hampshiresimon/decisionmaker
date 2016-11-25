@@ -5,10 +5,7 @@ import {browserHistory} from 'react-router';
 import {List, Map} from 'immutable';
 import * as actionCreators from '../core/actionCreator';
 import uuid from 'uuid';
-//import Slider from 'rc-slider';
-//require('rc-slider/assets/index.css');
-require('react-input-range/dist/react-input-range.css')
-import InputRange from 'react-input-range';
+import {ConsiderationContainer} from './Consideration'
 
 class Considerations extends React.Component{
   constructor(props) {
@@ -18,10 +15,8 @@ class Considerations extends React.Component{
       values : 0
     }
 
-    this.removeConsideration = this.removeConsideration.bind(this)
     this.handleConsiderationChange = this.handleConsiderationChange.bind(this);
     this.handleConsiderationSubmit = this.handleConsiderationSubmit.bind(this);
-    this.handleConsiderationValueChanged = this.handleConsiderationValueChanged.bind(this);
   }
 
   handleConsiderationChange(event) {
@@ -36,25 +31,7 @@ class Considerations extends React.Component{
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return true// shallowCompare(this, nextProps, nextState);
-  }
-
-  removeConsideration(event) {
-    event.preventDefault()
-    this.props.removeConsiderationAction(event.currentTarget.dataset.id, this.props.answer, this.props.question)
-  }
-
-  handleConsiderationValueChanged(id, val)
-  {
-    this.setState({
-      values: val,
-    });
-    /*
-    alert('here')
-    var consideration = this.props.answer.get('considerations').find( (c) => c.get('id') === id)
-    var updatedConsideration = consideration.set('score', val)
-    this.props.updateConsiderationAction(updatedConsideration, this.props.answer, this.props.question)
-    */
+    return shallowCompare(this, nextProps, nextState);
   }
 
 
@@ -75,24 +52,8 @@ class Considerations extends React.Component{
       </div>
       <div>
         {considerations.map(c=>
-
-          <div>
-            <h1 key={c.get('id')}>
-              <u>{c.get('title')}</u>
-            </h1>
-            <div>
-
-
-
-            <InputRange
-                   maxValue={20}
-                   minValue={0}
-                   value={this.state.values}
-                   onChange={this.handleConsiderationValueChanged}
-                 />
-
-            </div>
-            <u data-id={c.get('id')} onClick={this.removeConsideration}>REMOVE</u>
+          <div key={c.get('id')}>
+            <ConsiderationContainer consideration={c} answer={this.props.answer} question={this.props.question}/>
           </div>
         )
       }
