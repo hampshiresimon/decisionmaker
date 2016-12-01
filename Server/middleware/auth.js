@@ -19,7 +19,8 @@ module.exports = function (req, res, next) {
                 return
             }
 
-            userService.getUserByUsername(decoded.username, function(callback)
+            // get user details but not state as we don't want that included in the request
+            userService.getUserByUsername(decoded.username, false, function(callback)
             {
                 if (callback.statusCode == httpStatusCodes.ok) {
                     req.user = callback.payload

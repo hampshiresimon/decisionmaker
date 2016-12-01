@@ -6,13 +6,27 @@ export function SetAccountCreationStatus(account, status)
   return account.set('accountCreationStatus', status)
 }
 
-export function SetLoginStatus(account, status)
+export function SetLoginStatus(state, status, questions)
 {
-  var loginStatusUpdate = account.set('loginStatus', status)
-  if( status == Constants.LOGIN_STATE_LOGGED_IN)
-  {
-    return loginStatusUpdate.set('lastLogin', getDateTime() )
+  let loginStatusUpdate = state.setIn(['account','loginStatus'], status)
+
+  if(status == Constants.LOGIN_STATE_LOGGED_IN) {
+    loginStatusUpdate = loginStatusUpdate.setIn(['account','lastLogin'], getDateTime() )
   }
+
+  if(questions) {
+    loginStatusUpdate = loginStatusUpdate.set('questions', questions)
+  }
+
+  return loginStatusUpdate
+}
+
+export function SetAccountDetails(account, token, user)
+{
+  var tokenAccountUpdate = account.set('token', token)
+  var userUpdate = tokenAccountUpdate.set('user', user)
+
+  return userUpdate
 }
 
 function getDateTime() {

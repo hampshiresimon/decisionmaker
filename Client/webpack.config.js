@@ -27,7 +27,8 @@ module.exports = {
   output: {
     path: __dirname + '/dist',
     publicPath: '/',
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    sourceMapFilename: "bundle.js.map",
   },
   devServer: {
     contentBase: './dist',

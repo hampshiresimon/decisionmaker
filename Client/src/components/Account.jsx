@@ -3,6 +3,7 @@ var shallowCompare = require('react-addons-shallow-compare');
 import {connect} from 'react-redux';
 import * as actionCreators from '../core/actionCreator';
 import {AccountCreateContainer} from './AccountCreate'
+import {AccountLoginContainer} from './AccountLogin'
 
 
 class Account extends React.Component{
@@ -76,10 +77,13 @@ class Account extends React.Component{
     return <div/>
   }
 */
+
+
+
   render() {
-
-    return <div><AccountCreateContainer /></div>
-
+    return <div><div><AccountCreateContainer account={this.props.account} /></div>
+            <div><AccountLoginContainer account={this.props.account} /></div>
+            </div>
     }
 }
 

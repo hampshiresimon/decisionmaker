@@ -11,7 +11,7 @@ var app = express()
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', "*")
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
-    res.header('Access-Control-Allow-Headers', 'Content-Type')
+    res.header('Access-Control-Allow-Headers', 'Content-Type,x-auth')
     next()
 }
 
@@ -26,6 +26,7 @@ app.use(authMiddleware);
 // endpoints
 app.use('/api/auth', require('./controllers/api/auth'))
 app.use('/api/users', require('./controllers/api/users'))
+app.use('/api/state', require('./controllers/api/state'))
 
 app.use(errorMiddleware);
 

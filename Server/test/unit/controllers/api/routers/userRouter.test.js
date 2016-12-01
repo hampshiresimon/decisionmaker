@@ -63,7 +63,7 @@ describe('userRouter', () =>
       responseJsonParentStub.json = responseJsonStub
 
       var expectedUser = dataGenerator.createValidUser()
-      userServiceMock.expects('createNewUser').once().yields( { statusCode : 200, payload : expectedUser})
+      userServiceMock.expects('createNewUser').once().yields( { statusCode : 201, payload : expectedUser})
 
       userRouter.postRoute(requestStub, responseStub, nextStub)
 
@@ -72,13 +72,57 @@ describe('userRouter', () =>
     }))
   })
 
-
   describe('getRoute', () => {
+
+    it('is BadRequest if request invalid', sinon.test( function()
+    {
+      var expectedUser = dataGenerator.createValidUser()
+
+      var userServiceMock = this.mock(userService)
+
+      var requestStub = this.stub()
+      var responseStub = this.stub()
+      var responseStatusStub = this.stub()
+      var responseSendParentStub = this.stub()
+      var responseSendStub = this.stub()
+      var nextStub = this.stub()
+
+      requestStub.user = expectedUser
+      responseStub.status = responseStatusStub
+      responseStatusStub.returns(responseSendParentStub)
+      responseSendParentStub.send = responseSendStub
+
+      userServiceMock.expects('getUserByUsername').once().yields( { statusCode : 400, payload : 'Completely invalid request'})
+
+      userRouter.getRoute(requestStub, responseStub, nextStub)
+
+      expect(responseStatusStub.calledWith(400)).is.true
+      expect(responseSendStub.calledWith('Completely invalid request')).is.true
+    }))
+
+    it('is InternalServerError if request fails', sinon.test( function()
+    {
+      var expectedUser = dataGenerator.createValidUser()
+
+      var userServiceMock = this.mock(userService)
+
+      var requestStub = this.stub()
+      var responseStub = this.stub()
+      var nextStub = this.stub()
+
+      requestStub.user = expectedUser
+      userServiceMock.expects('getUserByUsername').once().yields( { statusCode : 500, payload : 'A very important error occurred'})
+
+      userRouter.getRoute(requestStub, responseStub, nextStub)
+
+      expect(nextStub.called).is.true
+    }))
 
     it('is Ok and returns user', sinon.test( function()
     {
       var expectedUser = dataGenerator.createValidUser()
 
+      var userServiceMock = this.mock(userService)
       var requestStub = this.stub()
       var responseStub = this.stub()
       var responseStatusStub = this.stub()
@@ -90,6 +134,8 @@ describe('userRouter', () =>
       responseStub.status = responseStatusStub
       responseStatusStub.returns(responseJsonParentStub)
       responseJsonParentStub.json = responseJsonStub
+
+      userServiceMock.expects('getUserByUsername').once().yields( { statusCode : 200, payload : expectedUser })
 
       userRouter.getRoute(requestStub, responseStub, nextStub)
 

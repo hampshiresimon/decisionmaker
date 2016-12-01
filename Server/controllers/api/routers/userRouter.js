@@ -6,24 +6,30 @@ var authRouter = {
   postRoute : function (req, res, next) {
 
     userService.createNewUser(req.body, function (callback) {
-        if (callback.statusCode == httpStatusCodes.badRequest) {
 
-            res.status(httpStatusCodes.badRequest).send(callback.payload)
-
-        } else if (callback.statusCode == httpStatusCodes.internalServerError) {
-
-            next(callback.payload)
-
-        } else {
-
-            res.status(httpStatusCodes.created).json(callback.payload)
-        }
+      if (callback.statusCode == httpStatusCodes.internalServerError) {
+        next(callback.payload)
+      } else if (callback.statusCode == httpStatusCodes.created){
+        res.status(httpStatusCodes.created).json(callback.payload)
+      } else {
+        res.status(callback.statusCode).send(callback.payload)
+      }
     })
   },
 
   getRoute : function (req, res, next) {
 
-      res.status(httpStatusCodes.ok).json(req.user)
+    // get the user with state
+    userService.getUserByUsername(req.user.username, true, function (callback)
+    {
+      if (callback.statusCode == httpStatusCodes.internalServerError) {
+        next(callback.payload)
+      } else if (callback.statusCode == httpStatusCodes.ok) {
+        res.status(httpStatusCodes.ok).json(callback.payload)
+      } else {
+        res.status(callback.statusCode).send(callback.payload)
+      }
+    })
   }
 }
 

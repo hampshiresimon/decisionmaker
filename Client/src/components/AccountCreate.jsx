@@ -2,6 +2,8 @@ import React from 'react';
 var shallowCompare = require('react-addons-shallow-compare');
 import {connect} from 'react-redux';
 import * as actionCreators from '../core/actionCreator';
+import {Map} from 'immutable'
+import * as Constants from '../core/constants'
 
 
 class AccountCreate extends React.Component{
@@ -55,16 +57,37 @@ class AccountCreate extends React.Component{
 
   handleAccountCreateSubmit(event) {
     event.preventDefault();
-    this.props.createAccountAction( {})
+    this.props.createAccountAction( Map({
+      firstName : this.state.firstName,
+      lastName : this.state.lastName,
+      username : this.state.username,
+      password : this.state.password,
+      email : this.state.email }))
+
     //var uid = uuid.v1()
     //this.props.newQuestionAction( Map({ title : this.state.questionText, id : uid }), this.props.question)
     //browserHistory.push('/question/' + uid);
   }
 
+  getErrorMsg()
+  {
+    let msg = null
+    if( this.props.account.get('accountCreationStatus') == Constants.ACCOUNT_STATE_USERNAME_IN_USE) {
+      msg = 'The username is in use - please select another'
+    } else if( this.props.account.get('accountCreationStatus') == Constants.ACCOUNT_STATE_FAILED) {
+      msg = 'There was a problem creating your account - please try again'
+    }
+
+    if(msg)
+    {
+      return <div><b>{msg}</b></div>
+    }
+  }
+
 
   render() {
 
-    return <div>
+    return <div>{this.getErrorMsg()}<div>
       <form onSubmit={this.handleAccountCreateSubmit}>
         <div>
           first name
@@ -107,6 +130,7 @@ class AccountCreate extends React.Component{
 
         </div>
       </form>
+    </div>
     </div>
 
   }

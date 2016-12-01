@@ -35,6 +35,31 @@ describe('user', () => {
           })
     })
 
+    it('is Duplicate when username already exists', function(done)
+    {
+      // drop the user collection
+      var users = dataCollections.getUsers().collection;
+      users.drop()
+
+      chai.request(server.app)
+          .post('/api/users')
+          .send(userGenerator.createValidUser())
+          .end((err, res) => {
+
+
+            chai.request(server.app)
+                .post('/api/users')
+                .send(userGenerator.createValidUser())
+                .end((duplicateErr, duplicateRes) => {
+
+                  expect(duplicateRes).to.have.status(409);
+                  expect(duplicateRes.text).to.contain('username already exists')
+
+                  done()
+                })
+          })
+    })
+
     it('is Created when new a new user is created', function(done)
     {
       // drop the user collection
@@ -48,14 +73,7 @@ describe('user', () => {
 
             expect(res).to.have.status(201);
 
-            expect(res.body).to.not.be.empty
-            expect(res.body.firstName).to.not.be.empty
-            expect(res.body.lastName).to.not.be.empty
-            expect(res.body.username).to.not.be.empty
-            expect(res.body.password).to.not.be.empty
-            expect(res.body.email).to.not.be.empty
-            expect(res.body._id).to.not.be.empty
-
+            expect(res.body.token).to.not.be.empty
             done()
           })
     })
@@ -154,11 +172,12 @@ describe('user', () => {
 
                   chai.request(server.app)
                       .get('/api/users')
-                      .set('x-auth', authRes.body)
+                      .set('x-auth', authRes.body.token)
                       .end((userErr, userRes) => {
 
                         expect(userRes).to.have.status(200)
                         expect(userRes.body.username).to.equal(user.username)
+                        expect(userRes.body.state.name).to.equal(user.state.name)
                         done()
                       })
                 })

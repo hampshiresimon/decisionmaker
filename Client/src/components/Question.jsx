@@ -7,6 +7,8 @@ import * as actionCreators from '../core/actionCreator';
 import {AnswersContainer} from './Answers'
 import {NewAnswerContainer} from './NewAnswer'
 import {AccountContainer} from './Account'
+import * as Constants from '../core/constants'
+import {Link} from 'react-router';
 
 
 class Question extends React.Component{
@@ -57,7 +59,7 @@ class Question extends React.Component{
 
   getAccountLink()
   {
-    if( !this.state.showAccount && !this.props.account.get('loggedIn') )
+    if( !this.state.showAccount && !(this.props.account.get('loginStatus') == Constants.LOGIN_STATE_LOGGED_IN ))
     {
       return <div onClick={this.saveQuestion}>SAVE THIS QUESTION</div>
     }
@@ -65,9 +67,17 @@ class Question extends React.Component{
 
   getAccountPanel()
   {
-    if( this.state.showAccount && !this.props.account.get('loggedIn'))
+    if( this.state.showAccount && !(this.props.account.get('loginStatus') == Constants.LOGIN_STATE_LOGGED_IN ))
     {
-      return <div><AccountContainer /></div>
+      return <div><AccountContainer account={this.props.account} /></div>
+    }
+  }
+
+  getWelcomePanel()
+  {
+    if( this.props.account.get('loginStatus') == Constants.LOGIN_STATE_LOGGED_IN )
+    {
+      return <div>WELCOME {this.props.account.get('user').get('firstName')} {this.props.account.get('user').get('lastName')}</div>
     }
   }
 
@@ -78,9 +88,11 @@ class Question extends React.Component{
 
 
     return <div className="container-fluid">
+          <div><Link to='/'>MORE QUESTIONS</Link></div>
               <div>{question.get('title')}</div>
               { this.getAccountLink()}
               { this.getAccountPanel()}
+              { this.getWelcomePanel()}
               { this.getBestAnswer()}
               <div><AnswersContainer question={question} newAnswer={this.newAnswer}/ ></div>
 
@@ -95,12 +107,12 @@ function mapStateToProps(state) {
     //pair: state.getIn(['vote', 'pair']),
     //hasVoted: state.get('hasVoted'),
     //winner: state.get('winner')
-  };
+  }
 }
 
 const QuestionContainer = connect(
   mapStateToProps,
   actionCreators
-)(Question);
+)(Question)
 
 export { Question, QuestionContainer }

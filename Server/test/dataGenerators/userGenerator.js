@@ -8,7 +8,10 @@ var userGenerator = {
       lastName : 'lastName_test',
       username : 'username_test',
       password : 'password_test',
-      email : 'email_test'
+      email : 'email_test',
+      state : {
+        name : 'state name'
+      }
     }
   },
 

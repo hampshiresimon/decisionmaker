@@ -1,20 +1,42 @@
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import {connect} from 'react-redux';
 import {NewQuestionContainer} from './NewQuestion'
-import MyQuestionsHeader from './MyQuestionsHeader'
-import Login from './Login'
-import QuestionList from './QuestionList'
+import {MyQuestionsContainer} from './MyQuestions'
+var shallowCompare = require('react-addons-shallow-compare');
+import * as actionCreators from '../core/actionCreator';
 
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
+class Landing extends React.Component{
+  constructor(props) {
+    super(props)
+    this.state = {
 
-  render: function() {
-    return <div className="container-fluid">
-            <NewQuestionContainer/>
-            <MyQuestionsHeader/>
-            <Login/>
-            <QuestionList/>
-          </div>;
+    }
+
   }
-});
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
+
+  render() {
+    return <div className="container-fluid">
+      <NewQuestionContainer/>
+      <MyQuestionsContainer account={this.props.account} questions={this.props.questions}/>
+    </div>;
+  }
+}
+
+function mapStateToProps(state) {
+  return {
+    account : state.get('account'),
+    questions : state.get('questions')
+  }
+}
+
+const LandingContainer = connect(
+  mapStateToProps,
+  actionCreators
+)(Landing)
+
+export { Landing, LandingContainer }

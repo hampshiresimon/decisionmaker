@@ -1,11 +1,11 @@
-var userService = require('../services/userService')
+var stateService = require('../services/stateService')
 var httpStatusCodes = require('../../../helpers/httpStatusCodes')
 
-var authRouter = {
+var stateRouter = {
 
   postRoute : function (req, res, next) {
 
-    userService.createToken(req.body, function (callback) {
+    stateService.save(req.body, req.user, function (callback) {
 
         if (callback.statusCode == httpStatusCodes.internalServerError) {
           next(callback.payload)
@@ -18,4 +18,4 @@ var authRouter = {
   }
 }
 
-module.exports = authRouter
+module.exports = stateRouter

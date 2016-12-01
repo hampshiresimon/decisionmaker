@@ -1,6 +1,8 @@
 import React from 'react';
 var shallowCompare = require('react-addons-shallow-compare');
 import {Link} from 'react-router';
+import {connect} from 'react-redux';
+import * as actionCreators from '../core/actionCreator';
 
 
 class QuestionList extends React.Component{
@@ -16,13 +18,32 @@ class QuestionList extends React.Component{
     return this.props.questions || []
   }
 
+getQuestionLink(question)
+{
+  return '/question/' + question.get('id')
+}
+
   render() {
-    return <div className="ol-md-8 col-md-offset-2">
+
+let a = this.getQuestions()
+
+    return <div>
       {this.getQuestions().map(question =>
-        <div><Link to="/question">{question.title}</Link></div>
+        <div key={question.get('id')}><Link to={this.getQuestionLink(question)}>{question.get('title')}</Link></div>
      )}
       </div>;
   }
 }
 
-export default QuestionList
+function mapStateToProps(state) {
+  return {
+
+  }
+}
+
+const QuestionListContainer = connect(
+  mapStateToProps,
+  actionCreators
+)(QuestionList)
+
+export { QuestionList, QuestionListContainer }
