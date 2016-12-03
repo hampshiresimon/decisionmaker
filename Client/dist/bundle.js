@@ -63,7 +63,7 @@
 /******/ 	}
 /******/
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "bac383a88a2dad6abc4e"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "f3b03eee7ebf4826cecf"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/
@@ -9269,15 +9269,6 @@
 	  __REACT_HOT_LOADER__.register(store, 'store', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/entry.jsx');
 	
 	  __REACT_HOT_LOADER__.register(routes, 'routes', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/entry.jsx');
-	}();
-
-	;
-	;
-
-	var _temp2 = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
 	}();
 
 	;
@@ -37398,8 +37389,7 @@
 	  }
 	});
 	
-	var _default2 = _default;
-	exports.default = _default2;
+	exports.default = _default;
 	;
 	
 	var _temp = function () {
@@ -37410,17 +37400,6 @@
 	  __REACT_HOT_LOADER__.register(pair, 'pair', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/App.jsx');
 	
 	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/App.jsx');
-
-	  __REACT_HOT_LOADER__.register(_default2, 'default', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/App.jsx');
-	}();
-
-	;
-	;
-
-	var _temp2 = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
 	}();
 
 	;
@@ -42457,7 +42436,6 @@
 	    var _this = _possibleConstructorReturn(this, (Landing.__proto__ || Object.getPrototypeOf(Landing)).call(this, props));
 	
 	    _this.state = {};
-	
 	    return _this;
 	  }
 	
@@ -42471,9 +42449,139 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'container-fluid' },
-	        _react2.default.createElement(_NewQuestion.NewQuestionContainer, null),
-	        _react2.default.createElement(_MyQuestions.MyQuestionsContainer, { account: this.props.account, questions: this.props.questions })
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'div',
+	            { id: 'myCarousel', className: 'carousel slide', 'data-ride': 'carousel', 'data-interval': '7000' },
+	            _react2.default.createElement(
+	              'ol',
+	              { className: 'carousel-indicators' },
+	              _react2.default.createElement('li', { 'data-target': '#myCarousel', 'data-slide-to': '0', className: 'active' }),
+	              _react2.default.createElement('li', { 'data-target': '#myCarousel', 'data-slide-to': '1', className: '' }),
+	              _react2.default.createElement('li', { 'data-target': '#myCarousel', 'data-slide-to': '2', className: '' }),
+	              _react2.default.createElement('li', { 'data-target': '#myCarousel', 'data-slide-to': '3', className: '' })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'carousel-inner' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'item active' },
+	                _react2.default.createElement('img', { src: 'http://placehold.it/900x250/5677fc/5677fc', className: 'carousel-image', alt: '' }),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'container' },
+	                  _react2.default.createElement(
+	                    'div',
+	                    { className: 'carousel-caption' },
+	                    _react2.default.createElement(
+	                      'div',
+	                      { className: 'carouselHeader' },
+	                      'Making Decisions'
+	                    ),
+	                    _react2.default.createElement(
+	                      'p',
+	                      { className: 'carouselBody' },
+	                      'Isn\'t always easy...'
+	                    )
+	                  )
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'item' },
+	                _react2.default.createElement('img', { src: 'http://placehold.it/900x250/673ab7/673ab7', className: 'carousel-image', alt: '' }),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'container' },
+	                  _react2.default.createElement(
+	                    'div',
+	                    { className: 'carousel-caption' },
+	                    _react2.default.createElement(
+	                      'div',
+	                      { className: 'carouselHeader' },
+	                      'Modern Living'
+	                    ),
+	                    _react2.default.createElement(
+	                      'p',
+	                      { className: 'carouselBody' },
+	                      'Can be bewildering'
+	                    )
+	                  )
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'item' },
+	                _react2.default.createElement('img', { src: 'http://placehold.it/900x250/9c27b0/9c27b0', className: 'carousel-image', alt: '' }),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'container' },
+	                  _react2.default.createElement(
+	                    'div',
+	                    { className: 'carousel-caption' },
+	                    _react2.default.createElement(
+	                      'div',
+	                      { className: 'carouselHeader' },
+	                      'Be Sure'
+	                    ),
+	                    _react2.default.createElement(
+	                      'p',
+	                      { className: 'carouselBody' },
+	                      'Of your decisions'
+	                    )
+	                  )
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'item' },
+	                _react2.default.createElement('img', { src: 'http://placehold.it/900x250/E91E63/E91E63', className: 'carousel-image', alt: '' }),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'container' },
+	                  _react2.default.createElement(
+	                    'div',
+	                    { className: 'carousel-caption' },
+	                    _react2.default.createElement(
+	                      'div',
+	                      { className: 'carouselHeader' },
+	                      'We\'re Here'
+	                    ),
+	                    _react2.default.createElement(
+	                      'p',
+	                      { className: 'carouselBody' },
+	                      'On your journey'
+	                    )
+	                  )
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'a',
+	              { href: '#myCarousel', className: 'left carousel-control', 'data-slide': 'prev' },
+	              _react2.default.createElement('span', { className: 'glyphicon glyphicon-chevron-left' })
+	            ),
+	            _react2.default.createElement(
+	              'a',
+	              { href: '#myCarousel', className: 'right carousel-control', 'data-slide': 'next' },
+	              _react2.default.createElement('span', { className: 'glyphicon glyphicon-chevron-right' })
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'container-fluid' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-md-10 col-md-offset-1 panelStyle' },
+	            _react2.default.createElement(_NewQuestion.NewQuestionContainer, null),
+	            _react2.default.createElement(_MyQuestions.MyQuestionsContainer, { account: this.props.account, questions: this.props.questions })
+	          )
+	        )
 	      );
 	    }
 	  }]);
@@ -42499,20 +42607,11 @@
 	    return;
 	  }
 	
-	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Landing.jsx');
-	
 	  __REACT_HOT_LOADER__.register(Landing, 'Landing', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Landing.jsx');
 	
+	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Landing.jsx');
+	
 	  __REACT_HOT_LOADER__.register(LandingContainer, 'LandingContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Landing.jsx');
-	}();
-
-	;
-	;
-
-	var _temp2 = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
 	}();
 
 	;
@@ -42569,7 +42668,8 @@
 	    var _this = _possibleConstructorReturn(this, (NewQuestion.__proto__ || Object.getPrototypeOf(NewQuestion)).call(this, props));
 	
 	    _this.state = {
-	      questionText: ''
+	      questionText: '',
+	      submitted: false
 	    };
 	
 	    _this.handleChange = _this.handleChange.bind(_this);
@@ -42585,10 +42685,14 @@
 	  }, {
 	    key: 'handleSubmit',
 	    value: function handleSubmit(event) {
+	      this.setState({ submitted: true });
 	      event.preventDefault();
-	      var uid = _uuid2.default.v1();
-	      this.props.newQuestionAction((0, _immutable.Map)({ title: this.state.questionText, id: uid }), this.props.question);
-	      _reactRouter.browserHistory.push('/question/' + uid);
+	
+	      if (this.state.questionText != '') {
+	        var uid = _uuid2.default.v1();
+	        this.props.newQuestionAction((0, _immutable.Map)({ title: this.state.questionText, id: uid }), this.props.question);
+	        _reactRouter.browserHistory.push('/question/' + uid);
+	      }
 	    }
 	  }, {
 	    key: 'shouldComponentUpdate',
@@ -42596,24 +42700,44 @@
 	      return shallowCompare(this, nextProps, nextState);
 	    }
 	  }, {
+	    key: 'showValidation',
+	    value: function showValidation() {
+	      if (this.state.questionText == '' && this.state.submitted) {
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'alert alert-warning control-padding' },
+	          'Enter a description of your problem before continuing...'
+	        );
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'ol-md-8 col-md-offset-2' },
+	        null,
 	        _react2.default.createElement(
 	          'form',
 	          { onSubmit: this.handleSubmit },
 	          _react2.default.createElement(
 	            'div',
-	            null,
-	            'Question:'
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            null,
-	            _react2.default.createElement('textarea', { value: this.state.questionText, onChange: this.handleChange }),
-	            _react2.default.createElement('input', { type: 'submit', value: 'GO' })
+	            { className: 'form-group container-fluid' },
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'text-large' },
+	                'Start making better decisions'
+	              ),
+	              this.showValidation(),
+	              _react2.default.createElement('textarea', { placeholder: 'Enter a description of your troublesome problem, e.g. should I buy that new pair of shoes?', className: 'form-control text-medium control-padding', value: this.state.questionText, onChange: this.handleChange })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'input-button' },
+	              _react2.default.createElement('input', { className: 'form-control control-padding btn btn-primary', type: 'submit', value: 'BEGIN >>' })
+	            )
 	          )
 	        )
 	      );
@@ -42642,20 +42766,11 @@
 	    return;
 	  }
 	
-	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/NewQuestion.jsx');
-	
 	  __REACT_HOT_LOADER__.register(NewQuestion, 'NewQuestion', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/NewQuestion.jsx');
 	
+	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/NewQuestion.jsx');
+	
 	  __REACT_HOT_LOADER__.register(NewQuestionContainer, 'NewQuestionContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/NewQuestion.jsx');
-	}();
-
-	;
-	;
-
-	var _temp2 = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
 	}();
 
 	;
@@ -42885,15 +43000,6 @@
 	}();
 
 	;
-	;
-
-	var _temp2 = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-	}();
-
-	;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
@@ -42942,15 +43048,6 @@
 	}();
 
 	;
-	;
-
-	var _temp2 = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-	}();
-
-	;
 
 /***/ },
 /* 350 */
@@ -42992,15 +43089,6 @@
 	  __REACT_HOT_LOADER__.register(ACCOUNT_STATE_FAILED, "ACCOUNT_STATE_FAILED", "/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/constants.js");
 	
 	  __REACT_HOT_LOADER__.register(ACCOUNT_STATE_SUCCESS, "ACCOUNT_STATE_SUCCESS", "/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/constants.js");
-	}();
-
-	;
-	;
-
-	var _temp2 = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
 	}();
 
 	;
@@ -43364,20 +43452,11 @@
 	    return;
 	  }
 	
-	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/MyQuestions.jsx');
-	
 	  __REACT_HOT_LOADER__.register(MyQuestions, 'MyQuestions', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/MyQuestions.jsx');
 	
+	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/MyQuestions.jsx');
+	
 	  __REACT_HOT_LOADER__.register(MyQuestionsContainer, 'MyQuestionsContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/MyQuestions.jsx');
-	}();
-
-	;
-	;
-
-	var _temp2 = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
 	}();
 
 	;
@@ -43554,20 +43633,11 @@
 	    return;
 	  }
 	
-	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/AccountLogin.jsx');
-	
 	  __REACT_HOT_LOADER__.register(AccountLogin, 'AccountLogin', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/AccountLogin.jsx');
 	
+	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/AccountLogin.jsx');
+	
 	  __REACT_HOT_LOADER__.register(AccountLoginContainer, 'AccountLoginContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/AccountLogin.jsx');
-	}();
-
-	;
-	;
-
-	var _temp2 = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
 	}();
 
 	;
@@ -43676,20 +43746,11 @@
 	    return;
 	  }
 	
-	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/QuestionList.jsx');
-	
 	  __REACT_HOT_LOADER__.register(QuestionList, 'QuestionList', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/QuestionList.jsx');
 	
+	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/QuestionList.jsx');
+	
 	  __REACT_HOT_LOADER__.register(QuestionListContainer, 'QuestionListContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/QuestionList.jsx');
-	}();
-
-	;
-	;
-
-	var _temp2 = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
 	}();
 
 	;
@@ -43902,20 +43963,11 @@
 	    return;
 	  }
 	
-	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Question.jsx');
-	
 	  __REACT_HOT_LOADER__.register(Question, 'Question', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Question.jsx');
 	
+	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Question.jsx');
+	
 	  __REACT_HOT_LOADER__.register(QuestionContainer, 'QuestionContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Question.jsx');
-	}();
-
-	;
-	;
-
-	var _temp2 = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
 	}();
 
 	;
@@ -44031,8 +44083,8 @@
 	      }
 	    }
 	  }, {
-	    key: 'getAddConsideration',
-	    value: function getAddConsideration(id) {
+	    key: 'getConsiderations',
+	    value: function getConsiderations(id) {
 	
 	      if (this.state.showConsiderationForAnswers.includes(id)) {
 	        var answer = this.props.question.get('answers').find(function (item) {
@@ -44104,7 +44156,7 @@
 	              _react2.default.createElement(
 	                'div',
 	                null,
-	                _this2.getAddConsideration(c.get('id'))
+	                _this2.getConsiderations(c.get('id'))
 	              )
 	            );
 	          })
@@ -44136,20 +44188,11 @@
 	    return;
 	  }
 	
-	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Answers.jsx');
-	
 	  __REACT_HOT_LOADER__.register(Answers, 'Answers', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Answers.jsx');
 	
+	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Answers.jsx');
+	
 	  __REACT_HOT_LOADER__.register(AnswersContainer, 'AnswersContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Answers.jsx');
-	}();
-
-	;
-	;
-
-	var _temp2 = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
 	}();
 
 	;
@@ -44335,20 +44378,11 @@
 	    return;
 	  }
 	
-	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Considerations.jsx');
-	
 	  __REACT_HOT_LOADER__.register(Considerations, 'Considerations', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Considerations.jsx');
 	
+	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Considerations.jsx');
+	
 	  __REACT_HOT_LOADER__.register(ConsiderationsContainer, 'ConsiderationsContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Considerations.jsx');
-	}();
-
-	;
-	;
-
-	var _temp2 = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
 	}();
 
 	;
@@ -44428,7 +44462,7 @@
 	    key: 'handleConsiderationValueChanged',
 	    value: function handleConsiderationValueChanged(id, val) {
 	      this.setState({
-	        values: val
+	        value: val
 	      });
 	
 	      var consideration = this.props.consideration;
@@ -44456,7 +44490,7 @@
 	          _react2.default.createElement(_reactInputRange2.default, {
 	            maxValue: 20,
 	            minValue: -20,
-	            value: this.state.values,
+	            value: this.state.value,
 	            onChange: this.handleConsiderationValueChanged
 	          })
 	        ),
@@ -44492,20 +44526,11 @@
 	    return;
 	  }
 	
-	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Consideration.jsx');
-	
 	  __REACT_HOT_LOADER__.register(Consideration, 'Consideration', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Consideration.jsx');
 	
+	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Consideration.jsx');
+	
 	  __REACT_HOT_LOADER__.register(ConsiderationContainer, 'ConsiderationContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Consideration.jsx');
-	}();
-
-	;
-	;
-
-	var _temp2 = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
 	}();
 
 	;
@@ -46855,20 +46880,11 @@
 	    return;
 	  }
 	
-	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/NewAnswer.jsx');
-	
 	  __REACT_HOT_LOADER__.register(NewAnswer, 'NewAnswer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/NewAnswer.jsx');
 	
+	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/NewAnswer.jsx');
+	
 	  __REACT_HOT_LOADER__.register(NewAnswerContainer, 'NewAnswerContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/NewAnswer.jsx');
-	}();
-
-	;
-	;
-
-	var _temp2 = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
 	}();
 
 	;
@@ -47033,20 +47049,11 @@
 	    return;
 	  }
 	
-	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Account.jsx');
-	
 	  __REACT_HOT_LOADER__.register(Account, 'Account', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Account.jsx');
 	
+	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Account.jsx');
+	
 	  __REACT_HOT_LOADER__.register(AccountContainer, 'AccountContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Account.jsx');
-	}();
-
-	;
-	;
-
-	var _temp2 = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
 	}();
 
 	;
@@ -47299,20 +47306,11 @@
 	    return;
 	  }
 	
-	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/AccountCreate.jsx');
-	
 	  __REACT_HOT_LOADER__.register(AccountCreate, 'AccountCreate', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/AccountCreate.jsx');
 	
+	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/AccountCreate.jsx');
+	
 	  __REACT_HOT_LOADER__.register(AccountCreateContainer, 'AccountCreateContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/AccountCreate.jsx');
-	}();
-
-	;
-	;
-
-	var _temp2 = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
 	}();
 
 	;
@@ -47432,8 +47430,7 @@
 	  return state;
 	};
 	
-	var _default2 = _default;
-	exports.default = _default2;
+	exports.default = _default;
 	;
 
 	var _temp = function () {
@@ -47442,17 +47439,6 @@
 	  }
 
 	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/reducer.js');
-
-	  __REACT_HOT_LOADER__.register(_default2, 'default', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/reducer.js');
-	}();
-
-	;
-	;
-
-	var _temp2 = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
 	}();
 
 	;
@@ -47481,15 +47467,6 @@
 	  }
 	
 	  __REACT_HOT_LOADER__.register(NewQuestion, 'NewQuestion', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/stateManagers/questionState.js');
-	}();
-
-	;
-	;
-
-	var _temp2 = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
 	}();
 
 	;
@@ -47531,15 +47508,6 @@
 	  __REACT_HOT_LOADER__.register(NewAnswer, 'NewAnswer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/stateManagers/answerState.js');
 	
 	  __REACT_HOT_LOADER__.register(RemoveAnswer, 'RemoveAnswer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/stateManagers/answerState.js');
-	}();
-
-	;
-	;
-
-	var _temp2 = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
 	}();
 
 	;
@@ -47602,15 +47570,6 @@
 	  __REACT_HOT_LOADER__.register(RemoveConsideration, 'RemoveConsideration', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/stateManagers/considerationState.js');
 	
 	  __REACT_HOT_LOADER__.register(UpdateConsideration, 'UpdateConsideration', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/stateManagers/considerationState.js');
-	}();
-
-	;
-	;
-
-	var _temp2 = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
 	}();
 
 	;
@@ -47681,15 +47640,6 @@
 	  __REACT_HOT_LOADER__.register(SetAccountDetails, 'SetAccountDetails', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/stateManagers/accountState.js');
 	
 	  __REACT_HOT_LOADER__.register(getDateTime, 'getDateTime', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/stateManagers/accountState.js');
-	}();
-
-	;
-	;
-
-	var _temp2 = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
 	}();
 
 	;
@@ -47778,15 +47728,6 @@
 	  }
 	
 	  __REACT_HOT_LOADER__.register(createLogger, 'createLogger', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/core/middleware/persistState.js');
-	}();
-
-	;
-	;
-
-	var _temp2 = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
 	}();
 
 	;

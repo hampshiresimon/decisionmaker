@@ -1,0 +1,20 @@
+/*default version*/
+@font-face {
+	font-family: 'ostrich-sans-bold';
+	src: url('style/fonts/ostrich-sans-bold.eot');
+	src:
+		url('style/fonts/ostrich-sans-bold.otf')
+		format('opentype');
+}
+
+
+.header { font-family: 'ostrich-sans-bold'; font-size: 20px }
+
+
+
+/* FOR NATIVE JAVASCRIPT BOOTSTRAP */
+/* enables CSS3 transition for simple collapses, accordion and also navbar in responsive view */
+.collapse { transition: height .3s ease-out; /*-webkit-transition: height .3s ease-out*/ }
+
+/* styles the close button for the dismissible popovers */
+.popover .close { position: absolute; top: 7px; right: 10px; }

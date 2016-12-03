@@ -29,7 +29,7 @@ class Consideration extends React.Component{
   handleConsiderationValueChanged(id, val)
   {
     this.setState({
-      values: val,
+      value : val,
     });
 
     var consideration = this.props.consideration
@@ -49,7 +49,7 @@ class Consideration extends React.Component{
         <InputRange
           maxValue={20}
           minValue={-20}
-          value={this.state.values}
+          value={this.state.value}
           onChange={this.handleConsiderationValueChanged}
           />
       </div>

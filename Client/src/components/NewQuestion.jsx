@@ -11,7 +11,8 @@ class NewQuestion extends React.Component{
   constructor(props) {
     super(props)
     this.state = {
-      questionText: ''
+      questionText: '',
+      submitted : false
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -23,23 +24,42 @@ class NewQuestion extends React.Component{
   }
 
   handleSubmit(event) {
+    this.setState({submitted : true})
     event.preventDefault();
-    var uid = uuid.v1()
-    this.props.newQuestionAction( Map({ title : this.state.questionText, id : uid }), this.props.question)
-    browserHistory.push('/question/' + uid);
+
+    if( this.state.questionText != '' ) {
+      var uid = uuid.v1()
+      this.props.newQuestionAction( Map({ title : this.state.questionText, id : uid }), this.props.question)
+      browserHistory.push('/question/' + uid)
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
   }
 
+  showValidation() {
+    if( this.state.questionText == '' && this.state.submitted) {
+      return <div className='alert alert-warning control-padding'>
+        Enter a description of your problem before continuing...
+      </div>
+    }
+  }
+
   render() {
-    return <div className="ol-md-8 col-md-offset-2">
+    return <div>
       <form onSubmit={this.handleSubmit}>
-        <div>Question:</div>
-        <div>
-          <textarea value={this.state.questionText} onChange={this.handleChange}/>
-          <input type="submit" value="GO" />
+        <div className='form-group container-fluid'>
+          <div>
+            <div className='text-large'>
+              Start making better decisions
+            </div>
+          {this.showValidation()}
+            <textarea placeholder='Enter a description of your troublesome problem, e.g. should I buy that new pair of shoes?' className='form-control text-medium control-padding' value={this.state.questionText} onChange={this.handleChange}/>
+          </div>
+          <div className='input-button'>
+            <input className='form-control control-padding btn btn-primary' type='submit' value='BEGIN >>' />
+          </div>
         </div>
       </form>
     </div>

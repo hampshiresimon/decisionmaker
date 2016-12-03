@@ -60,7 +60,7 @@ class Answers extends React.Component{
     }
   }
 
-  getAddConsideration(id)
+  getConsiderations(id)
   {
 
     if( this.state.showConsiderationForAnswers.includes(id))
@@ -98,7 +98,7 @@ class Answers extends React.Component{
               <u data-id={c.get('id')} onClick={this.removeAnswer}>REMOVE</u>
               <u data-id={c.get('id')} onClick={this.showConsiderations}>SHOW CONSIDERATIONS</u>
               <div>
-                {this.getAddConsideration(c.get('id'))}
+                {this.getConsiderations(c.get('id'))}
               </div>
             </div>
           )
