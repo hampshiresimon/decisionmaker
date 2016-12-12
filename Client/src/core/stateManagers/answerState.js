@@ -2,7 +2,7 @@ import {Map, List} from 'immutable';
 
 export function NewAnswer(question, answer)
 {
-  return question.update( 'answers', answers => answers.push( Map( { title : answer.get('title'), id : answer.get('id'), score : 0, considerations : List() })))
+  return question.update( 'answers', answers => answers.unshift( Map( { title : answer.get('title'), id : answer.get('id'), score : 0, considerations : List() })))
 }
 
 export function RemoveAnswer(question, answerId)

@@ -83,6 +83,24 @@ export function createAccountAction(account)
         dispatch(accountDetailsAction(tokenObj.token, account))
         dispatch(accountCreationStatusUpdateAction(Constants.ACCOUNT_STATE_SUCCESS))
         dispatch(loginStatusUpdateAction(Constants.LOGIN_STATE_LOGGED_IN, null))
+
+        // persist to the server immediately
+        var responsePromise = fetch('http://www.decision-maker.co.uk:3000/api/state', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-auth': getState().get('account').get('token')
+          },
+          body: JSON.stringify(
+            getState()
+          )
+        }).then(a => {
+          // should be persisted
+          var httpStatus = a.status
+        }).catch(e => {
+          // do nothing but perhaps we need to think about some solution to this
+        })
+        
         break
 
         case 409:
@@ -147,7 +165,8 @@ export function loginAction(credentials)
           let localQuestions = getState().get('questions')
           let mergedQuestions = serverQuestions.concat(localQuestions)
 
-          dispatch(accountDetailsAction(tokenObj.token, credentials))
+          let user = fromJS(response).set('state', null)
+          dispatch(accountDetailsAction(tokenObj.token, user))
           dispatch(loginStatusUpdateAction(Constants.LOGIN_STATE_LOGGED_IN, mergedQuestions))
 
           // persist to the server immediately

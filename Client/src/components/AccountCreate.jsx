@@ -15,7 +15,8 @@ class AccountCreate extends React.Component{
       username : '',
       password : '',
       email : '',
-      marketing : true
+      marketing : true,
+      submitted : false
     }
 
     this.handleFirstNameChange = this.handleFirstNameChange.bind(this)
@@ -56,81 +57,105 @@ class AccountCreate extends React.Component{
   }
 
   handleAccountCreateSubmit(event) {
+    this.setState( { submitted : true} )
     event.preventDefault();
-    this.props.createAccountAction( Map({
-      firstName : this.state.firstName,
-      lastName : this.state.lastName,
-      username : this.state.username,
-      password : this.state.password,
-      email : this.state.email }))
 
-    //var uid = uuid.v1()
-    //this.props.newQuestionAction( Map({ title : this.state.questionText, id : uid }), this.props.question)
-    //browserHistory.push('/question/' + uid);
+    if( this.state.firstName != ''
+        && this.state.lastName != ''
+        && this.state.username != ''
+        && this.state.password != ''
+        && this.state.email != '' ) {
+
+        this.props.createAccountAction( Map({
+          firstName : this.state.firstName,
+          lastName : this.state.lastName,
+          username : this.state.username,
+          password : this.state.password,
+          email : this.state.email,
+          marketing : this.state.marketing }))
+    }
   }
 
-  getErrorMsg()
-  {
-    let msg = null
-    if( this.props.account.get('accountCreationStatus') == Constants.ACCOUNT_STATE_USERNAME_IN_USE) {
-      msg = 'The username is in use - please select another'
-    } else if( this.props.account.get('accountCreationStatus') == Constants.ACCOUNT_STATE_FAILED) {
-      msg = 'There was a problem creating your account - please try again'
+  showFirstNameValidation() {
+    if( this.state.submitted && this.state.firstName == '' ) {
+      return <div className='text-danger'>Please provide a first name</div>
     }
+  }
 
-    if(msg)
-    {
-      return <div><b>{msg}</b></div>
+  showLastNameValidation() {
+    if( this.state.submitted && this.state.lastName == '' ) {
+      return <div className='text-danger'>Please provide a last name</div>
+    }
+  }
+
+  showUsernameValidation() {
+    if( this.state.submitted && this.state.username == '' ) {
+      return <div className='text-danger'>Please provide a username</div>
+    }
+  }
+
+  showPasswordValidation() {
+    if( this.state.submitted && this.state.password == '' ) {
+      return <div className='text-danger'>Please provide a password</div>
+    }
+  }
+
+  showEmailValidation() {
+    if( this.state.submitted && this.state.email == '' ) {
+      return <div className='text-danger'>Please provide an email</div>
+    }
+  }
+
+  getErrorMsg() {
+    if( this.props.account.get('accountCreationStatus') == Constants.ACCOUNT_STATE_USERNAME_IN_USE) {
+      return <div className='text-danger'>The username is in use</div>
+    } else if( this.props.account.get('accountCreationStatus') == Constants.ACCOUNT_STATE_FAILED) {
+      return <div className='text-danger'>An error occurred - please try again</div>
     }
   }
 
 
   render() {
 
-    return <div>{this.getErrorMsg()}<div>
-      <form onSubmit={this.handleAccountCreateSubmit}>
-        <div>
-          first name
-        </div>
-        <div>
-          <input type='text' value={this.state.firstName} onChange={this.handleFirstNameChange}/>
-        </div>
-        <div>
-          last name
-        </div>
-        <div>
-          <input type='text' value={this.state.lastName} onChange={this.handleLastNameChange}/>
-        </div>
-        <div>
-          username
-        </div>
-        <div>
-          <input type='text' value={this.state.username} onChange={this.handleUsernameChange}/>
-        </div>
-        <div>
-          password
-        </div>
-        <div>
-          <input type='text' value={this.state.password} onChange={this.handlePasswordChange}/>
-        </div>
-        <div>
-          email
-        </div>
-        <div>
-          <input type='text' value={this.state.email} onChange={this.handleEmailChange}/>
-        </div>
-        <div>
-          <label>
-            <input type='checkbox' checked={this.state.marketing} onChange={this.handleMarketingChange}/>
-            marketing?
-          </label>
-        </div>
-        <div>
-          <input type="submit" value="GO" />
+    return <div>
+      <form onSubmit={this.handleAccountCreateSubmit} className='panel-style form-group'>
 
+        {this.getErrorMsg()}
+        <div className='control-header-style'>
+          {this.showFirstNameValidation()}
+          <input type='text' tabIndex='1' className='form-control text-medium' placeholder='first name' value={this.state.firstName} onChange={this.handleFirstNameChange}/>
+        </div>
+
+        <div className='control-header-style'>
+          {this.showLastNameValidation()}
+          <input type='text' tabIndex='2' className='form-control text-medium' placeholder='last name' value={this.state.lastName} onChange={this.handleLastNameChange}/>
+        </div>
+
+        <div className='control-header-style'>
+          {this.showUsernameValidation()}
+          <input type='text' tabIndex='3' className='form-control text-medium' placeholder='username' value={this.state.username} onChange={this.handleUsernameChange}/>
+        </div>
+
+        <div className='control-header-style'>
+          {this.showPasswordValidation()}
+          <input type='password' tabIndex='4' className='form-control text-medium' placeholder='password' value={this.state.password} onChange={this.handlePasswordChange}/>
+        </div>
+
+        <div className='control-header-style'>
+          {this.showEmailValidation()}
+          <input type='text' tabIndex='5' className='form-control text-medium' placeholder='email' value={this.state.email} onChange={this.handleEmailChange}/>
+        </div>
+        <div>
+
+        <div className='control-header-style'>
+          <input id='marketingCheckbox' tabIndex='6' className='text-medium' type='checkbox' checked={this.state.marketing} onChange={this.handleMarketingChange}/>
+          <label htmlFor='marketingCheckbox' className='text-medium control-left-margin'>hear from us via email?</label>
+        </div>
+        </div>
+        <div className='control-header-style text-medium'>
+          <input className='btn btn-primary text-medium' tabIndex='7' type="submit" value='create >>' />
         </div>
       </form>
-    </div>
     </div>
 
   }
@@ -138,11 +163,8 @@ class AccountCreate extends React.Component{
 
 function mapStateToProps(state) {
   return {
-    //answers : state.get('answers')
-    //pair: state.getIn(['vote', 'pair']),
-    //hasVoted: state.get('hasVoted'),
-    //winner: state.get('winner')
-  };
+
+  }
 }
 
 const AccountCreateContainer = connect(

@@ -2,103 +2,75 @@ import React from 'react';
 var shallowCompare = require('react-addons-shallow-compare');
 import {connect} from 'react-redux';
 import * as actionCreators from '../core/actionCreator';
-import {AccountCreateContainer} from './AccountCreate'
 import {AccountLoginContainer} from './AccountLogin'
+import {AccountCreateContainer} from './AccountCreate'
+
 
 
 class Account extends React.Component{
   constructor(props) {
     super(props)
     this.state = {
-
+      showLogin : true,
+      showRegister : false
     }
 
-/*
-    this.newAnswer = this.newAnswer.bind(this)
-    this.removeAnswer = this.removeAnswer.bind(this)
-    this.showConsiderations = this.showConsiderations.bind(this)
-    this.handleAnswerChange = this.handleAnswerChange.bind(this);
-    this.handleAnswerSubmit = this.handleAnswerSubmit.bind(this);
-    */
+    this.showLogin = this.showLogin.bind(this)
+    this.showRegister = this.showRegister.bind(this)
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
   }
 
-/*
-  handleAnswerChange(event) {
-    this.setState({answerText: event.target.value});
+  showLogin(event) {
+    this.setState( { showLogin : true, showRegister : false })
   }
 
-  handleAnswerSubmit(event) {
-
-    event.preventDefault();
-    var uid = uuid.v1()
-    this.props.newAnswerAction( Map({ title : this.state.answerText, id : uid, score : 0 }), this.props.question )
+  showRegister(event) {
+    this.setState( { showLogin : false, showRegister : true })
   }
 
-
-
-  newAnswer(event) {
-    event.preventDefault()
-    this.props.newAnswer()
-  }
-
-  removeAnswer(event) {
-    event.preventDefault()
-    this.props.removeAnswerAction(event.currentTarget.dataset.id, this.props.question)
-  }
-
-  showConsiderations(event) {
-    event.preventDefault()
-    var answerId = event.currentTarget.dataset.id
-
-    if( this.state.showConsiderationForAnswers.includes(answerId) )
-    {
-      this.setState({showConsiderationForAnswers : this.state.showConsiderationForAnswers.filter((item) => item === answerId)})
+  getVisibleComponent() {
+    if( this.state.showLogin ) {
+      return <AccountLoginContainer account={this.props.account}/>
     } else {
-      this.setState({showConsiderationForAnswers : this.state.showConsiderationForAnswers.push(answerId)})
+      return <AccountCreateContainer account={this.props.account}/>
     }
   }
-
-  getAddConsideration(id)
-  {
-
-    if( this.state.showConsiderationForAnswers.includes(id))
-    {
-      var answer = this.props.question.get('answers').find((item) => item.get('id') === id)
-
-        return <div>
-            <ConsiderationsContainer question={this.props.question} answer={answer}/>
-        </div>
-    }
-
-    return <div/>
-  }
-*/
-
-
 
   render() {
-    return <div><div><AccountCreateContainer account={this.props.account} /></div>
-            <div><AccountLoginContainer account={this.props.account} /></div>
+
+    return <div className='col-md-10 col-md-offset-1 panel-header-style'>
+      <div className="btn-group">
+        <button type="button" className="btn btn-primary dropdown-toggle text-medium" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">Save & Load Questions <span className="caret"></span></button>
+        <div className="form-vertical dropdown-menu keep_open no-margin">
+
+          <span id="radioButtons" className="btn-group account-form" data-toggle="buttons">
+            <label className="btn btn-default active account-form-tab text-medium" onClick={this.showLogin}>
+              <input type="radio" name="options" id="option1"/>Login
+              </label>
+              <label className="btn btn-default account-form-tab text-medium"  onClick={this.showRegister}>
+                <input type="radio" name="options" id="option2" checked=""/>Register
+                </label>
+              </span>
+              {this.getVisibleComponent()}
             </div>
+          </div>
+        </div>
+      }
     }
-}
 
-function mapStateToProps(state) {
-  return {
-    //answers : state.get('answers')
-    //pair: state.getIn(['vote', 'pair']),
-    //hasVoted: state.get('hasVoted'),
-    //winner: state.get('winner')
-  };
-}
 
-const AccountContainer = connect(
-  mapStateToProps,
-  actionCreators
-)(Account);
+    function mapStateToProps(state) {
+      return {
 
-export { Account, AccountContainer }
+      }
+    }
+
+    const AccountContainer = connect(
+      mapStateToProps,
+      actionCreators
+    )(Account)
+
+    export { Account, AccountContainer }

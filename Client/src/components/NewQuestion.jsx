@@ -29,8 +29,10 @@ class NewQuestion extends React.Component{
 
     if( this.state.questionText != '' ) {
       var uid = uuid.v1()
-      this.props.newQuestionAction( Map({ title : this.state.questionText, id : uid }), this.props.question)
-      browserHistory.push('/question/' + uid)
+      let question = Map({ title : this.state.questionText, id : uid })
+      this.props.newQuestionAction( question, this.props.question)
+      this.setState( { submitted : false, questionText : ''})
+      this.props.newQuestion( question )
     }
   }
 
@@ -47,31 +49,37 @@ class NewQuestion extends React.Component{
   }
 
   render() {
-    return <div>
-      <form onSubmit={this.handleSubmit}>
-        <div className='form-group container-fluid'>
-          <div>
-            <div className='text-large'>
-              Start making better decisions
+    return   <div className='col-md-10 col-md-offset-1 panel-header-style'>
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <div className='form-group'>
+            <div>
+              <div className='text-large'>
+                Start making better decisions
+              </div>
+              {this.showValidation()}
+              <textarea placeholder='Enter a description of your troublesome problem, e.g. should I buy that new pair of shoes?' className='form-control text-medium control-padding' value={this.state.questionText} onChange={this.handleChange}/>
+              <a className='text-small popover-link' data-html='true' data-toggle="popover" data-content="Enter a description above for the problem or dilemma you are trying to decide upon. <br/>The description just needs to be enough so that you can identify the problem in the future.">what is this?</a>
             </div>
-          {this.showValidation()}
-            <textarea placeholder='Enter a description of your troublesome problem, e.g. should I buy that new pair of shoes?' className='form-control text-medium control-padding' value={this.state.questionText} onChange={this.handleChange}/>
+            <div className='control-header-style'>
+              <input className='btn btn-primary text-medium' type='submit' value='create question >>' />
+            </div>
           </div>
-          <div className='input-button'>
-            <input className='form-control control-padding btn btn-primary' type='submit' value='BEGIN >>' />
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   }
 }
 
+
+NewQuestion.propTypes = {
+  newQuestion : React.PropTypes.func.isRequired
+}
+
 function mapStateToProps(state) {
   return {
-    //pair: state.getIn(['vote', 'pair']),
-    //hasVoted: state.get('hasVoted'),
-    //winner: state.get('winner')
-  };
+
+  }
 }
 
 const NewQuestionContainer = connect(

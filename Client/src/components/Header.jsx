@@ -1,12 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {NewQuestionContainer} from './NewQuestion'
-import {MyQuestionsContainer} from './MyQuestions'
-var shallowCompare = require('react-addons-shallow-compare');
 import * as actionCreators from '../core/actionCreator';
 
 
-class Landing extends React.Component{
+class Header extends React.Component{
   constructor(props) {
     super(props)
     this.state = {
@@ -18,11 +15,8 @@ class Landing extends React.Component{
   }
 
   render() {
-    return <div>
 
-
-      <div>
-        <div id='myCarousel' className='carousel slide' data-ride='carousel' data-interval='7000'>
+    return  <div id='myCarousel' className='carousel slide' data-ride='carousel' data-interval='7000'>
           <ol className='carousel-indicators'>
             <li data-target='#myCarousel' data-slide-to='0' className='active'></li>
             <li data-target='#myCarousel' data-slide-to='1' className=''></li>
@@ -72,29 +66,19 @@ class Landing extends React.Component{
           <a href='#myCarousel' className='right carousel-control' data-slide='next'><span className='glyphicon glyphicon-chevron-right'></span></a>
 
         </div>
-
-      </div>
-      <div className='container-fluid'>
-        <div className='col-md-10 col-md-offset-1 panelStyle'>
-          <NewQuestionContainer/>
-          <MyQuestionsContainer account={this.props.account} questions={this.props.questions}/>
-        </div>
-
-      </div>
-    </div>;
   }
 }
+
 
 function mapStateToProps(state) {
   return {
-    account : state.get('account'),
-    questions : state.get('questions')
+
   }
 }
 
-const LandingContainer = connect(
+const HeaderContainer = connect(
   mapStateToProps,
   actionCreators
-)(Landing)
+)(Header)
 
-export { Landing, LandingContainer }
+export { Header, HeaderContainer }

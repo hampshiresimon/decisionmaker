@@ -63,7 +63,7 @@
 /******/ 	}
 /******/
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f3b03eee7ebf4826cecf"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "809920b8c8f8a69385cc"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/
@@ -9219,21 +9219,15 @@
 	
 	var _App = __webpack_require__(344);
 	
-	var _App2 = _interopRequireDefault(_App);
-	
-	var _Landing = __webpack_require__(346);
-	
-	var _Question = __webpack_require__(358);
-	
-	var _reducer = __webpack_require__(378);
+	var _reducer = __webpack_require__(373);
 	
 	var _reducer2 = _interopRequireDefault(_reducer);
 	
-	var _reduxThunk = __webpack_require__(383);
+	var _reduxThunk = __webpack_require__(378);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
-	var _persistState = __webpack_require__(384);
+	var _persistState = __webpack_require__(379);
 	
 	var _persistState2 = _interopRequireDefault(_persistState);
 	
@@ -9241,21 +9235,18 @@
 	
 	var store = (0, _redux.createStore)(_reducer2.default, (0, _redux.applyMiddleware)(_reduxThunk2.default, _persistState2.default));
 	
-	var routes = _react2.default.createElement(
-	  _reactRouter.Route,
-	  { component: _App2.default },
-	  _react2.default.createElement(_reactRouter.Route, { path: '/', component: _Landing.LandingContainer }),
-	  _react2.default.createElement(_reactRouter.Route, { path: '/question/:questionId', component: _Question.QuestionContainer })
-	);
+	/*
+	const routes = <Route component={App}>
+	  <Route path="/" component={LandingContainer} />
+	  <Route path="/question/:questionId" component={QuestionContainer} />
+	
+	</Route>
+	*/
 	
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRedux.Provider,
 	  { store: store },
-	  _react2.default.createElement(
-	    _reactRouter.Router,
-	    { history: _reactRouter.browserHistory },
-	    routes
-	  )
+	  _react2.default.createElement(_App.AppContainer, null)
 	), document.getElementById('app'));
 	
 	module.hot.accept();
@@ -9267,8 +9258,6 @@
 	  }
 	
 	  __REACT_HOT_LOADER__.register(store, 'store', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/entry.jsx');
-	
-	  __REACT_HOT_LOADER__.register(routes, 'routes', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/entry.jsx');
 	}();
 
 	;
@@ -37364,6 +37353,9 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.AppContainer = exports.App = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(81);
 	
@@ -37371,25 +37363,128 @@
 	
 	var _immutable = __webpack_require__(345);
 	
+	var _reactRedux = __webpack_require__(327);
+	
+	var _actionCreator = __webpack_require__(346);
+	
+	var actionCreators = _interopRequireWildcard(_actionCreator);
+	
+	var _Header = __webpack_require__(349);
+	
+	var _Account = __webpack_require__(350);
+	
+	var _AccountDisplay = __webpack_require__(355);
+	
+	var _NewQuestion = __webpack_require__(356);
+	
+	var _MyQuestions = __webpack_require__(359);
+	
+	var _Wizard = __webpack_require__(372);
+	
+	var _constants = __webpack_require__(348);
+	
+	var Constants = _interopRequireWildcard(_constants);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var pair = _immutable.List.of('Trainspotting', '28 Days Later');
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var _default = _react2.default.createClass({
-	  displayName: '_default',
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	  render: function render() {
-	    return this.props.children;
-	  },
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	    this.setState({
-	      children: nextProps.children
-	    });
+	var shallowCompare = __webpack_require__(352);
+	
+	var App = function (_React$Component) {
+	  _inherits(App, _React$Component);
+	
+	  function App(props) {
+	    _classCallCheck(this, App);
+	
+	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+	
+	    _this.state = {
+	      wizardInProgress: false
+	    };
+	    return _this;
 	  }
-	});
 	
-	exports.default = _default;
+	  _createClass(App, [{
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps, nextState) {
+	      return shallowCompare(this, nextProps, nextState);
+	    }
+	  }, {
+	    key: 'getAccountDisplay',
+	    value: function getAccountDisplay() {
+	      if (this.props.account.get('loginStatus') == Constants.LOGIN_STATE_LOGGED_IN) {
+	        return _react2.default.createElement(_AccountDisplay.AccountDisplayContainer, { account: this.props.account });
+	      } else {
+	        return _react2.default.createElement(_Account.AccountContainer, { account: this.props.account });
+	      }
+	    }
+	  }, {
+	    key: 'getMainDisplay',
+	    value: function getMainDisplay() {
+	      if (!this.state.wizardInProgress) {
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          this.getAccountDisplay(),
+	          _react2.default.createElement(_NewQuestion.NewQuestionContainer, null),
+	          _react2.default.createElement(_MyQuestions.MyQuestionsContainer, { questions: this.props.questions, newQuestions: this.newQuestionAdded })
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'getWizardDisplay',
+	    value: function getWizardDisplay() {
+	      if (this.state.wizardInProgress) {
+	        return _react2.default.createElement(_Wizard.WizardContainer, null);
+	      }
+	    }
+	  }, {
+	    key: 'newQuestionAdded',
+	    value: function newQuestionAdded(question) {
+	      this.setState({ wizardInProgress: true });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'text-medium' },
+	          _react2.default.createElement(_Header.HeaderContainer, null),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'container-fluid' },
+	            getMainDisplay(),
+	            getWizardDisplay()
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return App;
+	}(_react2.default.Component);
+	
+	function mapStateToProps(state) {
+	  return {
+	    account: state.get('account'),
+	    questions: state.get('questions')
+	  };
+	}
+	
+	var AppContainer = (0, _reactRedux.connect)(mapStateToProps, actionCreators)(App);
+	
+	exports.App = App;
+	exports.AppContainer = AppContainer;
 	;
 	
 	var _temp = function () {
@@ -37397,9 +37492,11 @@
 	    return;
 	  }
 	
-	  __REACT_HOT_LOADER__.register(pair, 'pair', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/App.jsx');
+	  __REACT_HOT_LOADER__.register(App, 'App', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/App.jsx');
 	
-	  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/App.jsx');
+	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/App.jsx');
+	
+	  __REACT_HOT_LOADER__.register(AppContainer, 'AppContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/App.jsx');
 	}();
 
 	;
@@ -42392,393 +42489,6 @@
 /* 346 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.LandingContainer = exports.Landing = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(81);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRedux = __webpack_require__(327);
-	
-	var _NewQuestion = __webpack_require__(347);
-	
-	var _MyQuestions = __webpack_require__(355);
-	
-	var _actionCreator = __webpack_require__(348);
-	
-	var actionCreators = _interopRequireWildcard(_actionCreator);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var shallowCompare = __webpack_require__(353);
-	
-	var Landing = function (_React$Component) {
-	  _inherits(Landing, _React$Component);
-	
-	  function Landing(props) {
-	    _classCallCheck(this, Landing);
-	
-	    var _this = _possibleConstructorReturn(this, (Landing.__proto__ || Object.getPrototypeOf(Landing)).call(this, props));
-	
-	    _this.state = {};
-	    return _this;
-	  }
-	
-	  _createClass(Landing, [{
-	    key: 'shouldComponentUpdate',
-	    value: function shouldComponentUpdate(nextProps, nextState) {
-	      return shallowCompare(this, nextProps, nextState);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(
-	            'div',
-	            { id: 'myCarousel', className: 'carousel slide', 'data-ride': 'carousel', 'data-interval': '7000' },
-	            _react2.default.createElement(
-	              'ol',
-	              { className: 'carousel-indicators' },
-	              _react2.default.createElement('li', { 'data-target': '#myCarousel', 'data-slide-to': '0', className: 'active' }),
-	              _react2.default.createElement('li', { 'data-target': '#myCarousel', 'data-slide-to': '1', className: '' }),
-	              _react2.default.createElement('li', { 'data-target': '#myCarousel', 'data-slide-to': '2', className: '' }),
-	              _react2.default.createElement('li', { 'data-target': '#myCarousel', 'data-slide-to': '3', className: '' })
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'carousel-inner' },
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'item active' },
-	                _react2.default.createElement('img', { src: 'http://placehold.it/900x250/5677fc/5677fc', className: 'carousel-image', alt: '' }),
-	                _react2.default.createElement(
-	                  'div',
-	                  { className: 'container' },
-	                  _react2.default.createElement(
-	                    'div',
-	                    { className: 'carousel-caption' },
-	                    _react2.default.createElement(
-	                      'div',
-	                      { className: 'carouselHeader' },
-	                      'Making Decisions'
-	                    ),
-	                    _react2.default.createElement(
-	                      'p',
-	                      { className: 'carouselBody' },
-	                      'Isn\'t always easy...'
-	                    )
-	                  )
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'item' },
-	                _react2.default.createElement('img', { src: 'http://placehold.it/900x250/673ab7/673ab7', className: 'carousel-image', alt: '' }),
-	                _react2.default.createElement(
-	                  'div',
-	                  { className: 'container' },
-	                  _react2.default.createElement(
-	                    'div',
-	                    { className: 'carousel-caption' },
-	                    _react2.default.createElement(
-	                      'div',
-	                      { className: 'carouselHeader' },
-	                      'Modern Living'
-	                    ),
-	                    _react2.default.createElement(
-	                      'p',
-	                      { className: 'carouselBody' },
-	                      'Can be bewildering'
-	                    )
-	                  )
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'item' },
-	                _react2.default.createElement('img', { src: 'http://placehold.it/900x250/9c27b0/9c27b0', className: 'carousel-image', alt: '' }),
-	                _react2.default.createElement(
-	                  'div',
-	                  { className: 'container' },
-	                  _react2.default.createElement(
-	                    'div',
-	                    { className: 'carousel-caption' },
-	                    _react2.default.createElement(
-	                      'div',
-	                      { className: 'carouselHeader' },
-	                      'Be Sure'
-	                    ),
-	                    _react2.default.createElement(
-	                      'p',
-	                      { className: 'carouselBody' },
-	                      'Of your decisions'
-	                    )
-	                  )
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'item' },
-	                _react2.default.createElement('img', { src: 'http://placehold.it/900x250/E91E63/E91E63', className: 'carousel-image', alt: '' }),
-	                _react2.default.createElement(
-	                  'div',
-	                  { className: 'container' },
-	                  _react2.default.createElement(
-	                    'div',
-	                    { className: 'carousel-caption' },
-	                    _react2.default.createElement(
-	                      'div',
-	                      { className: 'carouselHeader' },
-	                      'We\'re Here'
-	                    ),
-	                    _react2.default.createElement(
-	                      'p',
-	                      { className: 'carouselBody' },
-	                      'On your journey'
-	                    )
-	                  )
-	                )
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'a',
-	              { href: '#myCarousel', className: 'left carousel-control', 'data-slide': 'prev' },
-	              _react2.default.createElement('span', { className: 'glyphicon glyphicon-chevron-left' })
-	            ),
-	            _react2.default.createElement(
-	              'a',
-	              { href: '#myCarousel', className: 'right carousel-control', 'data-slide': 'next' },
-	              _react2.default.createElement('span', { className: 'glyphicon glyphicon-chevron-right' })
-	            )
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'container-fluid' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-md-10 col-md-offset-1 panelStyle' },
-	            _react2.default.createElement(_NewQuestion.NewQuestionContainer, null),
-	            _react2.default.createElement(_MyQuestions.MyQuestionsContainer, { account: this.props.account, questions: this.props.questions })
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return Landing;
-	}(_react2.default.Component);
-	
-	function mapStateToProps(state) {
-	  return {
-	    account: state.get('account'),
-	    questions: state.get('questions')
-	  };
-	}
-	
-	var LandingContainer = (0, _reactRedux.connect)(mapStateToProps, actionCreators)(Landing);
-	
-	exports.Landing = Landing;
-	exports.LandingContainer = LandingContainer;
-	;
-	
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-	
-	  __REACT_HOT_LOADER__.register(Landing, 'Landing', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Landing.jsx');
-	
-	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Landing.jsx');
-	
-	  __REACT_HOT_LOADER__.register(LandingContainer, 'LandingContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Landing.jsx');
-	}();
-
-	;
-
-/***/ },
-/* 347 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.NewQuestionContainer = exports.NewQuestion = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(81);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRedux = __webpack_require__(327);
-	
-	var _reactRouter = __webpack_require__(251);
-	
-	var _actionCreator = __webpack_require__(348);
-	
-	var actionCreators = _interopRequireWildcard(_actionCreator);
-	
-	var _uuid = __webpack_require__(351);
-	
-	var _uuid2 = _interopRequireDefault(_uuid);
-	
-	var _immutable = __webpack_require__(345);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var shallowCompare = __webpack_require__(353);
-	
-	var NewQuestion = function (_React$Component) {
-	  _inherits(NewQuestion, _React$Component);
-	
-	  function NewQuestion(props) {
-	    _classCallCheck(this, NewQuestion);
-	
-	    var _this = _possibleConstructorReturn(this, (NewQuestion.__proto__ || Object.getPrototypeOf(NewQuestion)).call(this, props));
-	
-	    _this.state = {
-	      questionText: '',
-	      submitted: false
-	    };
-	
-	    _this.handleChange = _this.handleChange.bind(_this);
-	    _this.handleSubmit = _this.handleSubmit.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(NewQuestion, [{
-	    key: 'handleChange',
-	    value: function handleChange(event) {
-	      this.setState({ questionText: event.target.value });
-	    }
-	  }, {
-	    key: 'handleSubmit',
-	    value: function handleSubmit(event) {
-	      this.setState({ submitted: true });
-	      event.preventDefault();
-	
-	      if (this.state.questionText != '') {
-	        var uid = _uuid2.default.v1();
-	        this.props.newQuestionAction((0, _immutable.Map)({ title: this.state.questionText, id: uid }), this.props.question);
-	        _reactRouter.browserHistory.push('/question/' + uid);
-	      }
-	    }
-	  }, {
-	    key: 'shouldComponentUpdate',
-	    value: function shouldComponentUpdate(nextProps, nextState) {
-	      return shallowCompare(this, nextProps, nextState);
-	    }
-	  }, {
-	    key: 'showValidation',
-	    value: function showValidation() {
-	      if (this.state.questionText == '' && this.state.submitted) {
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'alert alert-warning control-padding' },
-	          'Enter a description of your problem before continuing...'
-	        );
-	      }
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'form',
-	          { onSubmit: this.handleSubmit },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'form-group container-fluid' },
-	            _react2.default.createElement(
-	              'div',
-	              null,
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'text-large' },
-	                'Start making better decisions'
-	              ),
-	              this.showValidation(),
-	              _react2.default.createElement('textarea', { placeholder: 'Enter a description of your troublesome problem, e.g. should I buy that new pair of shoes?', className: 'form-control text-medium control-padding', value: this.state.questionText, onChange: this.handleChange })
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'input-button' },
-	              _react2.default.createElement('input', { className: 'form-control control-padding btn btn-primary', type: 'submit', value: 'BEGIN >>' })
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return NewQuestion;
-	}(_react2.default.Component);
-	
-	function mapStateToProps(state) {
-	  return {
-	    //pair: state.getIn(['vote', 'pair']),
-	    //hasVoted: state.get('hasVoted'),
-	    //winner: state.get('winner')
-	  };
-	}
-	
-	var NewQuestionContainer = (0, _reactRedux.connect)(mapStateToProps, actionCreators)(NewQuestion);
-	
-	exports.NewQuestion = NewQuestion;
-	exports.NewQuestionContainer = NewQuestionContainer;
-	;
-	
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-	
-	  __REACT_HOT_LOADER__.register(NewQuestion, 'NewQuestion', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/NewQuestion.jsx');
-	
-	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/NewQuestion.jsx');
-	
-	  __REACT_HOT_LOADER__.register(NewQuestionContainer, 'NewQuestionContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/NewQuestion.jsx');
-	}();
-
-	;
-
-/***/ },
-/* 348 */
-/***/ function(module, exports, __webpack_require__) {
-
 	/* WEBPACK VAR INJECTION */(function(Promise) {'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
@@ -42796,11 +42506,11 @@
 	exports.createAccountAction = createAccountAction;
 	exports.loginAction = loginAction;
 	
-	var _actionTypes = __webpack_require__(349);
+	var _actionTypes = __webpack_require__(347);
 	
 	var actionTypes = _interopRequireWildcard(_actionTypes);
 	
-	var _constants = __webpack_require__(350);
+	var _constants = __webpack_require__(348);
 	
 	var Constants = _interopRequireWildcard(_constants);
 	
@@ -42876,6 +42586,22 @@
 	          dispatch(accountDetailsAction(tokenObj.token, account));
 	          dispatch(accountCreationStatusUpdateAction(Constants.ACCOUNT_STATE_SUCCESS));
 	          dispatch(loginStatusUpdateAction(Constants.LOGIN_STATE_LOGGED_IN, null));
+	
+	          // persist to the server immediately
+	          var responsePromise = fetch('http://www.decision-maker.co.uk:3000/api/state', {
+	            method: 'POST',
+	            headers: {
+	              'Content-Type': 'application/json',
+	              'x-auth': getState().get('account').get('token')
+	            },
+	            body: JSON.stringify(getState())
+	          }).then(function (a) {
+	            // should be persisted
+	            var httpStatus = a.status;
+	          }).catch(function (e) {
+	            // do nothing but perhaps we need to think about some solution to this
+	          });
+	
 	          break;
 	
 	        case 409:
@@ -42937,7 +42663,8 @@
 	            var localQuestions = getState().get('questions');
 	            var mergedQuestions = serverQuestions.concat(localQuestions);
 	
-	            dispatch(accountDetailsAction(tokenObj.token, credentials));
+	            var user = (0, _immutable.fromJS)(response).set('state', null);
+	            dispatch(accountDetailsAction(tokenObj.token, user));
 	            dispatch(loginStatusUpdateAction(Constants.LOGIN_STATE_LOGGED_IN, mergedQuestions));
 	
 	            // persist to the server immediately
@@ -43003,7 +42730,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
-/* 349 */
+/* 347 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -43050,7 +42777,7 @@
 	;
 
 /***/ },
-/* 350 */
+/* 348 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -43094,13 +42821,1161 @@
 	;
 
 /***/ },
+/* 349 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.HeaderContainer = exports.Header = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(81);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(327);
+	
+	var _actionCreator = __webpack_require__(346);
+	
+	var actionCreators = _interopRequireWildcard(_actionCreator);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Header = function (_React$Component) {
+	  _inherits(Header, _React$Component);
+	
+	  function Header(props) {
+	    _classCallCheck(this, Header);
+	
+	    var _this = _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).call(this, props));
+	
+	    _this.state = {};
+	    return _this;
+	  }
+	
+	  _createClass(Header, [{
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps, nextState) {
+	      return shallowCompare(this, nextProps, nextState);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	
+	      return _react2.default.createElement(
+	        'div',
+	        { id: 'myCarousel', className: 'carousel slide', 'data-ride': 'carousel', 'data-interval': '7000' },
+	        _react2.default.createElement(
+	          'ol',
+	          { className: 'carousel-indicators' },
+	          _react2.default.createElement('li', { 'data-target': '#myCarousel', 'data-slide-to': '0', className: 'active' }),
+	          _react2.default.createElement('li', { 'data-target': '#myCarousel', 'data-slide-to': '1', className: '' }),
+	          _react2.default.createElement('li', { 'data-target': '#myCarousel', 'data-slide-to': '2', className: '' }),
+	          _react2.default.createElement('li', { 'data-target': '#myCarousel', 'data-slide-to': '3', className: '' })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'carousel-inner' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'item active' },
+	            _react2.default.createElement('img', { src: 'http://placehold.it/900x250/5677fc/5677fc', className: 'carousel-image', alt: '' }),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'container' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'carousel-caption' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'carouselHeader' },
+	                  'Making Decisions'
+	                ),
+	                _react2.default.createElement(
+	                  'p',
+	                  { className: 'carouselBody' },
+	                  'Isn\'t always easy...'
+	                )
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'item' },
+	            _react2.default.createElement('img', { src: 'http://placehold.it/900x250/673ab7/673ab7', className: 'carousel-image', alt: '' }),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'container' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'carousel-caption' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'carouselHeader' },
+	                  'Modern Living'
+	                ),
+	                _react2.default.createElement(
+	                  'p',
+	                  { className: 'carouselBody' },
+	                  'Can be bewildering'
+	                )
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'item' },
+	            _react2.default.createElement('img', { src: 'http://placehold.it/900x250/9c27b0/9c27b0', className: 'carousel-image', alt: '' }),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'container' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'carousel-caption' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'carouselHeader' },
+	                  'Be Sure'
+	                ),
+	                _react2.default.createElement(
+	                  'p',
+	                  { className: 'carouselBody' },
+	                  'Of your decisions'
+	                )
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'item' },
+	            _react2.default.createElement('img', { src: 'http://placehold.it/900x250/E91E63/E91E63', className: 'carousel-image', alt: '' }),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'container' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'carousel-caption' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'carouselHeader' },
+	                  'We\'re Here'
+	                ),
+	                _react2.default.createElement(
+	                  'p',
+	                  { className: 'carouselBody' },
+	                  'On your journey'
+	                )
+	              )
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'a',
+	          { href: '#myCarousel', className: 'left carousel-control', 'data-slide': 'prev' },
+	          _react2.default.createElement('span', { className: 'glyphicon glyphicon-chevron-left' })
+	        ),
+	        _react2.default.createElement(
+	          'a',
+	          { href: '#myCarousel', className: 'right carousel-control', 'data-slide': 'next' },
+	          _react2.default.createElement('span', { className: 'glyphicon glyphicon-chevron-right' })
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Header;
+	}(_react2.default.Component);
+	
+	function mapStateToProps(state) {
+	  return {};
+	}
+	
+	var HeaderContainer = (0, _reactRedux.connect)(mapStateToProps, actionCreators)(Header);
+	
+	exports.Header = Header;
+	exports.HeaderContainer = HeaderContainer;
+	;
+	
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+	
+	  __REACT_HOT_LOADER__.register(Header, 'Header', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Header.jsx');
+	
+	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Header.jsx');
+	
+	  __REACT_HOT_LOADER__.register(HeaderContainer, 'HeaderContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Header.jsx');
+	}();
+
+	;
+
+/***/ },
+/* 350 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.AccountContainer = exports.Account = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(81);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(327);
+	
+	var _actionCreator = __webpack_require__(346);
+	
+	var actionCreators = _interopRequireWildcard(_actionCreator);
+	
+	var _AccountLogin = __webpack_require__(351);
+	
+	var _AccountCreate = __webpack_require__(354);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var shallowCompare = __webpack_require__(352);
+	
+	var Account = function (_React$Component) {
+	  _inherits(Account, _React$Component);
+	
+	  function Account(props) {
+	    _classCallCheck(this, Account);
+	
+	    var _this = _possibleConstructorReturn(this, (Account.__proto__ || Object.getPrototypeOf(Account)).call(this, props));
+	
+	    _this.state = {
+	      showLogin: true,
+	      showRegister: false
+	    };
+	
+	    _this.showLogin = _this.showLogin.bind(_this);
+	    _this.showRegister = _this.showRegister.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(Account, [{
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps, nextState) {
+	      return shallowCompare(this, nextProps, nextState);
+	    }
+	  }, {
+	    key: 'showLogin',
+	    value: function showLogin(event) {
+	      this.setState({ showLogin: true, showRegister: false });
+	    }
+	  }, {
+	    key: 'showRegister',
+	    value: function showRegister(event) {
+	      this.setState({ showLogin: false, showRegister: true });
+	    }
+	  }, {
+	    key: 'getVisibleComponent',
+	    value: function getVisibleComponent() {
+	      if (this.state.showLogin) {
+	        return _react2.default.createElement(_AccountLogin.AccountLoginContainer, { account: this.props.account });
+	      } else {
+	        return _react2.default.createElement(_AccountCreate.AccountCreateContainer, { account: this.props.account });
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'col-md-10 col-md-offset-1 panel-header-style' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'btn-group' },
+	          _react2.default.createElement(
+	            'button',
+	            { type: 'button', className: 'btn btn-primary dropdown-toggle text-medium', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', role: 'button', 'aria-expanded': 'false' },
+	            'Save & Load Questions ',
+	            _react2.default.createElement('span', { className: 'caret' })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'form-vertical dropdown-menu keep_open no-margin' },
+	            _react2.default.createElement(
+	              'span',
+	              { id: 'radioButtons', className: 'btn-group account-form', 'data-toggle': 'buttons' },
+	              _react2.default.createElement(
+	                'label',
+	                { className: 'btn btn-default active account-form-tab text-medium', onClick: this.showLogin },
+	                _react2.default.createElement('input', { type: 'radio', name: 'options', id: 'option1' }),
+	                'Login'
+	              ),
+	              _react2.default.createElement(
+	                'label',
+	                { className: 'btn btn-default account-form-tab text-medium', onClick: this.showRegister },
+	                _react2.default.createElement('input', { type: 'radio', name: 'options', id: 'option2', checked: '' }),
+	                'Register'
+	              )
+	            ),
+	            this.getVisibleComponent()
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Account;
+	}(_react2.default.Component);
+	
+	function mapStateToProps(state) {
+	  return {};
+	}
+	
+	var AccountContainer = (0, _reactRedux.connect)(mapStateToProps, actionCreators)(Account);
+	
+	exports.Account = Account;
+	exports.AccountContainer = AccountContainer;
+	;
+	
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+	
+	  __REACT_HOT_LOADER__.register(Account, 'Account', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Account.jsx');
+	
+	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Account.jsx');
+	
+	  __REACT_HOT_LOADER__.register(AccountContainer, 'AccountContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Account.jsx');
+	}();
+
+	;
+
+/***/ },
 /* 351 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.AccountLoginContainer = exports.AccountLogin = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(81);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(327);
+	
+	var _actionCreator = __webpack_require__(346);
+	
+	var actionCreators = _interopRequireWildcard(_actionCreator);
+	
+	var _immutable = __webpack_require__(345);
+	
+	var _constants = __webpack_require__(348);
+	
+	var Constants = _interopRequireWildcard(_constants);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var shallowCompare = __webpack_require__(352);
+	
+	var AccountLogin = function (_React$Component) {
+	  _inherits(AccountLogin, _React$Component);
+	
+	  function AccountLogin(props) {
+	    _classCallCheck(this, AccountLogin);
+	
+	    var _this = _possibleConstructorReturn(this, (AccountLogin.__proto__ || Object.getPrototypeOf(AccountLogin)).call(this, props));
+	
+	    _this.state = {
+	      username: '',
+	      password: '',
+	      submitted: false
+	    };
+	
+	    _this.handleUsernameChange = _this.handleUsernameChange.bind(_this);
+	    _this.handlePasswordChange = _this.handlePasswordChange.bind(_this);
+	    _this.handleLoginSubmit = _this.handleLoginSubmit.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(AccountLogin, [{
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps, nextState) {
+	      return shallowCompare(this, nextProps, nextState);
+	    }
+	  }, {
+	    key: 'handleUsernameChange',
+	    value: function handleUsernameChange(event) {
+	      this.setState({ username: event.target.value });
+	    }
+	  }, {
+	    key: 'handlePasswordChange',
+	    value: function handlePasswordChange(event) {
+	      this.setState({ password: event.target.value });
+	    }
+	  }, {
+	    key: 'handleLoginSubmit',
+	    value: function handleLoginSubmit(event) {
+	      this.setState({ submitted: true });
+	      event.preventDefault();
+	
+	      if (this.state.username != '' && this.state.password != '') {
+	        this.props.loginAction((0, _immutable.Map)({
+	          username: this.state.username,
+	          password: this.state.password
+	        }));
+	      }
+	    }
+	  }, {
+	    key: 'showUsernameValidation',
+	    value: function showUsernameValidation() {
+	      if (this.state.submitted && this.state.username == '') {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'text-danger' },
+	          'Please provide a username'
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'showPasswordValidation',
+	    value: function showPasswordValidation() {
+	      if (this.state.submitted && this.state.password == '') {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'text-danger' },
+	          'Please provide a password'
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'getErrorMsg',
+	    value: function getErrorMsg() {
+	      if (this.props.account.get('loginStatus') == Constants.LOGIN_STATE_FAILED) {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'text-danger' },
+	          'The supplied details were incorrect'
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'form',
+	          { onSubmit: this.handleLoginSubmit, className: 'panel-style form-group' },
+	          this.getErrorMsg(),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'control-header-style' },
+	            this.showUsernameValidation(),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'input-group' },
+	              _react2.default.createElement('span', { className: 'input-group-addon glyphicon glyphicon-user', id: 'username-addon' }),
+	              _react2.default.createElement('input', { placeholder: 'username', tabIndex: '1', type: 'text', 'aria-describedby': 'username-addon', className: 'form-control text-medium', value: this.state.username, onChange: this.handleUsernameChange })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'control-header-style' },
+	            this.showPasswordValidation(),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'input-group' },
+	              _react2.default.createElement('span', { className: 'input-group-addon glyphicon glyphicon-lock', id: 'password-addon' }),
+	              _react2.default.createElement('input', { placeholder: 'password', tabIndex: '2', type: 'password', 'aria-describedby': 'password-addon', className: 'form-control text-medium', value: this.state.password, onChange: this.handlePasswordChange })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'control-header-style text-medium' },
+	            _react2.default.createElement('input', { className: 'btn btn-primary text-medium', tabIndex: '3', type: 'submit', value: 'login >>' })
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return AccountLogin;
+	}(_react2.default.Component);
+	
+	function mapStateToProps(state) {
+	  return {
+	    //answers : state.get('answers')
+	    //pair: state.getIn(['vote', 'pair']),
+	    //hasVoted: state.get('hasVoted'),
+	    //winner: state.get('winner')
+	  };
+	}
+	
+	var AccountLoginContainer = (0, _reactRedux.connect)(mapStateToProps, actionCreators)(AccountLogin);
+	
+	exports.AccountLogin = AccountLogin;
+	exports.AccountLoginContainer = AccountLoginContainer;
+	;
+	
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+	
+	  __REACT_HOT_LOADER__.register(AccountLogin, 'AccountLogin', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/AccountLogin.jsx');
+	
+	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/AccountLogin.jsx');
+	
+	  __REACT_HOT_LOADER__.register(AccountLoginContainer, 'AccountLoginContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/AccountLogin.jsx');
+	}();
+
+	;
+
+/***/ },
+/* 352 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(353);
+
+/***/ },
+/* 353 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	* @providesModule shallowCompare
+	*/
+	
+	'use strict';
+	
+	var shallowEqual = __webpack_require__(203);
+	
+	/**
+	 * Does a shallow comparison for props and state.
+	 * See ReactComponentWithPureRenderMixin
+	 * See also https://facebook.github.io/react/docs/shallow-compare.html
+	 */
+	function shallowCompare(instance, nextProps, nextState) {
+	  return !shallowEqual(instance.props, nextProps) || !shallowEqual(instance.state, nextState);
+	}
+	
+	module.exports = shallowCompare;
+
+/***/ },
+/* 354 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.AccountCreateContainer = exports.AccountCreate = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(81);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(327);
+	
+	var _actionCreator = __webpack_require__(346);
+	
+	var actionCreators = _interopRequireWildcard(_actionCreator);
+	
+	var _immutable = __webpack_require__(345);
+	
+	var _constants = __webpack_require__(348);
+	
+	var Constants = _interopRequireWildcard(_constants);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var shallowCompare = __webpack_require__(352);
+	
+	var AccountCreate = function (_React$Component) {
+	  _inherits(AccountCreate, _React$Component);
+	
+	  function AccountCreate(props) {
+	    _classCallCheck(this, AccountCreate);
+	
+	    var _this = _possibleConstructorReturn(this, (AccountCreate.__proto__ || Object.getPrototypeOf(AccountCreate)).call(this, props));
+	
+	    _this.state = {
+	      firstName: '',
+	      lastName: '',
+	      username: '',
+	      password: '',
+	      email: '',
+	      marketing: true,
+	      submitted: false
+	    };
+	
+	    _this.handleFirstNameChange = _this.handleFirstNameChange.bind(_this);
+	    _this.handleLastNameChange = _this.handleLastNameChange.bind(_this);
+	    _this.handleUsernameChange = _this.handleUsernameChange.bind(_this);
+	    _this.handlePasswordChange = _this.handlePasswordChange.bind(_this);
+	    _this.handleEmailChange = _this.handleEmailChange.bind(_this);
+	    _this.handleMarketingChange = _this.handleMarketingChange.bind(_this);
+	    _this.handleAccountCreateSubmit = _this.handleAccountCreateSubmit.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(AccountCreate, [{
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps, nextState) {
+	      return shallowCompare(this, nextProps, nextState);
+	    }
+	  }, {
+	    key: 'handleFirstNameChange',
+	    value: function handleFirstNameChange(event) {
+	      this.setState({ firstName: event.target.value });
+	    }
+	  }, {
+	    key: 'handleLastNameChange',
+	    value: function handleLastNameChange(event) {
+	      this.setState({ lastName: event.target.value });
+	    }
+	  }, {
+	    key: 'handleUsernameChange',
+	    value: function handleUsernameChange(event) {
+	      this.setState({ username: event.target.value });
+	    }
+	  }, {
+	    key: 'handlePasswordChange',
+	    value: function handlePasswordChange(event) {
+	      this.setState({ password: event.target.value });
+	    }
+	  }, {
+	    key: 'handleEmailChange',
+	    value: function handleEmailChange(event) {
+	      this.setState({ email: event.target.value });
+	    }
+	  }, {
+	    key: 'handleMarketingChange',
+	    value: function handleMarketingChange(event) {
+	      this.setState({ marketing: event.target.checked });
+	    }
+	  }, {
+	    key: 'handleAccountCreateSubmit',
+	    value: function handleAccountCreateSubmit(event) {
+	      this.setState({ submitted: true });
+	      event.preventDefault();
+	
+	      if (this.state.firstName != '' && this.state.lastName != '' && this.state.username != '' && this.state.password != '' && this.state.email != '') {
+	
+	        this.props.createAccountAction((0, _immutable.Map)({
+	          firstName: this.state.firstName,
+	          lastName: this.state.lastName,
+	          username: this.state.username,
+	          password: this.state.password,
+	          email: this.state.email,
+	          marketing: this.state.marketing }));
+	      }
+	    }
+	  }, {
+	    key: 'showFirstNameValidation',
+	    value: function showFirstNameValidation() {
+	      if (this.state.submitted && this.state.firstName == '') {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'text-danger' },
+	          'Please provide a first name'
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'showLastNameValidation',
+	    value: function showLastNameValidation() {
+	      if (this.state.submitted && this.state.lastName == '') {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'text-danger' },
+	          'Please provide a last name'
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'showUsernameValidation',
+	    value: function showUsernameValidation() {
+	      if (this.state.submitted && this.state.username == '') {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'text-danger' },
+	          'Please provide a username'
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'showPasswordValidation',
+	    value: function showPasswordValidation() {
+	      if (this.state.submitted && this.state.password == '') {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'text-danger' },
+	          'Please provide a password'
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'showEmailValidation',
+	    value: function showEmailValidation() {
+	      if (this.state.submitted && this.state.email == '') {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'text-danger' },
+	          'Please provide an email'
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'getErrorMsg',
+	    value: function getErrorMsg() {
+	      if (this.props.account.get('accountCreationStatus') == Constants.ACCOUNT_STATE_USERNAME_IN_USE) {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'text-danger' },
+	          'The username is in use'
+	        );
+	      } else if (this.props.account.get('accountCreationStatus') == Constants.ACCOUNT_STATE_FAILED) {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'text-danger' },
+	          'An error occurred - please try again'
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'form',
+	          { onSubmit: this.handleAccountCreateSubmit, className: 'panel-style form-group' },
+	          this.getErrorMsg(),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'control-header-style' },
+	            this.showFirstNameValidation(),
+	            _react2.default.createElement('input', { type: 'text', tabIndex: '1', className: 'form-control text-medium', placeholder: 'first name', value: this.state.firstName, onChange: this.handleFirstNameChange })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'control-header-style' },
+	            this.showLastNameValidation(),
+	            _react2.default.createElement('input', { type: 'text', tabIndex: '2', className: 'form-control text-medium', placeholder: 'last name', value: this.state.lastName, onChange: this.handleLastNameChange })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'control-header-style' },
+	            this.showUsernameValidation(),
+	            _react2.default.createElement('input', { type: 'text', tabIndex: '3', className: 'form-control text-medium', placeholder: 'username', value: this.state.username, onChange: this.handleUsernameChange })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'control-header-style' },
+	            this.showPasswordValidation(),
+	            _react2.default.createElement('input', { type: 'password', tabIndex: '4', className: 'form-control text-medium', placeholder: 'password', value: this.state.password, onChange: this.handlePasswordChange })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'control-header-style' },
+	            this.showEmailValidation(),
+	            _react2.default.createElement('input', { type: 'text', tabIndex: '5', className: 'form-control text-medium', placeholder: 'email', value: this.state.email, onChange: this.handleEmailChange })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'control-header-style' },
+	              _react2.default.createElement('input', { id: 'marketingCheckbox', tabIndex: '6', className: 'text-medium', type: 'checkbox', checked: this.state.marketing, onChange: this.handleMarketingChange }),
+	              _react2.default.createElement(
+	                'label',
+	                { htmlFor: 'marketingCheckbox', className: 'text-medium control-left-margin' },
+	                'hear from us via email?'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'control-header-style text-medium' },
+	            _react2.default.createElement('input', { className: 'btn btn-primary text-medium', tabIndex: '7', type: 'submit', value: 'create >>' })
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return AccountCreate;
+	}(_react2.default.Component);
+	
+	function mapStateToProps(state) {
+	  return {};
+	}
+	
+	var AccountCreateContainer = (0, _reactRedux.connect)(mapStateToProps, actionCreators)(AccountCreate);
+	
+	exports.AccountCreate = AccountCreate;
+	exports.AccountCreateContainer = AccountCreateContainer;
+	;
+	
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+	
+	  __REACT_HOT_LOADER__.register(AccountCreate, 'AccountCreate', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/AccountCreate.jsx');
+	
+	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/AccountCreate.jsx');
+	
+	  __REACT_HOT_LOADER__.register(AccountCreateContainer, 'AccountCreateContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/AccountCreate.jsx');
+	}();
+
+	;
+
+/***/ },
+/* 355 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.AccountDisplayContainer = exports.AccountDisplay = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(81);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(327);
+	
+	var _actionCreator = __webpack_require__(346);
+	
+	var actionCreators = _interopRequireWildcard(_actionCreator);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var shallowCompare = __webpack_require__(352);
+	
+	var AccountDisplay = function (_React$Component) {
+	  _inherits(AccountDisplay, _React$Component);
+	
+	  function AccountDisplay(props) {
+	    _classCallCheck(this, AccountDisplay);
+	
+	    var _this = _possibleConstructorReturn(this, (AccountDisplay.__proto__ || Object.getPrototypeOf(AccountDisplay)).call(this, props));
+	
+	    _this.state = {};
+	    return _this;
+	  }
+	
+	  _createClass(AccountDisplay, [{
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps, nextState) {
+	      return shallowCompare(this, nextProps, nextState);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'col-md-10 col-md-offset-1 panel-header-style' },
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'text-large' },
+	            'Hallo ',
+	            this.props.account.get('user').get('firstName'),
+	            ' ',
+	            this.props.account.get('user').get('lastName'),
+	            '!'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'text-medium' },
+	            'All changes you now make below will now be automatically saved'
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return AccountDisplay;
+	}(_react2.default.Component);
+	
+	function mapStateToProps(state) {
+	  return {};
+	}
+	
+	var AccountDisplayContainer = (0, _reactRedux.connect)(mapStateToProps, actionCreators)(AccountDisplay);
+	
+	exports.AccountDisplay = AccountDisplay;
+	exports.AccountDisplayContainer = AccountDisplayContainer;
+	;
+	
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+	
+	  __REACT_HOT_LOADER__.register(AccountDisplay, 'AccountDisplay', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/AccountDisplay.jsx');
+	
+	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/AccountDisplay.jsx');
+	
+	  __REACT_HOT_LOADER__.register(AccountDisplayContainer, 'AccountDisplayContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/AccountDisplay.jsx');
+	}();
+
+	;
+
+/***/ },
+/* 356 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.NewQuestionContainer = exports.NewQuestion = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(81);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(327);
+	
+	var _reactRouter = __webpack_require__(251);
+	
+	var _actionCreator = __webpack_require__(346);
+	
+	var actionCreators = _interopRequireWildcard(_actionCreator);
+	
+	var _uuid = __webpack_require__(357);
+	
+	var _uuid2 = _interopRequireDefault(_uuid);
+	
+	var _immutable = __webpack_require__(345);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var shallowCompare = __webpack_require__(352);
+	
+	var NewQuestion = function (_React$Component) {
+	  _inherits(NewQuestion, _React$Component);
+	
+	  function NewQuestion(props) {
+	    _classCallCheck(this, NewQuestion);
+	
+	    var _this = _possibleConstructorReturn(this, (NewQuestion.__proto__ || Object.getPrototypeOf(NewQuestion)).call(this, props));
+	
+	    _this.state = {
+	      questionText: '',
+	      submitted: false
+	    };
+	
+	    _this.handleChange = _this.handleChange.bind(_this);
+	    _this.handleSubmit = _this.handleSubmit.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(NewQuestion, [{
+	    key: 'handleChange',
+	    value: function handleChange(event) {
+	      this.setState({ questionText: event.target.value });
+	    }
+	  }, {
+	    key: 'handleSubmit',
+	    value: function handleSubmit(event) {
+	      this.setState({ submitted: true });
+	      event.preventDefault();
+	
+	      if (this.state.questionText != '') {
+	        var uid = _uuid2.default.v1();
+	        var question = (0, _immutable.Map)({ title: this.state.questionText, id: uid });
+	        this.props.newQuestionAction(question, this.props.question);
+	        this.setState({ submitted: false, questionText: '' });
+	        this.props.newQuestion(question);
+	      }
+	    }
+	  }, {
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps, nextState) {
+	      return shallowCompare(this, nextProps, nextState);
+	    }
+	  }, {
+	    key: 'showValidation',
+	    value: function showValidation() {
+	      if (this.state.questionText == '' && this.state.submitted) {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'alert alert-warning control-padding' },
+	          'Enter a description of your problem before continuing...'
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'col-md-10 col-md-offset-1 panel-header-style' },
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'form',
+	            { onSubmit: this.handleSubmit },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'form-group' },
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'text-large' },
+	                  'Start making better decisions'
+	                ),
+	                this.showValidation(),
+	                _react2.default.createElement('textarea', { placeholder: 'Enter a description of your troublesome problem, e.g. should I buy that new pair of shoes?', className: 'form-control text-medium control-padding', value: this.state.questionText, onChange: this.handleChange }),
+	                _react2.default.createElement(
+	                  'a',
+	                  { className: 'text-small popover-link', 'data-html': 'true', 'data-toggle': 'popover', 'data-content': 'Enter a description above for the problem or dilemma you are trying to decide upon. <br/>The description just needs to be enough so that you can identify the problem in the future.' },
+	                  'what is this?'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'control-header-style' },
+	                _react2.default.createElement('input', { className: 'btn btn-primary text-medium', type: 'submit', value: 'create question >>' })
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return NewQuestion;
+	}(_react2.default.Component);
+	
+	NewQuestion.propTypes = {
+	  newQuestion: _react2.default.PropTypes.func.isRequired
+	};
+	
+	function mapStateToProps(state) {
+	  return {};
+	}
+	
+	var NewQuestionContainer = (0, _reactRedux.connect)(mapStateToProps, actionCreators)(NewQuestion);
+	
+	exports.NewQuestion = NewQuestion;
+	exports.NewQuestionContainer = NewQuestionContainer;
+	;
+	
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+	
+	  __REACT_HOT_LOADER__.register(NewQuestion, 'NewQuestion', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/NewQuestion.jsx');
+	
+	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/NewQuestion.jsx');
+	
+	  __REACT_HOT_LOADER__.register(NewQuestionContainer, 'NewQuestionContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/NewQuestion.jsx');
+	}();
+
+	;
+
+/***/ },
+/* 357 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Unique ID creation requires a high quality random # generator.  We feature
 	// detect to determine the best RNG source, normalizing to a function that
 	// returns 128-bits of randomness, since that's what's usually required
-	var _rng = __webpack_require__(352);
+	var _rng = __webpack_require__(358);
 	
 	// Maps for number <-> hex string conversion
 	var _byteToHex = [];
@@ -43257,7 +44132,7 @@
 
 
 /***/ },
-/* 352 */
+/* 358 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -43296,43 +44171,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 353 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__(354);
-
-/***/ },
-/* 354 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	* @providesModule shallowCompare
-	*/
-	
-	'use strict';
-	
-	var shallowEqual = __webpack_require__(203);
-	
-	/**
-	 * Does a shallow comparison for props and state.
-	 * See ReactComponentWithPureRenderMixin
-	 * See also https://facebook.github.io/react/docs/shallow-compare.html
-	 */
-	function shallowCompare(instance, nextProps, nextState) {
-	  return !shallowEqual(instance.props, nextProps) || !shallowEqual(instance.state, nextState);
-	}
-	
-	module.exports = shallowCompare;
-
-/***/ },
-/* 355 */
+/* 359 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43348,19 +44187,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _reactRouter = __webpack_require__(251);
+	
 	var _reactRedux = __webpack_require__(327);
 	
-	var _AccountLogin = __webpack_require__(356);
-	
-	var _QuestionList = __webpack_require__(357);
-	
-	var _actionCreator = __webpack_require__(348);
+	var _actionCreator = __webpack_require__(346);
 	
 	var actionCreators = _interopRequireWildcard(_actionCreator);
 	
-	var _constants = __webpack_require__(350);
-	
-	var Constants = _interopRequireWildcard(_constants);
+	var _Question = __webpack_require__(360);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -43372,7 +44207,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var shallowCompare = __webpack_require__(353);
+	var shallowCompare = __webpack_require__(352);
 	
 	var MyQuestions = function (_React$Component) {
 	  _inherits(MyQuestions, _React$Component);
@@ -43380,10 +44215,7 @@
 	  function MyQuestions(props) {
 	    _classCallCheck(this, MyQuestions);
 	
-	    var _this = _possibleConstructorReturn(this, (MyQuestions.__proto__ || Object.getPrototypeOf(MyQuestions)).call(this, props));
-	
-	    _this.state = {};
-	    return _this;
+	    return _possibleConstructorReturn(this, (MyQuestions.__proto__ || Object.getPrototypeOf(MyQuestions)).call(this, props));
 	  }
 	
 	  _createClass(MyQuestions, [{
@@ -43392,43 +44224,23 @@
 	      return shallowCompare(this, nextProps, nextState);
 	    }
 	  }, {
-	    key: 'getLoginContainer',
-	    value: function getLoginContainer() {
-	      if (this.props.account.get('loginStatus') != Constants.LOGIN_STATE_LOGGED_IN) {
-	        return _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(_AccountLogin.AccountLoginContainer, { account: this.props.account })
-	        );
-	      }
-	    }
-	  }, {
-	    key: 'getQuestionsContainer',
-	    value: function getQuestionsContainer() {
-	      if (this.props.account.get('loginStatus') == Constants.LOGIN_STATE_LOGGED_IN) {
-	        return _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(_QuestionList.QuestionListContainer, { questions: this.props.questions })
-	        );
-	      }
+	    key: 'getQuestions',
+	    value: function getQuestions() {
+	      return this.props.questions || [];
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	
 	      return _react2.default.createElement(
 	        'div',
-	        null,
+	        { className: 'col-md-10 col-md-offset-1 panel-header-style' },
 	        _react2.default.createElement(
 	          'div',
-	          null,
-	          'My Saved Questions'
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          this.getLoginContainer(),
-	          this.getQuestionsContainer()
+	          { className: 'panel-group', id: 'question_accordion' },
+	          this.getQuestions().map(function (question) {
+	            return _react2.default.createElement(_Question.QuestionContainer, { key: question.get('id'), question: question });
+	          })
 	        )
 	      );
 	    }
@@ -43462,301 +44274,7 @@
 	;
 
 /***/ },
-/* 356 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.AccountLoginContainer = exports.AccountLogin = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(81);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRedux = __webpack_require__(327);
-	
-	var _actionCreator = __webpack_require__(348);
-	
-	var actionCreators = _interopRequireWildcard(_actionCreator);
-	
-	var _immutable = __webpack_require__(345);
-	
-	var _constants = __webpack_require__(350);
-	
-	var Constants = _interopRequireWildcard(_constants);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var shallowCompare = __webpack_require__(353);
-	
-	var AccountLogin = function (_React$Component) {
-	  _inherits(AccountLogin, _React$Component);
-	
-	  function AccountLogin(props) {
-	    _classCallCheck(this, AccountLogin);
-	
-	    var _this = _possibleConstructorReturn(this, (AccountLogin.__proto__ || Object.getPrototypeOf(AccountLogin)).call(this, props));
-	
-	    _this.state = {
-	      username: '',
-	      password: ''
-	    };
-	
-	    _this.handleUsernameChange = _this.handleUsernameChange.bind(_this);
-	    _this.handlePasswordChange = _this.handlePasswordChange.bind(_this);
-	    _this.handleLoginSubmit = _this.handleLoginSubmit.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(AccountLogin, [{
-	    key: 'shouldComponentUpdate',
-	    value: function shouldComponentUpdate(nextProps, nextState) {
-	      return shallowCompare(this, nextProps, nextState);
-	    }
-	  }, {
-	    key: 'handleUsernameChange',
-	    value: function handleUsernameChange(event) {
-	      this.setState({ username: event.target.value });
-	    }
-	  }, {
-	    key: 'handlePasswordChange',
-	    value: function handlePasswordChange(event) {
-	      this.setState({ password: event.target.value });
-	    }
-	  }, {
-	    key: 'handleLoginSubmit',
-	    value: function handleLoginSubmit(event) {
-	      event.preventDefault();
-	      this.props.loginAction((0, _immutable.Map)({
-	        username: this.state.username,
-	        password: this.state.password
-	      }));
-	    }
-	  }, {
-	    key: 'getErrorMsg',
-	    value: function getErrorMsg() {
-	      var msg = null;
-	      if (this.props.account.get('loginStatus') == Constants.LOGIN_STATE_FAILED) {
-	        msg = 'The supplied details were incorrect - please try again';
-	      }
-	
-	      if (msg) {
-	        return _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(
-	            'b',
-	            null,
-	            msg
-	          )
-	        );
-	      }
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        this.getErrorMsg(),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(
-	            'form',
-	            { onSubmit: this.handleLoginSubmit },
-	            _react2.default.createElement(
-	              'div',
-	              null,
-	              'username'
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              null,
-	              _react2.default.createElement('input', { type: 'text', value: this.state.username, onChange: this.handleUsernameChange })
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              null,
-	              'password'
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              null,
-	              _react2.default.createElement('input', { type: 'text', value: this.state.password, onChange: this.handlePasswordChange })
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              null,
-	              _react2.default.createElement('input', { type: 'submit', value: 'GO' })
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return AccountLogin;
-	}(_react2.default.Component);
-	
-	function mapStateToProps(state) {
-	  return {
-	    //answers : state.get('answers')
-	    //pair: state.getIn(['vote', 'pair']),
-	    //hasVoted: state.get('hasVoted'),
-	    //winner: state.get('winner')
-	  };
-	}
-	
-	var AccountLoginContainer = (0, _reactRedux.connect)(mapStateToProps, actionCreators)(AccountLogin);
-	
-	exports.AccountLogin = AccountLogin;
-	exports.AccountLoginContainer = AccountLoginContainer;
-	;
-	
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-	
-	  __REACT_HOT_LOADER__.register(AccountLogin, 'AccountLogin', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/AccountLogin.jsx');
-	
-	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/AccountLogin.jsx');
-	
-	  __REACT_HOT_LOADER__.register(AccountLoginContainer, 'AccountLoginContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/AccountLogin.jsx');
-	}();
-
-	;
-
-/***/ },
-/* 357 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.QuestionListContainer = exports.QuestionList = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(81);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRouter = __webpack_require__(251);
-	
-	var _reactRedux = __webpack_require__(327);
-	
-	var _actionCreator = __webpack_require__(348);
-	
-	var actionCreators = _interopRequireWildcard(_actionCreator);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var shallowCompare = __webpack_require__(353);
-	
-	var QuestionList = function (_React$Component) {
-	  _inherits(QuestionList, _React$Component);
-	
-	  function QuestionList(props) {
-	    _classCallCheck(this, QuestionList);
-	
-	    return _possibleConstructorReturn(this, (QuestionList.__proto__ || Object.getPrototypeOf(QuestionList)).call(this, props));
-	  }
-	
-	  _createClass(QuestionList, [{
-	    key: 'shouldComponentUpdate',
-	    value: function shouldComponentUpdate(nextProps, nextState) {
-	      return shallowCompare(this, nextProps, nextState);
-	    }
-	  }, {
-	    key: 'getQuestions',
-	    value: function getQuestions() {
-	      return this.props.questions || [];
-	    }
-	  }, {
-	    key: 'getQuestionLink',
-	    value: function getQuestionLink(question) {
-	      return '/question/' + question.get('id');
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-	
-	      var a = this.getQuestions();
-	
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        this.getQuestions().map(function (question) {
-	          return _react2.default.createElement(
-	            'div',
-	            { key: question.get('id') },
-	            _react2.default.createElement(
-	              _reactRouter.Link,
-	              { to: _this2.getQuestionLink(question) },
-	              question.get('title')
-	            )
-	          );
-	        })
-	      );
-	    }
-	  }]);
-	
-	  return QuestionList;
-	}(_react2.default.Component);
-	
-	function mapStateToProps(state) {
-	  return {};
-	}
-	
-	var QuestionListContainer = (0, _reactRedux.connect)(mapStateToProps, actionCreators)(QuestionList);
-	
-	exports.QuestionList = QuestionList;
-	exports.QuestionListContainer = QuestionListContainer;
-	;
-	
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-	
-	  __REACT_HOT_LOADER__.register(QuestionList, 'QuestionList', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/QuestionList.jsx');
-	
-	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/QuestionList.jsx');
-	
-	  __REACT_HOT_LOADER__.register(QuestionListContainer, 'QuestionListContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/QuestionList.jsx');
-	}();
-
-	;
-
-/***/ },
-/* 358 */
+/* 360 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43772,25 +44290,21 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactRedux = __webpack_require__(327);
-	
 	var _reactRouter = __webpack_require__(251);
 	
-	var _immutable = __webpack_require__(345);
+	var _reactRedux = __webpack_require__(327);
 	
-	var _actionCreator = __webpack_require__(348);
+	var _actionCreator = __webpack_require__(346);
 	
 	var actionCreators = _interopRequireWildcard(_actionCreator);
 	
-	var _Answers = __webpack_require__(359);
+	var _uuid = __webpack_require__(357);
 	
-	var _NewAnswer = __webpack_require__(375);
+	var _uuid2 = _interopRequireDefault(_uuid);
 	
-	var _Account = __webpack_require__(376);
+	var _immutable = __webpack_require__(345);
 	
-	var _constants = __webpack_require__(350);
-	
-	var Constants = _interopRequireWildcard(_constants);
+	var _Answer = __webpack_require__(361);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -43802,7 +44316,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var shallowCompare = __webpack_require__(353);
+	var shallowCompare = __webpack_require__(352);
 	
 	var Question = function (_React$Component) {
 	  _inherits(Question, _React$Component);
@@ -43813,34 +44327,39 @@
 	    var _this = _possibleConstructorReturn(this, (Question.__proto__ || Object.getPrototypeOf(Question)).call(this, props));
 	
 	    _this.state = {
-	      showAccount: false
+	      answer: '',
+	      submitted: false
 	    };
 	
-	    _this.saveQuestion = _this.saveQuestion.bind(_this);
-	    //this.handleSubmit = this.handleSubmit.bind(this);
+	    _this.handleAnswerChange = _this.handleAnswerChange.bind(_this);
+	    _this.handleAnswerSubmit = _this.handleAnswerSubmit.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(Question, [{
-	    key: 'handleChange',
-	    value: function handleChange(event) {
-	      //this.setState({questionText: event.target.value});
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      // enure new popovers work
+	      $('[data-toggle="popover"]').popover();
 	    }
 	  }, {
-	    key: 'handleSubmit',
-	    value: function handleSubmit(event) {
-	      //event.preventDefault();
-	      //this.props.newQuestionAction(this.state.questionText)
-	      //browserHistory.push('/some/path/123');
+	    key: 'handleAnswerChange',
+	    value: function handleAnswerChange(event) {
+	      this.setState({ answer: event.target.value });
 	    }
 	  }, {
-	    key: 'getQuestion',
-	    value: function getQuestion() {
-	      var _this2 = this;
+	    key: 'handleAnswerSubmit',
+	    value: function handleAnswerSubmit(event) {
 	
-	      return this.props.questions.find(function (q) {
-	        return q.get('id') === _this2.props.params.questionId;
-	      });
+	      this.setState({ submitted: true });
+	      event.preventDefault();
+	
+	      if (this.state.answer != '') {
+	        var uid = _uuid2.default.v1();
+	        this.props.newAnswerAction((0, _immutable.Map)({ title: this.state.answer, id: uid, score: 0 }), this.props.question);
+	
+	        this.setState({ submitted: false, answer: '' });
+	      }
 	    }
 	  }, {
 	    key: 'shouldComponentUpdate',
@@ -43848,92 +44367,113 @@
 	      return shallowCompare(this, nextProps, nextState);
 	    }
 	  }, {
+	    key: 'getHref',
+	    value: function getHref() {
+	      return '#' + this.props.question.get('id');
+	    }
+	  }, {
 	    key: 'getBestAnswer',
 	    value: function getBestAnswer() {
-	      var bestAnswer = this.getQuestion().get('answers').sort(function (a, b) {
+	      var bestAnswer = this.props.question.get('answers').sort(function (a, b) {
 	        return b.get('score') - a.get('score');
 	      }).first();
 	
 	      if (bestAnswer) {
+	        return bestAnswer.get('title');
+	      } else {
+	        return '';
+	      }
+	    }
+	  }, {
+	    key: 'showAnswerValidation',
+	    value: function showAnswerValidation() {
+	      if (this.state.submitted && this.state.answer == '') {
 	        return _react2.default.createElement(
 	          'div',
-	          null,
-	          'BEST ANSWER - ',
-	          bestAnswer.get('title')
+	          { className: 'alert alert-warning control-padding' },
+	          'Please describe your resolution'
 	        );
 	      }
 	    }
 	  }, {
-	    key: 'saveQuestion',
-	    value: function saveQuestion() {
-	      this.setState({ showAccount: true });
-	    }
-	  }, {
-	    key: 'getAccountLink',
-	    value: function getAccountLink() {
-	      if (!this.state.showAccount && !(this.props.account.get('loginStatus') == Constants.LOGIN_STATE_LOGGED_IN)) {
-	        return _react2.default.createElement(
-	          'div',
-	          { onClick: this.saveQuestion },
-	          'SAVE THIS QUESTION'
-	        );
-	      }
-	    }
-	  }, {
-	    key: 'getAccountPanel',
-	    value: function getAccountPanel() {
-	      if (this.state.showAccount && !(this.props.account.get('loginStatus') == Constants.LOGIN_STATE_LOGGED_IN)) {
-	        return _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(_Account.AccountContainer, { account: this.props.account })
-	        );
-	      }
-	    }
-	  }, {
-	    key: 'getWelcomePanel',
-	    value: function getWelcomePanel() {
-	      if (this.props.account.get('loginStatus') == Constants.LOGIN_STATE_LOGGED_IN) {
-	        return _react2.default.createElement(
-	          'div',
-	          null,
-	          'WELCOME ',
-	          this.props.account.get('user').get('firstName'),
-	          ' ',
-	          this.props.account.get('user').get('lastName')
-	        );
-	      }
+	    key: 'getAccordianId',
+	    value: function getAccordianId() {
+	      return 'answer_accordion_' + this.props.question.get('id');
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var question = this.getQuestion();
+	      var _this2 = this;
 	
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'container-fluid' },
+	        { className: 'panel panel-default' },
 	        _react2.default.createElement(
 	          'div',
-	          null,
+	          { className: 'panel-heading' },
 	          _react2.default.createElement(
-	            _reactRouter.Link,
-	            { to: '/' },
-	            'MORE QUESTIONS'
+	            'h4',
+	            { className: 'panel-title' },
+	            _react2.default.createElement(
+	              'a',
+	              { 'data-toggle': 'collapse', 'data-parent': '#question_accordion', href: this.getHref() },
+	              'Q. ',
+	              this.props.question.get('title')
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            'A. ',
+	            this.getBestAnswer()
 	          )
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          null,
-	          question.get('title')
-	        ),
-	        this.getAccountLink(),
-	        this.getAccountPanel(),
-	        this.getWelcomePanel(),
-	        this.getBestAnswer(),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(_Answers.AnswersContainer, { question: question, newAnswer: this.newAnswer })
+	          { id: this.props.question.get('id'), className: 'panel-collapse collapse in' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'panel-body panel-padding' },
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                  'form',
+	                  { onSubmit: this.handleAnswerSubmit, className: 'panel-style form-group' },
+	                  _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(
+	                      'div',
+	                      { className: 'control-header-style' },
+	                      this.showAnswerValidation(),
+	                      _react2.default.createElement('input', { placeholder: 'Enter resolution description', tabIndex: '1', type: 'text', className: 'form-control text-medium', value: this.state.answer, onChange: this.handleAnswerChange }),
+	                      _react2.default.createElement(
+	                        'a',
+	                        { className: 'text-small popover-link', 'data-html': 'true', 'data-toggle': 'popover', 'data-content': 'You need to create at least two resolutions for your question.<br/>For example, \'Yes - I should buy the shoes\' and \'No - I shouldn\'t buy the shoes\'.<br/>Enter a resolution into the box above and click \'create resolution\' to record the resolution. <br/>Do this for all possible outcomes you can see for your question.' },
+	                        'what is this?'
+	                      )
+	                    ),
+	                    _react2.default.createElement(
+	                      'div',
+	                      { className: 'control-header-style text-medium' },
+	                      _react2.default.createElement('input', { className: 'btn btn-primary text-medium', tabIndex: '3', type: 'submit', value: 'create resolution >>' })
+	                    ),
+	                    _react2.default.createElement(
+	                      'div',
+	                      { className: 'panel-group control-header-style', id: this.getAccordianId() },
+	                      this.props.question.get('answers').map(function (answer) {
+	                        return _react2.default.createElement(_Answer.AnswerContainer, { key: answer.get('id'), question: _this2.props.question, answer: answer });
+	                      })
+	                    )
+	                  )
+	                )
+	              )
+	            )
+	          )
 	        )
 	      );
 	    }
@@ -43943,13 +44483,7 @@
 	}(_react2.default.Component);
 	
 	function mapStateToProps(state) {
-	  return {
-	    account: state.get('account'),
-	    questions: state.get('questions')
-	    //pair: state.getIn(['vote', 'pair']),
-	    //hasVoted: state.get('hasVoted'),
-	    //winner: state.get('winner')
-	  };
+	  return {};
 	}
 	
 	var QuestionContainer = (0, _reactRedux.connect)(mapStateToProps, actionCreators)(Question);
@@ -43973,7 +44507,7 @@
 	;
 
 /***/ },
-/* 359 */
+/* 361 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43981,7 +44515,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.AnswersContainer = exports.Answers = undefined;
+	exports.AnswerContainer = exports.Answer = undefined;
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
@@ -43989,21 +44523,21 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactRedux = __webpack_require__(327);
-	
 	var _reactRouter = __webpack_require__(251);
 	
-	var _immutable = __webpack_require__(345);
+	var _reactRedux = __webpack_require__(327);
 	
-	var _actionCreator = __webpack_require__(348);
+	var _actionCreator = __webpack_require__(346);
 	
 	var actionCreators = _interopRequireWildcard(_actionCreator);
 	
-	var _Considerations = __webpack_require__(360);
-	
-	var _uuid = __webpack_require__(351);
+	var _uuid = __webpack_require__(357);
 	
 	var _uuid2 = _interopRequireDefault(_uuid);
+	
+	var _immutable = __webpack_require__(345);
+	
+	var _Consideration = __webpack_require__(362);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
@@ -44015,244 +44549,19 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var shallowCompare = __webpack_require__(353);
+	var shallowCompare = __webpack_require__(352);
 	
-	var Answers = function (_React$Component) {
-	  _inherits(Answers, _React$Component);
+	var Answer = function (_React$Component) {
+	  _inherits(Answer, _React$Component);
 	
-	  function Answers(props) {
-	    _classCallCheck(this, Answers);
+	  function Answer(props) {
+	    _classCallCheck(this, Answer);
 	
-	    var _this = _possibleConstructorReturn(this, (Answers.__proto__ || Object.getPrototypeOf(Answers)).call(this, props));
-	
-	    _this.state = {
-	      showConsiderationForAnswers: (0, _immutable.List)(),
-	      answerText: ''
-	    };
-	
-	    _this.newAnswer = _this.newAnswer.bind(_this);
-	    _this.removeAnswer = _this.removeAnswer.bind(_this);
-	    _this.showConsiderations = _this.showConsiderations.bind(_this);
-	    _this.handleAnswerChange = _this.handleAnswerChange.bind(_this);
-	    _this.handleAnswerSubmit = _this.handleAnswerSubmit.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(Answers, [{
-	    key: 'handleAnswerChange',
-	    value: function handleAnswerChange(event) {
-	      this.setState({ answerText: event.target.value });
-	    }
-	  }, {
-	    key: 'handleAnswerSubmit',
-	    value: function handleAnswerSubmit(event) {
-	
-	      event.preventDefault();
-	      var uid = _uuid2.default.v1();
-	      this.props.newAnswerAction((0, _immutable.Map)({ title: this.state.answerText, id: uid, score: 0 }), this.props.question);
-	    }
-	  }, {
-	    key: 'shouldComponentUpdate',
-	    value: function shouldComponentUpdate(nextProps, nextState) {
-	      return shallowCompare(this, nextProps, nextState);
-	    }
-	  }, {
-	    key: 'newAnswer',
-	    value: function newAnswer(event) {
-	      event.preventDefault();
-	      this.props.newAnswer();
-	    }
-	  }, {
-	    key: 'removeAnswer',
-	    value: function removeAnswer(event) {
-	      event.preventDefault();
-	      this.props.removeAnswerAction(event.currentTarget.dataset.id, this.props.question);
-	    }
-	  }, {
-	    key: 'showConsiderations',
-	    value: function showConsiderations(event) {
-	      event.preventDefault();
-	      var answerId = event.currentTarget.dataset.id;
-	
-	      if (this.state.showConsiderationForAnswers.includes(answerId)) {
-	        this.setState({ showConsiderationForAnswers: this.state.showConsiderationForAnswers.filter(function (item) {
-	            return item === answerId;
-	          }) });
-	      } else {
-	        this.setState({ showConsiderationForAnswers: this.state.showConsiderationForAnswers.push(answerId) });
-	      }
-	    }
-	  }, {
-	    key: 'getConsiderations',
-	    value: function getConsiderations(id) {
-	
-	      if (this.state.showConsiderationForAnswers.includes(id)) {
-	        var answer = this.props.question.get('answers').find(function (item) {
-	          return item.get('id') === id;
-	        });
-	
-	        return _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(_Considerations.ConsiderationsContainer, { question: this.props.question, answer: answer })
-	        );
-	      }
-	
-	      return _react2.default.createElement('div', null);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-	
-	      /* order by highest score first */
-	      var answers = this.props.question.get('answers'); //.sort( (a,b) => b.get('score') - a.get('score'))
-	
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(
-	            'form',
-	            { onSubmit: this.handleAnswerSubmit },
-	            _react2.default.createElement(
-	              'div',
-	              null,
-	              _react2.default.createElement('input', { type: 'text', value: this.state.answerText, onChange: this.handleAnswerChange }),
-	              _react2.default.createElement('input', { type: 'submit', value: 'ADD' })
-	            )
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          answers.map(function (c) {
-	            return _react2.default.createElement(
-	              'div',
-	              { key: c.get('id') },
-	              _react2.default.createElement(
-	                'h1',
-	                null,
-	                _react2.default.createElement(
-	                  'u',
-	                  null,
-	                  c.get('title')
-	                ),
-	                ' - ',
-	                c.get('score')
-	              ),
-	              _react2.default.createElement(
-	                'u',
-	                { 'data-id': c.get('id'), onClick: _this2.removeAnswer },
-	                'REMOVE'
-	              ),
-	              _react2.default.createElement(
-	                'u',
-	                { 'data-id': c.get('id'), onClick: _this2.showConsiderations },
-	                'SHOW CONSIDERATIONS'
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                null,
-	                _this2.getConsiderations(c.get('id'))
-	              )
-	            );
-	          })
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return Answers;
-	}(_react2.default.Component);
-	
-	function mapStateToProps(state) {
-	  return {
-	    //answers : state.get('answers')
-	    //pair: state.getIn(['vote', 'pair']),
-	    //hasVoted: state.get('hasVoted'),
-	    //winner: state.get('winner')
-	  };
-	}
-	
-	var AnswersContainer = (0, _reactRedux.connect)(mapStateToProps, actionCreators)(Answers);
-	
-	exports.Answers = Answers;
-	exports.AnswersContainer = AnswersContainer;
-	;
-	
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-	
-	  __REACT_HOT_LOADER__.register(Answers, 'Answers', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Answers.jsx');
-	
-	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Answers.jsx');
-	
-	  __REACT_HOT_LOADER__.register(AnswersContainer, 'AnswersContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Answers.jsx');
-	}();
-
-	;
-
-/***/ },
-/* 360 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.ConsiderationsContainer = exports.Considerations = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(81);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRedux = __webpack_require__(327);
-	
-	var _reactRouter = __webpack_require__(251);
-	
-	var _immutable = __webpack_require__(345);
-	
-	var _actionCreator = __webpack_require__(348);
-	
-	var actionCreators = _interopRequireWildcard(_actionCreator);
-	
-	var _uuid = __webpack_require__(351);
-	
-	var _uuid2 = _interopRequireDefault(_uuid);
-	
-	var _Consideration = __webpack_require__(361);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var shallowCompare = __webpack_require__(353);
-	
-	var Considerations = function (_React$Component) {
-	  _inherits(Considerations, _React$Component);
-	
-	  function Considerations(props) {
-	    _classCallCheck(this, Considerations);
-	
-	    var _this = _possibleConstructorReturn(this, (Considerations.__proto__ || Object.getPrototypeOf(Considerations)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (Answer.__proto__ || Object.getPrototypeOf(Answer)).call(this, props));
 	
 	    _this.state = {
-	      considerationText: '',
-	      values: 0
+	      consideration: '',
+	      submitted: false
 	    };
 	
 	    _this.handleConsiderationChange = _this.handleConsiderationChange.bind(_this);
@@ -44260,117 +44569,137 @@
 	    return _this;
 	  }
 	
-	  _createClass(Considerations, [{
+	  _createClass(Answer, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      // enure new popovers work
+	      $('[data-toggle="popover"]').popover();
+	    }
+	  }, {
 	    key: 'handleConsiderationChange',
 	    value: function handleConsiderationChange(event) {
-	      this.setState({ considerationText: event.target.value });
+	      this.setState({ consideration: event.target.value });
 	    }
 	  }, {
 	    key: 'handleConsiderationSubmit',
 	    value: function handleConsiderationSubmit(event) {
+	
+	      this.setState({ submitted: true });
 	      event.preventDefault();
-	      var uid = _uuid2.default.v1();
-	      this.props.newConsiderationAction((0, _immutable.Map)({ title: this.state.considerationText, id: uid, score: 0 }), this.props.answer, this.props.question);
-	      this.state.considerationText = '';
+	
+	      if (this.state.consideration != '') {
+	        var uid = _uuid2.default.v1();
+	        this.props.newConsiderationAction((0, _immutable.Map)({ title: this.state.consideration, id: uid, score: 0 }), this.props.answer, this.props.question);
+	
+	        this.setState({ submitted: false, consideration: '' });
+	      }
 	    }
 	  }, {
-	    key: 'shouldComponentUpdate',
-	    value: function shouldComponentUpdate(nextProps, nextState) {
-	      return shallowCompare(this, nextProps, nextState);
+	    key: 'showConsiderationValidation',
+	    value: function showConsiderationValidation() {
+	      if (this.state.submitted && this.state.consideration == '') {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'alert alert-warning control-padding' },
+	          'Please describe your consequence'
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'getHref',
+	    value: function getHref() {
+	      return '#' + this.props.answer.get('id');
+	    }
+	  }, {
+	    key: 'getAccordianId',
+	    value: function getAccordianId() {
+	      return '#answer_accordion_' + this.props.question.get('id');
+	    }
+	  }, {
+	    key: 'getConsiderationAccordianId',
+	    value: function getConsiderationAccordianId() {
+	      return '#consideration_accordion_' + this.props.answer.get('id');
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this2 = this;
 	
-	      /* order by highest score first */
-	      var considerations = this.props.answer.get('considerations'); //.sort( (a,b) => b.get('score') - a.get('score'))
-	
 	      return _react2.default.createElement(
 	        'div',
-	        null,
+	        { className: 'panel panel-default control-header-style' },
 	        _react2.default.createElement(
 	          'div',
-	          null,
+	          { className: 'panel-heading' },
 	          _react2.default.createElement(
-	            'form',
-	            { onSubmit: this.handleConsiderationSubmit },
+	            'h4',
+	            { className: 'panel-title' },
 	            _react2.default.createElement(
-	              'div',
-	              null,
-	              _react2.default.createElement('input', { type: 'text', value: this.state.considerationText, onChange: this.handleConsiderationChange }),
-	              _react2.default.createElement('input', { type: 'submit', value: 'ADD' })
+	              'a',
+	              { 'data-toggle': 'collapse', 'data-parent': this.getAccordianId(), href: this.getHref() },
+	              'R. ',
+	              this.props.answer.get('title')
 	            )
 	          )
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          null,
-	          considerations.map(function (c) {
-	            return _react2.default.createElement(
+	          { id: this.props.answer.get('id'), className: 'panel-collapse collapse in' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'panel-body panel-padding' },
+	            _react2.default.createElement(
 	              'div',
-	              { key: c.get('id') },
-	              _react2.default.createElement(_Consideration.ConsiderationContainer, { consideration: c, answer: _this2.props.answer, question: _this2.props.question })
-	            );
-	          })
+	              null,
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'panel-style form-group' },
+	                  _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(
+	                      'div',
+	                      { className: 'control-header-style' },
+	                      this.showConsiderationValidation(),
+	                      _react2.default.createElement('input', { placeholder: 'Enter consequence description', tabIndex: '1', type: 'text', className: 'form-control text-medium', value: this.state.consideration, onChange: this.handleConsiderationChange }),
+	                      _react2.default.createElement(
+	                        'a',
+	                        { className: 'text-small popover-link', 'data-html': 'true', 'data-toggle': 'popover', 'data-content': 'For each potential resolution you need to create considerations upon which the preferred resolution will be selected.<br/>For example, a consideration may be \'Because the shoes are in the sale\'.<br/>After the consideration is created you should use the slider to give positive or negative weight to the new consideration.<br/>The weight you give to a consideration will be used to determine the best resolution to your quesstion.<br/>The resolution determined by your considerations will be displayed under the question heading above.' },
+	                        'what is this?'
+	                      )
+	                    ),
+	                    _react2.default.createElement(
+	                      'div',
+	                      { className: 'control-header-style text-medium' },
+	                      _react2.default.createElement('input', { className: 'btn btn-primary text-medium', tabIndex: '3', type: 'button', onClick: this.handleConsiderationSubmit, value: 'create consequence >>' })
+	                    ),
+	                    this.props.answer.get('considerations').map(function (consideration) {
+	                      return _react2.default.createElement(_Consideration.ConsiderationContainer, { key: consideration.get('id'), consideration: consideration, question: _this2.props.question, answer: _this2.props.answer });
+	                    })
+	                  )
+	                )
+	              )
+	            )
+	          )
 	        )
 	      );
 	    }
 	  }]);
 	
-	  return Considerations;
+	  return Answer;
 	}(_react2.default.Component);
 	
-	/*
-	//<CustomizedSlider startVal={c.get('score')} afterChange={ this.handleConsiderationValueChanged } />
-	
-	class CustomizedSlider extends React.Component{
-	
-	  constructor(props) {
-	    super(props)
-	    this.state = {
-	      value : this.props.startVal
-	    }
-	
-	    alert('constructor = ' + this.props.startVal)
-	
-	    this.onSliderChange = this.onSliderChange.bind(this)
-	    this.onAfterChange = this.onAfterChange.bind(this)
-	  }
-	
-	  onSliderChange(value) {
-	    this.setState({
-	      value : value
-	    });
-	  }
-	
-	  onAfterChange(value) {
-	      this.props.afterChange(value)
-	  }
-	
-	  render() {
-	    return (
-	      <Slider value={this.state.value}
-	        onChange={this.onSliderChange} onAfterChange={this.onAfterChange}
-	      />
-	    );
-	  }
-	}
-	*/
-	
 	function mapStateToProps(state) {
-	  return {
-	    //answers : state.get('answers')
-	    //pair: state.getIn(['vote', 'pair']),
-	    //hasVoted: state.get('hasVoted'),
-	    //winner: state.get('winner')
-	  };
+	  return {};
 	}
 	
-	var ConsiderationsContainer = (0, _reactRedux.connect)(mapStateToProps, actionCreators)(Considerations);
+	var AnswerContainer = (0, _reactRedux.connect)(mapStateToProps, actionCreators)(Answer);
 	
-	exports.Considerations = Considerations;
-	exports.ConsiderationsContainer = ConsiderationsContainer;
+	exports.Answer = Answer;
+	exports.AnswerContainer = AnswerContainer;
 	;
 	
 	var _temp = function () {
@@ -44378,17 +44707,17 @@
 	    return;
 	  }
 	
-	  __REACT_HOT_LOADER__.register(Considerations, 'Considerations', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Considerations.jsx');
+	  __REACT_HOT_LOADER__.register(Answer, 'Answer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Answer.jsx');
 	
-	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Considerations.jsx');
+	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Answer.jsx');
 	
-	  __REACT_HOT_LOADER__.register(ConsiderationsContainer, 'ConsiderationsContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Considerations.jsx');
+	  __REACT_HOT_LOADER__.register(AnswerContainer, 'AnswerContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Answer.jsx');
 	}();
 
 	;
 
 /***/ },
-/* 361 */
+/* 362 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44408,11 +44737,11 @@
 	
 	var _immutable = __webpack_require__(345);
 	
-	var _reactInputRange = __webpack_require__(362);
+	var _reactInputRange = __webpack_require__(363);
 	
 	var _reactInputRange2 = _interopRequireDefault(_reactInputRange);
 	
-	var _actionCreator = __webpack_require__(348);
+	var _actionCreator = __webpack_require__(346);
 	
 	var actionCreators = _interopRequireWildcard(_actionCreator);
 	
@@ -44426,9 +44755,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var shallowCompare = __webpack_require__(353);
-	
-	__webpack_require__(371);
+	var shallowCompare = __webpack_require__(352);
 	
 	var Consideration = function (_React$Component) {
 	  _inherits(Consideration, _React$Component);
@@ -44450,7 +44777,12 @@
 	  _createClass(Consideration, [{
 	    key: 'shouldComponentUpdate',
 	    value: function shouldComponentUpdate(nextProps, nextState) {
-	      return true; // shallowCompare(this, nextProps, nextState);
+	      return shallowCompare(this, nextProps, nextState);
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.updateSliderColour();
 	    }
 	  }, {
 	    key: 'removeConsideration',
@@ -44465,39 +44797,93 @@
 	        value: val
 	      });
 	
+	      this.updateSliderColour();
+	
 	      var consideration = this.props.consideration;
 	      var updatedConsideration = consideration.set('score', val);
 	      this.props.updateConsiderationAction(updatedConsideration, this.props.answer, this.props.question);
 	    }
 	  }, {
+	    key: 'updateSliderColour',
+	    value: function updateSliderColour() {
+	
+	      // the colour values go from -50 to 50 so add 50 to make it a 0 - 100 scale
+	      var colourValue = this.state.value + 50;
+	
+	      $(this.inputRangeDiv).find('.InputRange-slider').css('background-color', this.numberToColorHsl(colourValue));
+	      $(this.inputRangeDiv).find('.InputRange-track--active').css('background-color', this.numberToColorHsl(colourValue));
+	    }
+	  }, {
+	    key: 'hslToRgb',
+	    value: function hslToRgb(h, s, l) {
+	      var r, g, b;
+	
+	      if (s == 0) {
+	        r = g = b = l; // achromatic
+	      } else {
+	        var hue2rgb = function hue2rgb(p, q, t) {
+	          if (t < 0) t += 1;
+	          if (t > 1) t -= 1;
+	          if (t < 1 / 6) return p + (q - p) * 6 * t;
+	          if (t < 1 / 2) return q;
+	          if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+	          return p;
+	        };
+	
+	        var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+	        var p = 2 * l - q;
+	        r = hue2rgb(p, q, h + 1 / 3);
+	        g = hue2rgb(p, q, h);
+	        b = hue2rgb(p, q, h - 1 / 3);
+	      }
+	
+	      return [Math.floor(r * 255), Math.floor(g * 255), Math.floor(b * 255)];
+	    }
+	
+	    // convert a number to a color using hsl
+	
+	  }, {
+	    key: 'numberToColorHsl',
+	    value: function numberToColorHsl(i) {
+	      // as the function expects a value between 0 and 1, and red = 0° and green = 120°
+	      // we convert the input to the appropriate hue value
+	      var hue = i * 1.2 / 360;
+	      // we convert hsl to rgb (saturation 100%, lightness 50%)
+	      var rgb = this.hslToRgb(hue, 1, .5);
+	      // we format to css value and return
+	      return 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
 	
 	      /* order by highest score first */
 	      var consideration = this.props.consideration;
 	
 	      return _react2.default.createElement(
 	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'u',
-	          null,
-	          consideration.get('title')
-	        ),
+	        { className: 'panel panel-default control-header-style panel-padding' },
 	        _react2.default.createElement(
 	          'div',
-	          null,
-	          _react2.default.createElement(_reactInputRange2.default, {
-	            maxValue: 20,
-	            minValue: -20,
-	            value: this.state.value,
-	            onChange: this.handleConsiderationValueChanged
-	          })
-	        ),
-	        _react2.default.createElement(
-	          'u',
-	          { 'data-id': consideration.get('id'), onClick: this.removeConsideration },
-	          'REMOVE'
+	          { className: 'panel-body' },
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            consideration.get('title')
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { ref: function ref(input) {
+	                _this2.inputRangeDiv = input;
+	              } },
+	            _react2.default.createElement(_reactInputRange2.default, {
+	              maxValue: 50,
+	              minValue: -50,
+	              value: this.state.value,
+	              onChange: this.handleConsiderationValueChanged
+	            })
+	          )
 	        )
 	      );
 	    }
@@ -44507,12 +44893,7 @@
 	}(_react2.default.Component);
 	
 	function mapStateToProps(state) {
-	  return {
-	    //answers : state.get('answers')
-	    //pair: state.getIn(['vote', 'pair']),
-	    //hasVoted: state.get('hasVoted'),
-	    //winner: state.get('winner')
-	  };
+	  return {};
 	}
 	
 	var ConsiderationContainer = (0, _reactRedux.connect)(mapStateToProps, actionCreators)(Consideration);
@@ -44536,7 +44917,7 @@
 	;
 
 /***/ },
-/* 362 */
+/* 363 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -44551,7 +44932,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _InputRange = __webpack_require__(363);
+	var _InputRange = __webpack_require__(364);
 	
 	var _InputRange2 = _interopRequireDefault(_InputRange);
 	
@@ -44573,7 +44954,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 363 */
+/* 364 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -44600,29 +44981,29 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Slider = __webpack_require__(364);
+	var _Slider = __webpack_require__(365);
 	
 	var _Slider2 = _interopRequireDefault(_Slider);
 	
-	var _Track = __webpack_require__(367);
+	var _Track = __webpack_require__(368);
 	
 	var _Track2 = _interopRequireDefault(_Track);
 	
-	var _Label = __webpack_require__(365);
+	var _Label = __webpack_require__(366);
 	
 	var _Label2 = _interopRequireDefault(_Label);
 	
-	var _defaultClassNames = __webpack_require__(368);
+	var _defaultClassNames = __webpack_require__(369);
 	
 	var _defaultClassNames2 = _interopRequireDefault(_defaultClassNames);
 	
-	var _valueTransformer = __webpack_require__(369);
+	var _valueTransformer = __webpack_require__(370);
 	
 	var _valueTransformer2 = _interopRequireDefault(_valueTransformer);
 	
-	var _util = __webpack_require__(366);
+	var _util = __webpack_require__(367);
 	
-	var _propTypes = __webpack_require__(370);
+	var _propTypes = __webpack_require__(371);
 	
 	/**
 	 * A map for storing internal members
@@ -45351,7 +45732,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 364 */
+/* 365 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45378,11 +45759,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Label = __webpack_require__(365);
+	var _Label = __webpack_require__(366);
 	
 	var _Label2 = _interopRequireDefault(_Label);
 	
-	var _util = __webpack_require__(366);
+	var _util = __webpack_require__(367);
 	
 	/**
 	 * Get the owner document of slider
@@ -45608,7 +45989,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 365 */
+/* 366 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45699,7 +46080,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 366 */
+/* 367 */
 /***/ function(module, exports) {
 
 	/**
@@ -45939,7 +46320,7 @@
 	}
 
 /***/ },
-/* 367 */
+/* 368 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45966,7 +46347,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _util = __webpack_require__(366);
+	var _util = __webpack_require__(367);
 	
 	/**
 	 * Get the CSS styles for an active track
@@ -46102,7 +46483,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 368 */
+/* 369 */
 /***/ function(module, exports) {
 
 	/**
@@ -46141,7 +46522,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 369 */
+/* 370 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -46154,7 +46535,7 @@
 	  value: true
 	});
 	
-	var _util = __webpack_require__(366);
+	var _util = __webpack_require__(367);
 	
 	/**
 	 * Convert position into percentage value
@@ -46329,7 +46710,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 370 */
+/* 371 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -46343,7 +46724,7 @@
 	});
 	exports.maxMinValuePropType = maxMinValuePropType;
 	
-	var _util = __webpack_require__(366);
+	var _util = __webpack_require__(367);
 	
 	/**
 	 * A prop type accepting a range of numeric values or a single numeric value
@@ -46383,940 +46764,102 @@
 	}
 
 /***/ },
-/* 371 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	
-	// load the styles
-	var content = __webpack_require__(372);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(374)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(true) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept(372, function() {
-				var newContent = __webpack_require__(372);
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
 /* 372 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(373)();
-	// imports
+	'use strict';
 	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.WizardContainer = exports.Wizard = undefined;
 	
-	// module
-	exports.push([module.id, ".InputRange-slider {\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  background: #3f51b5;\n  border: 1px solid #3f51b5;\n  border-radius: 100%;\n  cursor: pointer;\n  display: block;\n  height: 1rem;\n  margin-left: -0.5rem;\n  margin-top: -0.65rem;\n  outline: none;\n  position: absolute;\n  top: 50%;\n  transition: -webkit-transform 0.3s ease-out, box-shadow 0.3s ease-out;\n  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;\n  width: 1rem; }\n  .InputRange-slider:active {\n    -webkit-transform: scale(1.3);\n            transform: scale(1.3); }\n  .InputRange-slider:focus {\n    box-shadow: 0 0 0 5px rgba(63, 81, 181, 0.2); }\n  .InputRange.is-disabled .InputRange-slider {\n    background: #cccccc;\n    border: 1px solid #cccccc;\n    box-shadow: none;\n    -webkit-transform: none;\n            transform: none; }\n\n.InputRange-sliderContainer {\n  transition: left 0.3s ease-out; }\n\n.InputRange-label {\n  color: #aaaaaa;\n  font-family: \"Helvetica Neue\", san-serif;\n  font-size: 0.8rem;\n  white-space: nowrap; }\n\n.InputRange-label--min,\n.InputRange-label--max {\n  bottom: -1.4rem;\n  position: absolute; }\n\n.InputRange-label--min {\n  left: 0; }\n\n.InputRange-label--max {\n  right: 0; }\n\n.InputRange-label--value {\n  position: absolute;\n  top: -1.8rem; }\n\n.InputRange-labelContainer {\n  left: -50%;\n  position: relative; }\n  .InputRange-label--max .InputRange-labelContainer {\n    left: 50%; }\n\n.InputRange-track {\n  background: #eeeeee;\n  border-radius: 0.3rem;\n  cursor: pointer;\n  display: block;\n  height: 0.3rem;\n  position: relative;\n  transition: left 0.3s ease-out, width 0.3s ease-out; }\n  .InputRange.is-disabled .InputRange-track {\n    background: #eeeeee; }\n\n.InputRange-track--container {\n  left: 0;\n  margin-top: -0.15rem;\n  position: absolute;\n  right: 0;\n  top: 50%; }\n\n.InputRange-track--active {\n  background: #3f51b5; }\n\n.InputRange {\n  height: 1rem;\n  position: relative;\n  width: 100%; }\n", ""]);
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	// exports
+	var _react = __webpack_require__(81);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(327);
+	
+	var _actionCreator = __webpack_require__(346);
+	
+	var actionCreators = _interopRequireWildcard(_actionCreator);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var shallowCompare = __webpack_require__(352);
+	
+	var Wizard = function (_React$Component) {
+	  _inherits(Wizard, _React$Component);
+	
+	  function Wizard(props) {
+	    _classCallCheck(this, Wizard);
+	
+	    var _this = _possibleConstructorReturn(this, (Wizard.__proto__ || Object.getPrototypeOf(Wizard)).call(this, props));
+	
+	    _this.state = {};
+	    return _this;
+	  }
+	
+	  _createClass(Wizard, [{
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps, nextState) {
+	      return shallowCompare(this, nextProps, nextState);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'col-md-10 col-md-offset-1 panel-header-style' },
+	        _react2.default.createElement(
+	          'div',
+	          { 'class': 'text-medium' },
+	          'Welcome to the wizard'
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Wizard;
+	}(_react2.default.Component);
+	
+	function mapStateToProps(state) {
+	  return {};
+	}
+	
+	var WizardContainer = (0, _reactRedux.connect)(mapStateToProps, actionCreators)(Wizard);
+	
+	exports.Wizard = Wizard;
+	exports.WizardContainer = WizardContainer;
+	;
+	
+	var _temp = function () {
+	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+	    return;
+	  }
+	
+	  __REACT_HOT_LOADER__.register(Wizard, 'Wizard', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/wizard/Wizard.jsx');
+	
+	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/wizard/Wizard.jsx');
+	
+	  __REACT_HOT_LOADER__.register(WizardContainer, 'WizardContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/wizard/Wizard.jsx');
+	}();
 
+	;
 
 /***/ },
 /* 373 */
-/***/ function(module, exports) {
-
-	/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	// css base code, injected by the css-loader
-	module.exports = function() {
-		var list = [];
-	
-		// return the list of modules as css string
-		list.toString = function toString() {
-			var result = [];
-			for(var i = 0; i < this.length; i++) {
-				var item = this[i];
-				if(item[2]) {
-					result.push("@media " + item[2] + "{" + item[1] + "}");
-				} else {
-					result.push(item[1]);
-				}
-			}
-			return result.join("");
-		};
-	
-		// import a list of modules into the list
-		list.i = function(modules, mediaQuery) {
-			if(typeof modules === "string")
-				modules = [[null, modules, ""]];
-			var alreadyImportedModules = {};
-			for(var i = 0; i < this.length; i++) {
-				var id = this[i][0];
-				if(typeof id === "number")
-					alreadyImportedModules[id] = true;
-			}
-			for(i = 0; i < modules.length; i++) {
-				var item = modules[i];
-				// skip already imported module
-				// this implementation is not 100% perfect for weird media query combinations
-				//  when a module is imported multiple times with different media queries.
-				//  I hope this will never occur (Hey this way we have smaller bundles)
-				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-					if(mediaQuery && !item[2]) {
-						item[2] = mediaQuery;
-					} else if(mediaQuery) {
-						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-					}
-					list.push(item);
-				}
-			}
-		};
-		return list;
-	};
-
-
-/***/ },
-/* 374 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	var stylesInDom = {},
-		memoize = function(fn) {
-			var memo;
-			return function () {
-				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
-				return memo;
-			};
-		},
-		isOldIE = memoize(function() {
-			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
-		}),
-		getHeadElement = memoize(function () {
-			return document.head || document.getElementsByTagName("head")[0];
-		}),
-		singletonElement = null,
-		singletonCounter = 0,
-		styleElementsInsertedAtTop = [];
-	
-	module.exports = function(list, options) {
-		if(false) {
-			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
-		}
-	
-		options = options || {};
-		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-		// tags it will allow on a page
-		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
-	
-		// By default, add <style> tags to the bottom of <head>.
-		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
-	
-		var styles = listToStyles(list);
-		addStylesToDom(styles, options);
-	
-		return function update(newList) {
-			var mayRemove = [];
-			for(var i = 0; i < styles.length; i++) {
-				var item = styles[i];
-				var domStyle = stylesInDom[item.id];
-				domStyle.refs--;
-				mayRemove.push(domStyle);
-			}
-			if(newList) {
-				var newStyles = listToStyles(newList);
-				addStylesToDom(newStyles, options);
-			}
-			for(var i = 0; i < mayRemove.length; i++) {
-				var domStyle = mayRemove[i];
-				if(domStyle.refs === 0) {
-					for(var j = 0; j < domStyle.parts.length; j++)
-						domStyle.parts[j]();
-					delete stylesInDom[domStyle.id];
-				}
-			}
-		};
-	}
-	
-	function addStylesToDom(styles, options) {
-		for(var i = 0; i < styles.length; i++) {
-			var item = styles[i];
-			var domStyle = stylesInDom[item.id];
-			if(domStyle) {
-				domStyle.refs++;
-				for(var j = 0; j < domStyle.parts.length; j++) {
-					domStyle.parts[j](item.parts[j]);
-				}
-				for(; j < item.parts.length; j++) {
-					domStyle.parts.push(addStyle(item.parts[j], options));
-				}
-			} else {
-				var parts = [];
-				for(var j = 0; j < item.parts.length; j++) {
-					parts.push(addStyle(item.parts[j], options));
-				}
-				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
-			}
-		}
-	}
-	
-	function listToStyles(list) {
-		var styles = [];
-		var newStyles = {};
-		for(var i = 0; i < list.length; i++) {
-			var item = list[i];
-			var id = item[0];
-			var css = item[1];
-			var media = item[2];
-			var sourceMap = item[3];
-			var part = {css: css, media: media, sourceMap: sourceMap};
-			if(!newStyles[id])
-				styles.push(newStyles[id] = {id: id, parts: [part]});
-			else
-				newStyles[id].parts.push(part);
-		}
-		return styles;
-	}
-	
-	function insertStyleElement(options, styleElement) {
-		var head = getHeadElement();
-		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
-		if (options.insertAt === "top") {
-			if(!lastStyleElementInsertedAtTop) {
-				head.insertBefore(styleElement, head.firstChild);
-			} else if(lastStyleElementInsertedAtTop.nextSibling) {
-				head.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
-			} else {
-				head.appendChild(styleElement);
-			}
-			styleElementsInsertedAtTop.push(styleElement);
-		} else if (options.insertAt === "bottom") {
-			head.appendChild(styleElement);
-		} else {
-			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
-		}
-	}
-	
-	function removeStyleElement(styleElement) {
-		styleElement.parentNode.removeChild(styleElement);
-		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
-		if(idx >= 0) {
-			styleElementsInsertedAtTop.splice(idx, 1);
-		}
-	}
-	
-	function createStyleElement(options) {
-		var styleElement = document.createElement("style");
-		styleElement.type = "text/css";
-		insertStyleElement(options, styleElement);
-		return styleElement;
-	}
-	
-	function createLinkElement(options) {
-		var linkElement = document.createElement("link");
-		linkElement.rel = "stylesheet";
-		insertStyleElement(options, linkElement);
-		return linkElement;
-	}
-	
-	function addStyle(obj, options) {
-		var styleElement, update, remove;
-	
-		if (options.singleton) {
-			var styleIndex = singletonCounter++;
-			styleElement = singletonElement || (singletonElement = createStyleElement(options));
-			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
-			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
-		} else if(obj.sourceMap &&
-			typeof URL === "function" &&
-			typeof URL.createObjectURL === "function" &&
-			typeof URL.revokeObjectURL === "function" &&
-			typeof Blob === "function" &&
-			typeof btoa === "function") {
-			styleElement = createLinkElement(options);
-			update = updateLink.bind(null, styleElement);
-			remove = function() {
-				removeStyleElement(styleElement);
-				if(styleElement.href)
-					URL.revokeObjectURL(styleElement.href);
-			};
-		} else {
-			styleElement = createStyleElement(options);
-			update = applyToTag.bind(null, styleElement);
-			remove = function() {
-				removeStyleElement(styleElement);
-			};
-		}
-	
-		update(obj);
-	
-		return function updateStyle(newObj) {
-			if(newObj) {
-				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
-					return;
-				update(obj = newObj);
-			} else {
-				remove();
-			}
-		};
-	}
-	
-	var replaceText = (function () {
-		var textStore = [];
-	
-		return function (index, replacement) {
-			textStore[index] = replacement;
-			return textStore.filter(Boolean).join('\n');
-		};
-	})();
-	
-	function applyToSingletonTag(styleElement, index, remove, obj) {
-		var css = remove ? "" : obj.css;
-	
-		if (styleElement.styleSheet) {
-			styleElement.styleSheet.cssText = replaceText(index, css);
-		} else {
-			var cssNode = document.createTextNode(css);
-			var childNodes = styleElement.childNodes;
-			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
-			if (childNodes.length) {
-				styleElement.insertBefore(cssNode, childNodes[index]);
-			} else {
-				styleElement.appendChild(cssNode);
-			}
-		}
-	}
-	
-	function applyToTag(styleElement, obj) {
-		var css = obj.css;
-		var media = obj.media;
-	
-		if(media) {
-			styleElement.setAttribute("media", media)
-		}
-	
-		if(styleElement.styleSheet) {
-			styleElement.styleSheet.cssText = css;
-		} else {
-			while(styleElement.firstChild) {
-				styleElement.removeChild(styleElement.firstChild);
-			}
-			styleElement.appendChild(document.createTextNode(css));
-		}
-	}
-	
-	function updateLink(linkElement, obj) {
-		var css = obj.css;
-		var sourceMap = obj.sourceMap;
-	
-		if(sourceMap) {
-			// http://stackoverflow.com/a/26603875
-			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
-		}
-	
-		var blob = new Blob([css], { type: "text/css" });
-	
-		var oldSrc = linkElement.href;
-	
-		linkElement.href = URL.createObjectURL(blob);
-	
-		if(oldSrc)
-			URL.revokeObjectURL(oldSrc);
-	}
-
-
-/***/ },
-/* 375 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.NewAnswerContainer = exports.NewAnswer = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(81);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRedux = __webpack_require__(327);
-	
-	var _reactRouter = __webpack_require__(251);
-	
-	var _immutable = __webpack_require__(345);
-	
-	var _actionCreator = __webpack_require__(348);
-	
-	var actionCreators = _interopRequireWildcard(_actionCreator);
-	
-	var _uuid = __webpack_require__(351);
-	
-	var _uuid2 = _interopRequireDefault(_uuid);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var shallowCompare = __webpack_require__(353);
-	
-	var NewAnswer = function (_React$Component) {
-	  _inherits(NewAnswer, _React$Component);
-	
-	  function NewAnswer(props) {
-	    _classCallCheck(this, NewAnswer);
-	
-	    var _this = _possibleConstructorReturn(this, (NewAnswer.__proto__ || Object.getPrototypeOf(NewAnswer)).call(this, props));
-	
-	    _this.state = {
-	      answerText: ''
-	    };
-	
-	    _this.handleChange = _this.handleChange.bind(_this);
-	    _this.handleSubmit = _this.handleSubmit.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(NewAnswer, [{
-	    key: 'handleChange',
-	    value: function handleChange(event) {
-	      this.setState({ answerText: event.target.value });
-	    }
-	  }, {
-	    key: 'handleSubmit',
-	    value: function handleSubmit(event) {
-	
-	      event.preventDefault();
-	      var uid = _uuid2.default.v1();
-	      this.props.newAnswerAction({ title: this.state.answerText, id: uid, score: 0 }, this.props.question);
-	      this.props.newAnswerAdded();
-	      //browserHistory.push('/some/path/123');
-	    }
-	
-	    /*
-	      getQuestion()
-	      {
-	        return this.props.questions.get(this.getQuestionIndex())
-	      }
-	    
-	      getQuestionIndex()
-	      {
-	        return this.props.questions.findIndex(q => {
-	              return q.get('id') === this.props.params.questionId })
-	      }
-	      */
-	
-	  }, {
-	    key: 'shouldComponentUpdate',
-	    value: function shouldComponentUpdate(nextProps, nextState) {
-	      return shallowCompare(this, nextProps, nextState);
-	    }
-	
-	    /*
-	      newAnswer(event) {
-	        event.preventDefault();
-	        this.props.newAnswer()
-	      }
-	      */
-	
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'ol-md-8 col-md-offset-2' },
-	        _react2.default.createElement(
-	          'form',
-	          { onSubmit: this.handleSubmit },
-	          _react2.default.createElement(
-	            'div',
-	            null,
-	            'Answer:'
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            null,
-	            _react2.default.createElement('textarea', { value: this.state.answerText, onChange: this.handleChange }),
-	            _react2.default.createElement('input', { type: 'submit', value: 'GO' })
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return NewAnswer;
-	}(_react2.default.Component);
-	
-	function mapStateToProps(state) {
-	  return {
-	    //answers : state.get('answers')
-	    //pair: state.getIn(['vote', 'pair']),
-	    //hasVoted: state.get('hasVoted'),
-	    //winner: state.get('winner')
-	  };
-	}
-	
-	var NewAnswerContainer = (0, _reactRedux.connect)(mapStateToProps, actionCreators)(NewAnswer);
-	
-	exports.NewAnswer = NewAnswer;
-	exports.NewAnswerContainer = NewAnswerContainer;
-	;
-	
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-	
-	  __REACT_HOT_LOADER__.register(NewAnswer, 'NewAnswer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/NewAnswer.jsx');
-	
-	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/NewAnswer.jsx');
-	
-	  __REACT_HOT_LOADER__.register(NewAnswerContainer, 'NewAnswerContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/NewAnswer.jsx');
-	}();
-
-	;
-
-/***/ },
-/* 376 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.AccountContainer = exports.Account = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(81);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRedux = __webpack_require__(327);
-	
-	var _actionCreator = __webpack_require__(348);
-	
-	var actionCreators = _interopRequireWildcard(_actionCreator);
-	
-	var _AccountCreate = __webpack_require__(377);
-	
-	var _AccountLogin = __webpack_require__(356);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var shallowCompare = __webpack_require__(353);
-	
-	var Account = function (_React$Component) {
-	  _inherits(Account, _React$Component);
-	
-	  function Account(props) {
-	    _classCallCheck(this, Account);
-	
-	    var _this = _possibleConstructorReturn(this, (Account.__proto__ || Object.getPrototypeOf(Account)).call(this, props));
-	
-	    _this.state = {};
-	
-	    /*
-	        this.newAnswer = this.newAnswer.bind(this)
-	        this.removeAnswer = this.removeAnswer.bind(this)
-	        this.showConsiderations = this.showConsiderations.bind(this)
-	        this.handleAnswerChange = this.handleAnswerChange.bind(this);
-	        this.handleAnswerSubmit = this.handleAnswerSubmit.bind(this);
-	        */
-	    return _this;
-	  }
-	
-	  _createClass(Account, [{
-	    key: 'shouldComponentUpdate',
-	    value: function shouldComponentUpdate(nextProps, nextState) {
-	      return shallowCompare(this, nextProps, nextState);
-	    }
-	
-	    /*
-	      handleAnswerChange(event) {
-	        this.setState({answerText: event.target.value});
-	      }
-	    
-	      handleAnswerSubmit(event) {
-	    
-	        event.preventDefault();
-	        var uid = uuid.v1()
-	        this.props.newAnswerAction( Map({ title : this.state.answerText, id : uid, score : 0 }), this.props.question )
-	      }
-	    
-	    
-	    
-	      newAnswer(event) {
-	        event.preventDefault()
-	        this.props.newAnswer()
-	      }
-	    
-	      removeAnswer(event) {
-	        event.preventDefault()
-	        this.props.removeAnswerAction(event.currentTarget.dataset.id, this.props.question)
-	      }
-	    
-	      showConsiderations(event) {
-	        event.preventDefault()
-	        var answerId = event.currentTarget.dataset.id
-	    
-	        if( this.state.showConsiderationForAnswers.includes(answerId) )
-	        {
-	          this.setState({showConsiderationForAnswers : this.state.showConsiderationForAnswers.filter((item) => item === answerId)})
-	        } else {
-	          this.setState({showConsiderationForAnswers : this.state.showConsiderationForAnswers.push(answerId)})
-	        }
-	      }
-	    
-	      getAddConsideration(id)
-	      {
-	    
-	        if( this.state.showConsiderationForAnswers.includes(id))
-	        {
-	          var answer = this.props.question.get('answers').find((item) => item.get('id') === id)
-	    
-	            return <div>
-	                <ConsiderationsContainer question={this.props.question} answer={answer}/>
-	            </div>
-	        }
-	    
-	        return <div/>
-	      }
-	    */
-	
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(_AccountCreate.AccountCreateContainer, { account: this.props.account })
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(_AccountLogin.AccountLoginContainer, { account: this.props.account })
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return Account;
-	}(_react2.default.Component);
-	
-	function mapStateToProps(state) {
-	  return {
-	    //answers : state.get('answers')
-	    //pair: state.getIn(['vote', 'pair']),
-	    //hasVoted: state.get('hasVoted'),
-	    //winner: state.get('winner')
-	  };
-	}
-	
-	var AccountContainer = (0, _reactRedux.connect)(mapStateToProps, actionCreators)(Account);
-	
-	exports.Account = Account;
-	exports.AccountContainer = AccountContainer;
-	;
-	
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-	
-	  __REACT_HOT_LOADER__.register(Account, 'Account', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Account.jsx');
-	
-	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Account.jsx');
-	
-	  __REACT_HOT_LOADER__.register(AccountContainer, 'AccountContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/Account.jsx');
-	}();
-
-	;
-
-/***/ },
-/* 377 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.AccountCreateContainer = exports.AccountCreate = undefined;
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(81);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRedux = __webpack_require__(327);
-	
-	var _actionCreator = __webpack_require__(348);
-	
-	var actionCreators = _interopRequireWildcard(_actionCreator);
-	
-	var _immutable = __webpack_require__(345);
-	
-	var _constants = __webpack_require__(350);
-	
-	var Constants = _interopRequireWildcard(_constants);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var shallowCompare = __webpack_require__(353);
-	
-	var AccountCreate = function (_React$Component) {
-	  _inherits(AccountCreate, _React$Component);
-	
-	  function AccountCreate(props) {
-	    _classCallCheck(this, AccountCreate);
-	
-	    var _this = _possibleConstructorReturn(this, (AccountCreate.__proto__ || Object.getPrototypeOf(AccountCreate)).call(this, props));
-	
-	    _this.state = {
-	      firstName: '',
-	      lastName: '',
-	      username: '',
-	      password: '',
-	      email: '',
-	      marketing: true
-	    };
-	
-	    _this.handleFirstNameChange = _this.handleFirstNameChange.bind(_this);
-	    _this.handleLastNameChange = _this.handleLastNameChange.bind(_this);
-	    _this.handleUsernameChange = _this.handleUsernameChange.bind(_this);
-	    _this.handlePasswordChange = _this.handlePasswordChange.bind(_this);
-	    _this.handleEmailChange = _this.handleEmailChange.bind(_this);
-	    _this.handleMarketingChange = _this.handleMarketingChange.bind(_this);
-	    _this.handleAccountCreateSubmit = _this.handleAccountCreateSubmit.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(AccountCreate, [{
-	    key: 'shouldComponentUpdate',
-	    value: function shouldComponentUpdate(nextProps, nextState) {
-	      return shallowCompare(this, nextProps, nextState);
-	    }
-	  }, {
-	    key: 'handleFirstNameChange',
-	    value: function handleFirstNameChange(event) {
-	      this.setState({ firstName: event.target.value });
-	    }
-	  }, {
-	    key: 'handleLastNameChange',
-	    value: function handleLastNameChange(event) {
-	      this.setState({ lastName: event.target.value });
-	    }
-	  }, {
-	    key: 'handleUsernameChange',
-	    value: function handleUsernameChange(event) {
-	      this.setState({ username: event.target.value });
-	    }
-	  }, {
-	    key: 'handlePasswordChange',
-	    value: function handlePasswordChange(event) {
-	      this.setState({ password: event.target.value });
-	    }
-	  }, {
-	    key: 'handleEmailChange',
-	    value: function handleEmailChange(event) {
-	      this.setState({ email: event.target.value });
-	    }
-	  }, {
-	    key: 'handleMarketingChange',
-	    value: function handleMarketingChange(event) {
-	      this.setState({ marketing: event.target.checked });
-	    }
-	  }, {
-	    key: 'handleAccountCreateSubmit',
-	    value: function handleAccountCreateSubmit(event) {
-	      event.preventDefault();
-	      this.props.createAccountAction((0, _immutable.Map)({
-	        firstName: this.state.firstName,
-	        lastName: this.state.lastName,
-	        username: this.state.username,
-	        password: this.state.password,
-	        email: this.state.email }));
-	
-	      //var uid = uuid.v1()
-	      //this.props.newQuestionAction( Map({ title : this.state.questionText, id : uid }), this.props.question)
-	      //browserHistory.push('/question/' + uid);
-	    }
-	  }, {
-	    key: 'getErrorMsg',
-	    value: function getErrorMsg() {
-	      var msg = null;
-	      if (this.props.account.get('accountCreationStatus') == Constants.ACCOUNT_STATE_USERNAME_IN_USE) {
-	        msg = 'The username is in use - please select another';
-	      } else if (this.props.account.get('accountCreationStatus') == Constants.ACCOUNT_STATE_FAILED) {
-	        msg = 'There was a problem creating your account - please try again';
-	      }
-	
-	      if (msg) {
-	        return _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(
-	            'b',
-	            null,
-	            msg
-	          )
-	        );
-	      }
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        this.getErrorMsg(),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(
-	            'form',
-	            { onSubmit: this.handleAccountCreateSubmit },
-	            _react2.default.createElement(
-	              'div',
-	              null,
-	              'first name'
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              null,
-	              _react2.default.createElement('input', { type: 'text', value: this.state.firstName, onChange: this.handleFirstNameChange })
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              null,
-	              'last name'
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              null,
-	              _react2.default.createElement('input', { type: 'text', value: this.state.lastName, onChange: this.handleLastNameChange })
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              null,
-	              'username'
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              null,
-	              _react2.default.createElement('input', { type: 'text', value: this.state.username, onChange: this.handleUsernameChange })
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              null,
-	              'password'
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              null,
-	              _react2.default.createElement('input', { type: 'text', value: this.state.password, onChange: this.handlePasswordChange })
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              null,
-	              'email'
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              null,
-	              _react2.default.createElement('input', { type: 'text', value: this.state.email, onChange: this.handleEmailChange })
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              null,
-	              _react2.default.createElement(
-	                'label',
-	                null,
-	                _react2.default.createElement('input', { type: 'checkbox', checked: this.state.marketing, onChange: this.handleMarketingChange }),
-	                'marketing?'
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              null,
-	              _react2.default.createElement('input', { type: 'submit', value: 'GO' })
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return AccountCreate;
-	}(_react2.default.Component);
-	
-	function mapStateToProps(state) {
-	  return {
-	    //answers : state.get('answers')
-	    //pair: state.getIn(['vote', 'pair']),
-	    //hasVoted: state.get('hasVoted'),
-	    //winner: state.get('winner')
-	  };
-	}
-	
-	var AccountCreateContainer = (0, _reactRedux.connect)(mapStateToProps, actionCreators)(AccountCreate);
-	
-	exports.AccountCreate = AccountCreate;
-	exports.AccountCreateContainer = AccountCreateContainer;
-	;
-	
-	var _temp = function () {
-	  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
-	    return;
-	  }
-	
-	  __REACT_HOT_LOADER__.register(AccountCreate, 'AccountCreate', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/AccountCreate.jsx');
-	
-	  __REACT_HOT_LOADER__.register(mapStateToProps, 'mapStateToProps', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/AccountCreate.jsx');
-	
-	  __REACT_HOT_LOADER__.register(AccountCreateContainer, 'AccountCreateContainer', '/Users/simonhampshire/Projects/DecisionMaker/Client/src/components/AccountCreate.jsx');
-	}();
-
-	;
-
-/***/ },
-/* 378 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47325,21 +46868,21 @@
 	  value: true
 	});
 	
-	var _actionTypes = __webpack_require__(349);
+	var _actionTypes = __webpack_require__(347);
 	
 	var actionTypes = _interopRequireWildcard(_actionTypes);
 	
 	var _immutable = __webpack_require__(345);
 	
-	var _questionState = __webpack_require__(379);
+	var _questionState = __webpack_require__(374);
 	
-	var _answerState = __webpack_require__(380);
+	var _answerState = __webpack_require__(375);
 	
-	var _considerationState = __webpack_require__(381);
+	var _considerationState = __webpack_require__(376);
 	
-	var _accountState = __webpack_require__(382);
+	var _accountState = __webpack_require__(377);
 	
-	var _constants = __webpack_require__(350);
+	var _constants = __webpack_require__(348);
 	
 	var constants = _interopRequireWildcard(_constants);
 	
@@ -47444,7 +46987,7 @@
 	;
 
 /***/ },
-/* 379 */
+/* 374 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47457,7 +47000,7 @@
 	var _immutable = __webpack_require__(345);
 	
 	function NewQuestion(questions, question) {
-	  return questions.push((0, _immutable.Map)({ title: question.get('title'), id: question.get('id'), answers: (0, _immutable.List)() }));
+	  return questions.unshift((0, _immutable.Map)({ title: question.get('title'), id: question.get('id'), answers: (0, _immutable.List)() }));
 	}
 	;
 	
@@ -47472,7 +47015,7 @@
 	;
 
 /***/ },
-/* 380 */
+/* 375 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47487,7 +47030,7 @@
 	
 	function NewAnswer(question, answer) {
 	  return question.update('answers', function (answers) {
-	    return answers.push((0, _immutable.Map)({ title: answer.get('title'), id: answer.get('id'), score: 0, considerations: (0, _immutable.List)() }));
+	    return answers.unshift((0, _immutable.Map)({ title: answer.get('title'), id: answer.get('id'), score: 0, considerations: (0, _immutable.List)() }));
 	  });
 	}
 	
@@ -47513,7 +47056,7 @@
 	;
 
 /***/ },
-/* 381 */
+/* 376 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47575,7 +47118,7 @@
 	;
 
 /***/ },
-/* 382 */
+/* 377 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47589,7 +47132,7 @@
 	
 	var _immutable = __webpack_require__(345);
 	
-	var _constants = __webpack_require__(350);
+	var _constants = __webpack_require__(348);
 	
 	var Constants = _interopRequireWildcard(_constants);
 	
@@ -47645,7 +47188,7 @@
 	;
 
 /***/ },
-/* 383 */
+/* 378 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -47673,7 +47216,7 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 384 */
+/* 379 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47683,7 +47226,7 @@
 	});
 	exports.default = createLogger;
 	
-	var _constants = __webpack_require__(350);
+	var _constants = __webpack_require__(348);
 	
 	var Constants = _interopRequireWildcard(_constants);
 	

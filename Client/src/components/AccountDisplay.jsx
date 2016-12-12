@@ -1,36 +1,37 @@
 import React from 'react';
 var shallowCompare = require('react-addons-shallow-compare');
-import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import * as actionCreators from '../core/actionCreator';
-import {QuestionContainer} from './Question'
 
 
-class MyQuestions extends React.Component{
+
+class AccountDisplay extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
   }
 
-  getQuestions() {
-    return this.props.questions || []
-  }
-
   render() {
 
     return <div className='col-md-10 col-md-offset-1 panel-header-style'>
-
-      <div className="panel-group" id="question_accordion">
-        {this.getQuestions().map(question =>
-          <QuestionContainer key={question.get('id')} question={question} />
-        )}
+      <div>
+        <div className='text-large'>
+          Hallo {this.props.account.get('user').get('firstName')} {this.props.account.get('user').get('lastName')}!
+        </div>
+        <div className='text-medium'>
+          All changes you now make below will now be automatically saved
         </div>
       </div>
+    </div>
   }
 }
+
 
 function mapStateToProps(state) {
   return {
@@ -38,9 +39,9 @@ function mapStateToProps(state) {
   }
 }
 
-const MyQuestionsContainer = connect(
+const AccountDisplayContainer = connect(
   mapStateToProps,
   actionCreators
-)(MyQuestions)
+)(AccountDisplay)
 
-export { MyQuestions, MyQuestionsContainer }
+export { AccountDisplay, AccountDisplayContainer }
