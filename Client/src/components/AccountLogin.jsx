@@ -72,7 +72,7 @@ class AccountLogin extends React.Component{
           {this.showUsernameValidation()}
           <div className="input-group">
             <span className="input-group-addon glyphicon glyphicon-user" id="username-addon"></span>
-            <input placeholder='username' tabIndex='1' type='text' aria-describedby="username-addon" className='form-control text-medium' value={this.state.username} onChange={this.handleUsernameChange}/>
+            <input placeholder='username' tabIndex='1' type='text' aria-describedby="username-addon" className='form-control text-medium input-lg' value={this.state.username} onChange={this.handleUsernameChange}/>
           </div>
         </div>
 
@@ -82,7 +82,7 @@ class AccountLogin extends React.Component{
           {this.showPasswordValidation()}
           <div className="input-group">
             <span className="input-group-addon glyphicon glyphicon-lock" id="password-addon"></span>
-            <input placeholder='password' tabIndex='2' type='password' aria-describedby="password-addon" className='form-control text-medium' value={this.state.password} onChange={this.handlePasswordChange}/>
+            <input placeholder='password' tabIndex='2' type='password' aria-describedby="password-addon" className='form-control text-medium input-lg' value={this.state.password} onChange={this.handlePasswordChange}/>
           </div>
         </div>
         <div className='control-header-style text-medium'>

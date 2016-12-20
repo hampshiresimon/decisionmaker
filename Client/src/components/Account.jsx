@@ -41,20 +41,22 @@ class Account extends React.Component{
 
   render() {
 
-    return <div className='col-md-10 col-md-offset-1 panel-header-style'>
+    return <div className='panel-header-style'>
       <div className="btn-group">
-        <button type="button" className="btn btn-primary dropdown-toggle text-medium" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">Save & Load Questions <span className="caret"></span></button>
+        <button type="button" className="btn btn-primary dropdown-toggle text-medium" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false">My Account <span className="caret"></span></button>
         <div className="form-vertical dropdown-menu keep_open no-margin">
 
           <span id="radioButtons" className="btn-group account-form" data-toggle="buttons">
-            <label className="btn btn-default active account-form-tab text-medium" onClick={this.showLogin}>
+            <label className="btn btn-primary active account-form-tab text-medium" onClick={this.showLogin}>
               <input type="radio" name="options" id="option1"/>Login
               </label>
-              <label className="btn btn-default account-form-tab text-medium"  onClick={this.showRegister}>
+              <label className="btn btn-primary account-form-tab text-medium"  onClick={this.showRegister}>
                 <input type="radio" name="options" id="option2" checked=""/>Register
                 </label>
               </span>
-              {this.getVisibleComponent()}
+              <div className='account-form-footer'>
+                {this.getVisibleComponent()}
+              </div>
             </div>
           </div>
         </div>

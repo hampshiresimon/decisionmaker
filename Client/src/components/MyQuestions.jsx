@@ -19,16 +19,24 @@ class MyQuestions extends React.Component{
     return this.props.questions || []
   }
 
+  getPreviousQuestionText() {
+    if( this.props.questions && !this.props.questions.isEmpty()) {
+      return <div className='text-large'>
+        Previous Questions
+      </div>
+    }
+  }
+
   render() {
 
     return <div className='col-md-10 col-md-offset-1 panel-header-style'>
-
-      <div className="panel-group" id="question_accordion">
+      {this.getPreviousQuestionText()}
+      <div className='panel-group' id='question_accordion'>
         {this.getQuestions().map(question =>
           <QuestionContainer key={question.get('id')} question={question} />
         )}
-        </div>
       </div>
+    </div>
   }
 }
 

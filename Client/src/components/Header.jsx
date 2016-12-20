@@ -1,7 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import * as actionCreators from '../core/actionCreator';
-
+import {AccountContainer} from './Account';
+import {AccountDisplayContainer} from './AccountDisplay';
+import {List, Map} from 'immutable';
+import * as Constants from '../core/constants'
+var shallowCompare = require('react-addons-shallow-compare');
 
 class Header extends React.Component{
   constructor(props) {
@@ -14,9 +18,21 @@ class Header extends React.Component{
     return shallowCompare(this, nextProps, nextState);
   }
 
+  getAccountDisplay() {
+    if( this.props.account.get('loginStatus') == Constants.LOGIN_STATE_LOGGED_IN) {
+      return <AccountDisplayContainer account={this.props.account} />
+    } else {
+      return <AccountContainer account={this.props.account} />
+    }
+  }
+
   render() {
 
-    return  <div id='myCarousel' className='carousel slide' data-ride='carousel' data-interval='7000'>
+    return <div className='header-container'>
+      <div className='header-menu'>
+        {this.getAccountDisplay()}
+      </div>
+      <div id='myCarousel' className='carousel slide header-carousel' data-ride='carousel' data-interval='7000'>
           <ol className='carousel-indicators'>
             <li data-target='#myCarousel' data-slide-to='0' className='active'></li>
             <li data-target='#myCarousel' data-slide-to='1' className=''></li>
@@ -66,9 +82,13 @@ class Header extends React.Component{
           <a href='#myCarousel' className='right carousel-control' data-slide='next'><span className='glyphicon glyphicon-chevron-right'></span></a>
 
         </div>
+        </div>
   }
 }
 
+Header.propTypes = {
+  account : React.PropTypes.instanceOf(Map)
+}
 
 function mapStateToProps(state) {
   return {

@@ -54,15 +54,16 @@ class NewQuestion extends React.Component{
         <form onSubmit={this.handleSubmit}>
           <div className='form-group'>
             <div>
-              <div className='text-large'>
-                Start making better decisions
+              <div className='text-medium'>
+
               </div>
+              <div className='control-header-style'>
               {this.showValidation()}
-              <textarea placeholder='Enter a description of your troublesome problem, e.g. should I buy that new pair of shoes?' className='form-control text-medium control-padding' value={this.state.questionText} onChange={this.handleChange}/>
-              <a className='text-small popover-link' data-html='true' data-toggle="popover" data-content="Enter a description above for the problem or dilemma you are trying to decide upon. <br/>The description just needs to be enough so that you can identify the problem in the future.">what is this?</a>
+              <textarea placeholder='Enter a description of your problem' className='form-control text-medium control-padding' value={this.state.questionText} onChange={this.handleChange}/>
+              </div>
             </div>
             <div className='control-header-style'>
-              <input className='btn btn-primary text-medium' type='submit' value='create question >>' />
+              <input className='btn btn-primary text-medium' type='submit' value='start solving >>' />
             </div>
           </div>
         </form>

@@ -123,27 +123,27 @@ class AccountCreate extends React.Component{
         {this.getErrorMsg()}
         <div className='control-header-style'>
           {this.showFirstNameValidation()}
-          <input type='text' tabIndex='1' className='form-control text-medium' placeholder='first name' value={this.state.firstName} onChange={this.handleFirstNameChange}/>
+          <input type='text' tabIndex='1' className='form-control text-medium input-lg' placeholder='first name' value={this.state.firstName} onChange={this.handleFirstNameChange}/>
         </div>
 
         <div className='control-header-style'>
           {this.showLastNameValidation()}
-          <input type='text' tabIndex='2' className='form-control text-medium' placeholder='last name' value={this.state.lastName} onChange={this.handleLastNameChange}/>
+          <input type='text' tabIndex='2' className='form-control text-medium input-lg' placeholder='last name' value={this.state.lastName} onChange={this.handleLastNameChange}/>
         </div>
 
         <div className='control-header-style'>
           {this.showUsernameValidation()}
-          <input type='text' tabIndex='3' className='form-control text-medium' placeholder='username' value={this.state.username} onChange={this.handleUsernameChange}/>
+          <input type='text' tabIndex='3' className='form-control text-medium input-lg' placeholder='username' value={this.state.username} onChange={this.handleUsernameChange}/>
         </div>
 
         <div className='control-header-style'>
           {this.showPasswordValidation()}
-          <input type='password' tabIndex='4' className='form-control text-medium' placeholder='password' value={this.state.password} onChange={this.handlePasswordChange}/>
+          <input type='password' tabIndex='4' className='form-control text-medium input-lg' placeholder='password' value={this.state.password} onChange={this.handlePasswordChange}/>
         </div>
 
         <div className='control-header-style'>
           {this.showEmailValidation()}
-          <input type='text' tabIndex='5' className='form-control text-medium' placeholder='email' value={this.state.email} onChange={this.handleEmailChange}/>
+          <input type='text' tabIndex='5' className='form-control text-medium input-lg' placeholder='email' value={this.state.email} onChange={this.handleEmailChange}/>
         </div>
         <div>
 

@@ -19,13 +19,13 @@ class AccountDisplay extends React.Component {
 
   render() {
 
-    return <div className='col-md-10 col-md-offset-1 panel-header-style'>
+    return <div className='panel-header-style'>
       <div>
-        <div className='text-large'>
+        <div className='text-medium account-display'>
           Hallo {this.props.account.get('user').get('firstName')} {this.props.account.get('user').get('lastName')}!
         </div>
-        <div className='text-medium'>
-          All changes you now make below will now be automatically saved
+        <div className='text-small account-display'>
+          All changes will now be automatically saved
         </div>
       </div>
     </div>

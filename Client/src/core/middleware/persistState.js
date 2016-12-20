@@ -8,16 +8,16 @@ export default function createLogger({ getState }) {
     const returnValue = next(action)
 
     // persist offline to server if we are logged in
-    if(state.get('account').get('loginStatus') == Constants.LOGIN_STATE_LOGGED_IN) {
+    if(getState().get('account').get('loginStatus') == Constants.LOGIN_STATE_LOGGED_IN) {
 
       var responsePromise = fetch('http://www.decision-maker.co.uk:3000/api/state', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-auth': state.get('account').get('token')
+          'x-auth': getState().get('account').get('token')
         },
         body: JSON.stringify(
-          state
+          getState()
         )
       }).then(a => {
         // should be persisted

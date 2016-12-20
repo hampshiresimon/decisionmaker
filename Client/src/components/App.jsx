@@ -3,7 +3,6 @@ import {List} from 'immutable';
 import {connect} from 'react-redux';
 import * as actionCreators from '../core/actionCreator';
 import {HeaderContainer} from './Header';
-import {AccountContainer} from './Account';
 import {AccountDisplayContainer} from './AccountDisplay';
 import {NewQuestionContainer} from './NewQuestion'
 import {MyQuestionsContainer} from './MyQuestions'
@@ -11,33 +10,30 @@ import {WizardContainer} from './wizard/Wizard'
 var shallowCompare = require('react-addons-shallow-compare');
 import * as Constants from '../core/constants'
 
+const PageLanding = 1
+const PageWizard = 2
 
 class App extends React.Component{
   constructor(props) {
     super(props)
     this.state = {
-      wizardInProgress : false,
+      page : PageLanding,
       newQuestion : null
     }
 
     this.newQuestionAdded = this.newQuestionAdded.bind(this)
+    this.wizardFinish = this.wizardFinish.bind(this)
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
   }
 
-  getAccountDisplay() {
-    if( this.props.account.get('loginStatus') == Constants.LOGIN_STATE_LOGGED_IN) {
-      return <AccountDisplayContainer account={this.props.account} />
-    } else {
-      return <AccountContainer account={this.props.account} />
-    }
-  }
+
 
   getMainDisplay() {
-    if( !this.state.wizardInProgress ) {
-      return <div>{this.getAccountDisplay()}
+    if( this.state.page == PageLanding ) {
+      return <div>
         <NewQuestionContainer newQuestion={this.newQuestionAdded}/>
         <MyQuestionsContainer questions={this.props.questions}/>
         </div>
@@ -45,19 +41,23 @@ class App extends React.Component{
   }
 
   getWizardDisplay() {
-    if( this.state.wizardInProgress ) {
-      return <WizardContainer question={this.state.newQuestion}/>
+    if( this.state.page == PageWizard ) {
+      return <WizardContainer question={this.state.newQuestion} finish={this.wizardFinish}/>
     }
   }
 
+  wizardFinish() {
+    this.setState( { page : PageLanding })
+  }
+
   newQuestionAdded( question ) {
-    this.setState( { wizardInProgress : true, newQuestion : question } )
+    this.setState( { page : PageWizard, newQuestion : question } )
   }
 
   render() {
     return <div>
       <div className='text-medium'>
-        <HeaderContainer/>
+        <HeaderContainer account={this.props.account}/>
         <div className='container-fluid'>
           {this.getMainDisplay()}
           {this.getWizardDisplay()}
