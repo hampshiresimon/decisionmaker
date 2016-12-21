@@ -63,7 +63,7 @@
 /******/ 	}
 /******/
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "cc13fbe9ee3960d7666c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a0eb39c8c382eaa9129f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/
@@ -44262,34 +44262,20 @@
 	      return shallowCompare(this, nextProps, nextState);
 	    }
 	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	
-	      /*
-	          $('.panel').on('shown.bs.collapse', function (e) {
-	          alert('Event fired on show #' + e.currentTarget.id);
-	      })
-	      
-	      $('.panel').on('hidden.bs.collapse', function (e) {
-	      alert('Event fired on hide #' + e.currentTarget.id);
-	      })
-	      */
-	
-	      /*    $(document).on('show','.panel', function (e) {
-	                  //$('.accordion-heading i').toggleClass(' ');
-	                  $(e.target).prev('.panel-heading').addClass('accordion-opened');
-	             });
-	      
-	             $(document).on('hide','.panel', function (e) {
-	                 $(this).find('.panel-heading').not($(e.target)).removeClass('accordion-opened');
-	                 //$('.accordion-heading i').toggleClass('fa-chevron-right fa-chevron-down');
-	             });
-	             */
-	    }
-	  }, {
 	    key: 'getQuestions',
 	    value: function getQuestions() {
 	      return this.props.questions || [];
+	    }
+	  }, {
+	    key: 'getPreviousQuestionText',
+	    value: function getPreviousQuestionText() {
+	      if (this.props.questions && !this.props.questions.isEmpty()) {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'text-large' },
+	          'Previous Questions'
+	        );
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -44298,16 +44284,16 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'col-md-10 col-md-offset-1 panel-header-style' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'text-large' },
-	          'Previous Questions'
-	        ),
+	        this.getPreviousQuestionText(),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'panel-group', id: 'question_accordion' },
 	          this.getQuestions().map(function (question) {
-	            return _react2.default.createElement(_Question.QuestionContainer, { key: question.get('id'), question: question });
+	            return _react2.default.createElement(
+	              'div',
+	              { key: question.get('id'), className: 'control-header-style' },
+	              _react2.default.createElement(_Question.QuestionContainer, { question: question })
+	            );
 	          })
 	        )
 	      );
@@ -44396,11 +44382,14 @@
 	
 	    _this.state = {
 	      answer: '',
-	      submitted: false
+	      submitted: false,
+	      showAddAnswer: false
 	    };
 	
 	    _this.handleAnswerChange = _this.handleAnswerChange.bind(_this);
 	    _this.handleAnswerSubmit = _this.handleAnswerSubmit.bind(_this);
+	    _this.addAnswer = _this.addAnswer.bind(_this);
+	    _this.closeAddAnswer = _this.closeAddAnswer.bind(_this);
 	    return _this;
 	  }
 	
@@ -44410,17 +44399,15 @@
 	      // enure new popovers work
 	      $('[data-toggle="popover"]').popover();
 	
+	      // hide / show panel open & cllapse buttons
 	      $('.panel').on('shown.bs.collapse', function (e) {
-	
-	        alert($(e.target).closest('.panel-heading').find('.question-header-closed-icon'));
-	        $(e.target).closest('.panel-heading').find('.question-header-closed-icon').addClass('hide');
-	        $(e.target).closest('.panel-heading').find('.question-header-open-icon').removeClass('hide');
+	        $(e.target).closest('.panel').find('.question-header-closed-icon').first().addClass('hide');
+	        $(e.target).closest('.panel').find('.question-header-open-icon').first().removeClass('hide');
 	      });
 	
 	      $('.panel').on('hidden.bs.collapse', function (e) {
-	        alert('here');
-	        $(e.target).closest('.panel-heading').find('.question-header-closed-icon').removeClass('hide');
-	        $(e.target).closest('.panel-heading').find('.question-header-open-icon').addClass('hide');
+	        $(e.target).closest('.panel').find('.question-header-closed-icon').first().removeClass('hide');
+	        $(e.target).closest('.panel').find('.question-header-open-icon').first().addClass('hide');
 	      });
 	    }
 	  }, {
@@ -44439,7 +44426,54 @@
 	        var uid = _uuid2.default.v1();
 	        this.props.newAnswerAction((0, _immutable.Map)({ title: this.state.answer, id: uid, score: 0 }), this.props.question);
 	
-	        this.setState({ submitted: false, answer: '' });
+	        this.setState({ submitted: false, answer: '', showAddAnswer: false });
+	      }
+	    }
+	  }, {
+	    key: 'addAnswer',
+	    value: function addAnswer() {
+	      this.setState({ showAddAnswer: true });
+	    }
+	  }, {
+	    key: 'closeAddAnswer',
+	    value: function closeAddAnswer() {
+	      this.setState({ showAddAnswer: false, submitted: false, answer: '' });
+	    }
+	  }, {
+	    key: 'showAddAnswer',
+	    value: function showAddAnswer() {
+	      if (!this.state.showAddAnswer) {
+	        return _react2.default.createElement(
+	          'div',
+	          { onClick: this.addAnswer, className: 'cursor-hand control-header-style' },
+	          _react2.default.createElement('div', { className: 'glyphicon glyphicon-plus-sign landing-add-outcome-glyph' }),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'landing-add-outcome-text' },
+	            'add outcome'
+	          )
+	        );
+	      } else {
+	        return _react2.default.createElement(
+	          'form',
+	          { className: 'form-group', onSubmit: this.handleAnswerSubmit },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'control-header-style' },
+	            this.showAnswerValidation(),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'input-group' },
+	              _react2.default.createElement('input', { placeholder: 'Enter outcome description', 'aria-describedby': 'outcome-addon', tabIndex: '1', type: 'text', className: 'form-control text-medium', value: this.state.answer, onChange: this.handleAnswerChange }),
+	              _react2.default.createElement('span', { className: 'input-group-addon glyphicon glyphicon-remove', id: 'outcome-addon', onClick: this.closeAddAnswer })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'control-header-style text-medium' },
+	            _react2.default.createElement('input', { className: 'btn btn-primary text-medium', tabIndex: '3', type: 'submit', value: 'add outcome >>' })
+	          )
+	        );
 	      }
 	    }
 	  }, {
@@ -44450,7 +44484,12 @@
 	  }, {
 	    key: 'getHref',
 	    value: function getHref() {
-	      return '#' + this.props.question.get('id');
+	      return '#question_panel_' + this.props.question.get('id');
+	    }
+	  }, {
+	    key: 'getPanelBodyId',
+	    value: function getPanelBodyId() {
+	      return 'question_panel_' + this.props.question.get('id');
 	    }
 	  }, {
 	    key: 'getBestAnswer',
@@ -44471,8 +44510,8 @@
 	      if (this.state.submitted && this.state.answer == '') {
 	        return _react2.default.createElement(
 	          'div',
-	          { className: 'alert alert-warning control-padding' },
-	          'Please describe your resolution'
+	          { className: 'text-warning text-small' },
+	          'Please describe your new outcome'
 	        );
 	      }
 	    }
@@ -44486,9 +44525,13 @@
 	    value: function render() {
 	      var _this2 = this;
 	
+	      var bestAnswer = this.props.question.get('answers').sort(function (a, b) {
+	        return b.get('score') - a.get('score');
+	      }).first();
+	
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'panel panel-default' },
+	        { className: 'panel panel-primary' },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'panel-heading' },
@@ -44504,28 +44547,21 @@
 	                _react2.default.createElement(
 	                  'div',
 	                  { className: 'question-header-open-close' },
-	                  _react2.default.createElement('span', { className: 'glyphicon glyphicon-circle-arrow-right question-header-closed-icon' }),
-	                  _react2.default.createElement('span', { className: 'glyphicon glyphicon-circle-arrow-down question-header-open-icon hide' })
+	                  _react2.default.createElement('span', { className: 'glyphicon glyphicon-circle-arrow-right question-header-closed-icon question-header-text' }),
+	                  _react2.default.createElement('span', { className: 'glyphicon glyphicon-circle-arrow-down question-header-open-icon hide question-header-text' })
 	                ),
 	                _react2.default.createElement(
 	                  'span',
-	                  { className: 'text-medium' },
-	                  'Question. ',
+	                  { className: 'text-medium question-header-text' },
 	                  this.props.question.get('title')
 	                )
 	              )
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'question-header-answer' },
-	              'Best Answer. ',
-	              this.getBestAnswer()
 	            )
 	          )
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { id: this.props.question.get('id'), className: 'accordian-body collapse' },
+	          { id: this.getPanelBodyId(), className: 'accordian-body collapse' },
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'panel-body panel-padding' },
@@ -44536,35 +44572,16 @@
 	                'div',
 	                null,
 	                _react2.default.createElement(
-	                  'form',
-	                  { onSubmit: this.handleAnswerSubmit, className: 'panel-style form-group' },
+	                  'div',
+	                  null,
 	                  _react2.default.createElement(
 	                    'div',
-	                    null,
-	                    _react2.default.createElement(
-	                      'div',
-	                      { className: 'control-header-style' },
-	                      this.showAnswerValidation(),
-	                      _react2.default.createElement('input', { placeholder: 'Enter resolution description', tabIndex: '1', type: 'text', className: 'form-control text-medium', value: this.state.answer, onChange: this.handleAnswerChange }),
-	                      _react2.default.createElement(
-	                        'a',
-	                        { className: 'text-small popover-link', 'data-html': 'true', 'data-toggle': 'popover', 'data-content': 'You need to create at least two resolutions for your question.<br/>For example, \'Yes - I should buy the shoes\' and \'No - I shouldn\'t buy the shoes\'.<br/>Enter a resolution into the box above and click \'create resolution\' to record the resolution. <br/>Do this for all possible outcomes you can see for your question.' },
-	                        'what is this?'
-	                      )
-	                    ),
-	                    _react2.default.createElement(
-	                      'div',
-	                      { className: 'control-header-style text-medium' },
-	                      _react2.default.createElement('input', { className: 'btn btn-primary text-medium', tabIndex: '3', type: 'submit', value: 'create resolution >>' })
-	                    ),
-	                    _react2.default.createElement(
-	                      'div',
-	                      { className: 'panel-group control-header-style', id: this.getAccordianId() },
-	                      this.props.question.get('answers').map(function (answer) {
-	                        return _react2.default.createElement(_Answer.AnswerContainer, { key: answer.get('id'), question: _this2.props.question, answer: answer });
-	                      })
-	                    )
-	                  )
+	                    { className: 'panel-group control-header-style', id: this.getAccordianId() },
+	                    this.props.question.get('answers').map(function (answer) {
+	                      return _react2.default.createElement(_Answer.AnswerContainer, { isBest: answer.get('id') == bestAnswer.get('id'), key: answer.get('id'), question: _this2.props.question, answer: answer });
+	                    })
+	                  ),
+	                  this.showAddAnswer()
 	                )
 	              )
 	            )
@@ -44656,11 +44673,14 @@
 	
 	    _this.state = {
 	      consideration: '',
-	      submitted: false
+	      submitted: false,
+	      showAddConsideration: false
 	    };
 	
 	    _this.handleConsiderationChange = _this.handleConsiderationChange.bind(_this);
 	    _this.handleConsiderationSubmit = _this.handleConsiderationSubmit.bind(_this);
+	    _this.addConsideration = _this.addConsideration.bind(_this);
+	    _this.closeAddConsideration = _this.closeAddConsideration.bind(_this);
 	    return _this;
 	  }
 	
@@ -44676,6 +44696,57 @@
 	      this.setState({ consideration: event.target.value });
 	    }
 	  }, {
+	    key: 'addConsideration',
+	    value: function addConsideration() {
+	      this.setState({ showAddConsideration: true });
+	    }
+	  }, {
+	    key: 'closeAddConsideration',
+	    value: function closeAddConsideration() {
+	      this.setState({ showAddConsideration: false, submitted: false, consideration: '' });
+	    }
+	  }, {
+	    key: 'showAddConsideration',
+	    value: function showAddConsideration() {
+	      if (!this.state.showAddConsideration) {
+	        return _react2.default.createElement(
+	          'div',
+	          { onClick: this.addConsideration, className: 'cursor-hand control-header-style' },
+	          _react2.default.createElement('div', { className: 'glyphicon glyphicon-plus-sign landing-add-outcome-glyph' }),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'landing-add-outcome-text' },
+	            'add factor'
+	          )
+	        );
+	      } else {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'control-header-style' },
+	          _react2.default.createElement(
+	            'form',
+	            { className: 'form-group', onSubmit: this.handleConsiderationSubmit },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'control-header-style' },
+	              this.showConsiderationValidation(),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'input-group' },
+	                _react2.default.createElement('input', { placeholder: 'Enter factor description', tabIndex: '1', type: 'text', className: 'form-control text-medium', value: this.state.consideration, onChange: this.handleConsiderationChange }),
+	                _react2.default.createElement('span', { className: 'input-group-addon glyphicon glyphicon-remove', id: 'outcome-addon', onClick: this.closeAddConsideration })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'control-header-style text-medium' },
+	              _react2.default.createElement('input', { className: 'btn btn-primary text-medium', tabIndex: '3', type: 'submit', value: 'add factor >>' })
+	            )
+	          )
+	        );
+	      }
+	    }
+	  }, {
 	    key: 'handleConsiderationSubmit',
 	    value: function handleConsiderationSubmit(event) {
 	
@@ -44686,7 +44757,7 @@
 	        var uid = _uuid2.default.v1();
 	        this.props.newConsiderationAction((0, _immutable.Map)({ title: this.state.consideration, id: uid, score: 0 }), this.props.answer, this.props.question);
 	
-	        this.setState({ submitted: false, consideration: '' });
+	        this.setState({ submitted: false, consideration: '', showAddConsideration: false });
 	      }
 	    }
 	  }, {
@@ -44695,15 +44766,20 @@
 	      if (this.state.submitted && this.state.consideration == '') {
 	        return _react2.default.createElement(
 	          'div',
-	          { className: 'alert alert-warning control-padding' },
-	          'Please describe your consequence'
+	          { className: 'text-warning text-small' },
+	          'Please describe your new factor'
 	        );
 	      }
 	    }
 	  }, {
 	    key: 'getHref',
 	    value: function getHref() {
-	      return '#' + this.props.answer.get('id');
+	      return '#panel_' + this.props.answer.get('id');
+	    }
+	  }, {
+	    key: 'getPanelBodyId',
+	    value: function getPanelBodyId() {
+	      return 'panel_' + this.props.answer.get('id');
 	    }
 	  }, {
 	    key: 'getAccordianId',
@@ -44716,30 +44792,71 @@
 	      return '#consideration_accordion_' + this.props.answer.get('id');
 	    }
 	  }, {
+	    key: 'getBestOutcomeText',
+	    value: function getBestOutcomeText() {
+	      if (this.props.isBest) {
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement('span', { className: 'glyphicon glyphicon-thumbs-up' }),
+	          ' BEST OUTCOME'
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'getPanelCss',
+	    value: function getPanelCss() {
+	      if (this.props.isBest) {
+	        return 'panel panel-success control-header-style';
+	      } else {
+	        return 'panel panel-info control-header-style';
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this2 = this;
 	
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'panel panel-default control-header-style' },
+	        { className: this.getPanelCss() },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'panel-heading' },
+	          this.getBestOutcomeText(),
 	          _react2.default.createElement(
-	            'h4',
-	            { className: 'panel-title' },
+	            'div',
+	            { className: 'question-header-container answer-header-container' },
 	            _react2.default.createElement(
-	              'a',
-	              { 'data-toggle': 'collapse', 'data-parent': this.getAccordianId(), href: this.getHref() },
-	              'R. ',
-	              this.props.answer.get('title')
+	              'div',
+	              { className: 'question-header-title' },
+	              _react2.default.createElement(
+	                'a',
+	                { className: 'panel-toggle', 'data-toggle': 'collapse', 'data-parent': this.getAccordianId(), href: this.getHref() },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'question-header-open-close' },
+	                  _react2.default.createElement('span', { className: 'glyphicon glyphicon-circle-arrow-right question-header-closed-icon' }),
+	                  _react2.default.createElement('span', { className: 'glyphicon glyphicon-circle-arrow-down question-header-open-icon hide' })
+	                ),
+	                _react2.default.createElement(
+	                  'span',
+	                  { className: 'text-medium' },
+	                  this.props.answer.get('title')
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'text-medium' },
+	                'Score: ',
+	                this.props.answer.get('score')
+	              )
 	            )
 	          )
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { id: this.props.answer.get('id'), className: 'panel-collapse collapse in' },
+	          { id: this.getPanelBodyId(), className: 'panel-collapse collapse' },
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'panel-body panel-padding' },
@@ -44755,26 +44872,11 @@
 	                  _react2.default.createElement(
 	                    'div',
 	                    null,
-	                    _react2.default.createElement(
-	                      'div',
-	                      { className: 'control-header-style' },
-	                      this.showConsiderationValidation(),
-	                      _react2.default.createElement('input', { placeholder: 'Enter consequence description', tabIndex: '1', type: 'text', className: 'form-control text-medium', value: this.state.consideration, onChange: this.handleConsiderationChange }),
-	                      _react2.default.createElement(
-	                        'a',
-	                        { className: 'text-small popover-link', 'data-html': 'true', 'data-toggle': 'popover', 'data-content': 'For each potential resolution you need to create considerations upon which the preferred resolution will be selected.<br/>For example, a consideration may be \'Because the shoes are in the sale\'.<br/>After the consideration is created you should use the slider to give positive or negative weight to the new consideration.<br/>The weight you give to a consideration will be used to determine the best resolution to your quesstion.<br/>The resolution determined by your considerations will be displayed under the question heading above.' },
-	                        'what is this?'
-	                      )
-	                    ),
-	                    _react2.default.createElement(
-	                      'div',
-	                      { className: 'control-header-style text-medium' },
-	                      _react2.default.createElement('input', { className: 'btn btn-primary text-medium', tabIndex: '3', type: 'button', onClick: this.handleConsiderationSubmit, value: 'create consequence >>' })
-	                    ),
 	                    this.props.answer.get('considerations').map(function (consideration) {
 	                      return _react2.default.createElement(_Consideration.ConsiderationContainer, { key: consideration.get('id'), consideration: consideration, question: _this2.props.question, answer: _this2.props.answer });
 	                    })
-	                  )
+	                  ),
+	                  this.showAddConsideration()
 	                )
 	              )
 	            )
@@ -44786,6 +44888,22 @@
 	
 	  return Answer;
 	}(_react2.default.Component);
+	
+	/*
+	<div className='control-header-style'>
+	{this.showConsiderationValidation()}
+	<input placeholder='Enter consequence description' tabIndex='1' type='text' className='form-control text-medium' value={this.state.consideration} onChange={this.handleConsiderationChange}/>
+	<a className='text-small popover-link' data-html='true' data-toggle="popover" data-content="For each potential resolution you need to create considerations upon which the preferred resolution will be selected.<br/>For example, a consideration may be 'Because the shoes are in the sale'.<br/>After the consideration is created you should use the slider to give positive or negative weight to the new consideration.<br/>The weight you give to a consideration will be used to determine the best resolution to your quesstion.<br/>The resolution determined by your considerations will be displayed under the question heading above.">what is this?</a>
+	</div>
+	
+	<div className='control-header-style text-medium'>
+	<input className='btn btn-primary text-medium' tabIndex='3' type="button" onClick={this.handleConsiderationSubmit}  value='create consequence >>' />
+	</div>
+	*/
+	
+	Answer.propTypes = {
+	  isBest: _react2.default.PropTypes.bool.isRequired
+	};
 	
 	function mapStateToProps(state) {
 	  return {};
@@ -44920,29 +45038,56 @@
 	
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'panel panel-default control-header-style panel-padding' },
+	        { className: 'control-header-style' },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'panel-body' },
+	          null,
+	          consideration.get('title')
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { ref: function ref(input) {
+	              _this2.inputRangeDiv = input;
+	            } },
 	          _react2.default.createElement(
 	            'div',
-	            null,
-	            consideration.get('title')
+	            { className: 'consideration-icon-container' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'consideration-icon-left' },
+	              _react2.default.createElement('span', { className: 'glyphicon glyphicon-thumbs-down' })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'consideration-icon-right' },
+	              _react2.default.createElement('span', { className: 'glyphicon glyphicon-thumbs-up' })
+	            )
 	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { ref: function ref(input) {
-	                _this2.inputRangeDiv = input;
-	              } },
-	            _react2.default.createElement(_reactInputRange2.default, {
-	              maxValue: 50,
-	              minValue: -50,
-	              value: this.state.value,
-	              onChange: this.handleConsiderationValueChanged
-	            })
-	          )
+	          _react2.default.createElement(_reactInputRange2.default, {
+	            maxValue: 50,
+	            minValue: -50,
+	            value: this.state.value,
+	            onChange: this.handleConsiderationValueChanged
+	          })
 	        )
 	      );
+	
+	      /*<div className='panel panel-default control-header-style panel-padding'>
+	        <div className='panel-body'>
+	          <div>
+	            {consideration.get('title')}
+	          </div>
+	          <div ref={(input) => { this.inputRangeDiv = input; }}>
+	            <InputRange
+	              maxValue={50}
+	              minValue={-50}
+	              value={this.state.value}
+	              onChange={this.handleConsiderationValueChanged}
+	              />
+	          </div>
+	        </div>
+	      </div>
+	      */
 	    }
 	  }]);
 	
@@ -47006,15 +47151,14 @@
 	      // create the answers and considerations and save
 	      answers.forEach(function (answer) {
 	
-	        var uid = _uuid2.default.v1();
-	        var newAnswer = (0, _immutable.Map)({ title: answer.get('title'), id: uid, score: 0 });
+	        var newAnswer = (0, _immutable.Map)({ title: answer.get('title'), id: _uuid2.default.v1(), score: 0 });
 	        _this2.props.newAnswerAction(newAnswer, _this2.props.question);
 	
 	        // create considerations
 	        answer.get('considerations').forEach(function (consideration) {
 	
 	          var considerationId = _uuid2.default.v1();
-	          var newConsideration = (0, _immutable.Map)({ title: consideration.get('title'), id: uid, score: consideration.get('score') });
+	          var newConsideration = (0, _immutable.Map)({ title: consideration.get('title'), id: _uuid2.default.v1(), score: consideration.get('score') });
 	          _this2.props.newConsiderationAction(newConsideration, newAnswer, _this2.props.question);
 	        });
 	      });
@@ -48229,7 +48373,7 @@
 	
 	function NewAnswer(question, answer) {
 	  return question.update('answers', function (answers) {
-	    return answers.unshift((0, _immutable.Map)({ title: answer.get('title'), id: answer.get('id'), score: 0, considerations: (0, _immutable.List)() }));
+	    return answers.push((0, _immutable.Map)({ title: answer.get('title'), id: answer.get('id'), score: 0, considerations: (0, _immutable.List)() }));
 	  });
 	}
 	
@@ -48272,7 +48416,7 @@
 	function NewConsideration(answer, consideration) {
 	  var considerationMap = (0, _immutable.Map)({ title: consideration.get('title'), id: consideration.get('id'), score: consideration.get('score') });
 	  var addedConsiderationState = answer.update('considerations', function (consideration) {
-	    return consideration.unshift(considerationMap);
+	    return consideration.push(considerationMap);
 	  });
 	
 	  // update the score on the answer based on it's considerations

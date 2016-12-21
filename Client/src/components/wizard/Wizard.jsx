@@ -73,15 +73,14 @@ class Wizard extends React.Component{
     // create the answers and considerations and save
     answers.forEach( answer => {
 
-      let uid = uuid.v1()
-      let newAnswer = Map({ title : answer.get('title'), id : uid, score : 0 })
+      let newAnswer = Map({ title : answer.get('title'), id : uuid.v1(), score : 0 })
       this.props.newAnswerAction( newAnswer, this.props.question )
 
       // create considerations
       answer.get('considerations').forEach( consideration => {
 
         let considerationId = uuid.v1()
-        let newConsideration = Map({ title : consideration.get('title'), id : uid, score : consideration.get('score') })
+        let newConsideration = Map({ title : consideration.get('title'), id : uuid.v1(), score : consideration.get('score') })
         this.props.newConsiderationAction( newConsideration, newAnswer, this.props.question )
       })
     })

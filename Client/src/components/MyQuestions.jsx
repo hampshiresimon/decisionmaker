@@ -21,23 +21,30 @@ class MyQuestions extends React.Component{
 
   getPreviousQuestionText() {
     if( this.props.questions && !this.props.questions.isEmpty()) {
-      return <div className='text-large'>
+      return <div>
+      <div className='text-large'>
         Previous Questions
       </div>
-    }
-  }
-
-  render() {
-
-    return <div className='col-md-10 col-md-offset-1 panel-header-style'>
-      {this.getPreviousQuestionText()}
-      <div className='panel-group' id='question_accordion'>
-        {this.getQuestions().map(question =>
-          <QuestionContainer key={question.get('id')} question={question} />
-        )}
+      <div className='text-medium'>
+        Click the headers or <span className='glyphicon glyphicon-circle-arrow-right'></span> icon to view full details
       </div>
     </div>
   }
+}
+
+render() {
+
+  return <div className='col-md-10 col-md-offset-1 panel-header-style'>
+    {this.getPreviousQuestionText()}
+    <div className='panel-group' id='question_accordion'>
+      {this.getQuestions().map(question =>
+        <div key={question.get('id')} className='control-header-style'>
+          <QuestionContainer  question={question} />
+        </div>
+      )}
+    </div>
+  </div>
+}
 }
 
 function mapStateToProps(state) {

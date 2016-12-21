@@ -22,7 +22,7 @@ class Consideration extends React.Component{
   }
 
   componentDidMount() {
-    this.updateSliderColour()
+    this.updateSliderColour(0)
   }
 
   removeConsideration(event) {
@@ -31,21 +31,20 @@ class Consideration extends React.Component{
   }
 
   handleConsiderationValueChanged(id, val) {
-    this.setState({
-      value : val,
-    });
 
-    this.updateSliderColour()
+    this.updateSliderColour(val)
 
     var consideration = this.props.consideration
     var updatedConsideration = consideration.set('score', val)
     this.props.updateConsiderationAction(updatedConsideration, this.props.answer, this.props.question)
+
+    this.setState({ value : val })
   }
 
-  updateSliderColour() {
+  updateSliderColour(value) {
 
     // the colour values go from -50 to 50 so add 50 to make it a 0 - 100 scale
-    let colourValue = this.state.value + 50
+    let colourValue = value + 50
 
     $(this.inputRangeDiv).find('.InputRange-slider').css('background-color', numberToColorHsl(colourValue))
     $(this.inputRangeDiv).find('.InputRange-track--active').css('background-color', numberToColorHsl(colourValue))
@@ -64,10 +63,10 @@ class Consideration extends React.Component{
         <div ref={(input) => { this.inputRangeDiv = input; }}>
           <div className='consideration-icon-container'>
             <div className='consideration-icon-left'>
-              <span className='glyphicon glyphicon-thumbs-down'/>
+              <span className='glyphicon glyphicon-thumbs-down'/> <span className='text-small'>bad</span>
             </div>
             <div className='consideration-icon-right'>
-              <span className='glyphicon glyphicon-thumbs-up'/>
+              <span className='text-small'>good</span> <span className='glyphicon glyphicon-thumbs-up'/>
             </div>
           </div>
           <InputRange

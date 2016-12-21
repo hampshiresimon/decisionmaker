@@ -25,7 +25,7 @@ class WizardConsideration extends React.Component{
   }
 
   componentDidMount() {
-    this.updateSliderColour()
+    this.updateSliderColour(0)
   }
 
   handleConsiderationChange(event) {
@@ -42,15 +42,15 @@ class WizardConsideration extends React.Component{
       sliderValue : val,
     });
 
-    this.updateSliderColour()
+    this.updateSliderColour(val)
 
     this.props.valueChanged(this.props.considerationId, this.state.considerationText, val)
   }
 
-  updateSliderColour() {
+  updateSliderColour(value) {
 
     // the colour values go from -50 to 50 so add 50 to make it a 0 - 100 scale
-    let colourValue = this.state.sliderValue + 50
+    let colourValue = value + 50
 
     $(this.inputRangeDiv).find('.InputRange-slider').css('background-color', numberToColorHsl(colourValue))
     $(this.inputRangeDiv).find('.InputRange-track--active').css('background-color', numberToColorHsl(colourValue))
@@ -64,10 +64,10 @@ class WizardConsideration extends React.Component{
         <div ref={(input) => { this.inputRangeDiv = input; }} className='control-header-style'>
           <div className='consideration-icon-container'>
             <div className='consideration-icon-left'>
-              <span className='glyphicon glyphicon-thumbs-down'/>
+              <span className='glyphicon glyphicon-thumbs-down'/> <span className='text-small'>bad</span>
             </div>
             <div className='consideration-icon-right'>
-              <span className='glyphicon glyphicon-thumbs-up'/>
+              <span className='text-small'>good</span> <span className='glyphicon glyphicon-thumbs-up'/>
             </div>
           </div>
           <InputRange

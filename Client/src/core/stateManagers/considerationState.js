@@ -3,7 +3,7 @@ import {Map, List} from 'immutable';
 export function NewConsideration(answer, consideration)
 {
   var considerationMap = Map( { title : consideration.get('title'), id : consideration.get('id'), score : consideration.get('score') })
-  var addedConsiderationState = answer.update( 'considerations', consideration => consideration.unshift( considerationMap ))
+  var addedConsiderationState = answer.update( 'considerations', consideration => consideration.push( considerationMap ))
 
   // update the score on the answer based on it's considerations
   var totalScore = addedConsiderationState.get('considerations').reduce(function(sum, d) {
